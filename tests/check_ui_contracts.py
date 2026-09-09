@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Read-only UI preservation check. Python standard library only.
+"""Read-only HCI preservation check. Python standard library only.
 
 Run from the project root: python tests/check_ui_contracts.py
-The manifest records the uploaded application's contracts, not credentials.
+The HCI manifest records the uploaded application contracts, not credentials.
+The historical ui-contracts.json is retained as evidence of the UI-only stage.
+JavaScript edits requested for this HCI stage are explicitly listed in the new manifest.
 This does not connect to Supabase, change files, or replace live browser tests.
 """
 from collections import Counter
@@ -14,7 +16,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = Path(__file__).with_name('ui-contracts.json')
+MANIFEST = Path(__file__).with_name('hci-contracts.json')
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 FIELD_ATTRS = {'name', 'type', 'required', 'readonly', 'disabled', 'value', 'checked', 'min', 'max', 'minlength', 'maxlength', 'pattern', 'accept', 'multiple'}
 HOOK_CLASSES = {'navbar', 'navbar-nav', 'navbar-collapse', 'container', 'nav-link', 'd-none', 'invalid-feedback'}
@@ -110,14 +112,14 @@ def digest(path):
 
 def main():
     if not MANIFEST.exists():
-        print('Missing ui-contracts.json', file=sys.stderr)
+        print('Missing hci-contracts.json', file=sys.stderr)
         return 1
     manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
     failures = []
     for relative, expected in manifest['protected_files'].items():
         path = ROOT / relative
         if not path.is_file() or digest(path) != expected:
-            failures.append(f'Protected JavaScript/SQL/config file changed: {relative}')
+            failures.append(f'Protected queries/SQL/config/unchanged-JS file changed: {relative}')
     for relative, before in manifest['pages'].items():
         path = ROOT / relative
         if not path.is_file():
@@ -126,9 +128,17 @@ def main():
         page = inspect_page(path)
         after = page.snapshot()
         for id_, expected in before['ids'].items():
-            if after['ids'].get(id_) != expected:
-                failures.append(f'{relative}: functional attributes/tag/form changed for #{id_}')
-        for key in ('scripts', 'forms', 'options', 'textareas'):
+            actual = after['ids'].get(id_)
+            if not actual or actual['tag'] != expected['tag'] or actual['form'] != expected['form']:
+                failures.append(f'{relative}: functional tag/form changed for #{id_}')
+            elif any(actual['attrs'].get(k) != v for k,v in expected['attrs'].items()):
+                failures.append(f'{relative}: original functional attribute changed for #{id_}')
+        # Original scripts and attributes must remain in their exact relative
+        # order. New HCI helper scripts may be added, never replace old imports.
+        cursor = iter(after['scripts'])
+        if not all(any(item == old for item in cursor) for old in before['scripts']):
+            failures.append(f'{relative}: original script imports/order changed')
+        for key in ('forms', 'options', 'textareas'):
             if before[key] != after[key]:
                 failures.append(f'{relative}: {key} changed')
         for key in ('hrefs', 'classes'):
@@ -147,6 +157,21 @@ def main():
             local = path.parent / asset.split('#', 1)[0].split('?', 1)[0]
             if not local.is_file():
                 failures.append(f'{relative}: missing local asset {asset}')
+    for name, expected in manifest.get('constants', {}).items():
+        if expected not in (ROOT/'js/core.js').read_text(encoding='utf-8'):
+            failures.append(f'Role/status/classification contract changed: {name}')
+    for relative in ('forgot-password.html', 'reset-password.html'):
+        path = ROOT/relative
+        if not path.exists():
+            failures.append(f'Missing recovery page: {relative}')
+            continue
+        page = inspect_page(path)
+        if page.duplicates: failures.append(f'{relative}: duplicate IDs')
+        for ref in page.aria_refs:
+            if ref not in page.ids: failures.append(f'{relative}: missing ARIA target #{ref}')
+        for asset in page.assets:
+            if not asset.startswith(('http:', 'https:', 'data:', '#')) and not (path.parent/asset.split('#')[0].split('?')[0]).exists():
+                failures.append(f'{relative}: missing asset {asset}')
     css = ROOT / 'css/style.css'
     for asset in re.findall(r'url\([\"\']?([^\"\')]+)', css.read_text(encoding='utf-8')):
         if not asset.startswith(('http:', 'https:', 'data:')) and not (css.parent / asset).is_file():
@@ -156,7 +181,8 @@ def main():
         return 1
     print(f"PASS: {len(manifest['pages'])} pages preserve their original contracts.")
     print(f"PASS: {len(manifest['protected_files'])} protected files match the uploaded original.")
-    print('PASS: local asset references, ARIA targets, form defaults, and IDs.')
+    print('PASS: local assets, ARIA targets, form defaults, IDs, original script order, role/status constants.')
+    print(f"Authorized HCI JavaScript edits: {len(manifest['authorized_js_edits'])}; no blanket JavaScript-unchanged claim.")
     print('This is a static preservation check, not live authentication, RLS, storage, or QR acceptance testing.')
     return 0
 

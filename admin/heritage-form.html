@@ -1,397 +1,398 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>
    Pamana Admin | Heritage Form
   </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="../css/style.css" rel="stylesheet"/>
-  <meta content="#174C3A" name="theme-color"/>
-  <link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
-  <meta content="Pamana heritage archive workspace." name="description"/>
- </head>
- <body class="admin-page heritage-form-page pamana-polished" data-page="heritage-form" data-require-role="admin">
-  <a class="skip-link" href="#mainContent">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet"/>
+<meta content="#174C3A" name="theme-color"/>
+<link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Pamana heritage archive workspace." name="description"/>
+</head>
+<body class="admin-page heritage-form-page pamana-polished" data-page="heritage-form" data-require-role="admin">
+<a class="skip-link" href="#mainContent">
    Skip to main content
   </a>
-  <nav aria-label="Primary navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar admin-topbar">
-   <div class="container">
-    <a class="navbar-brand pamana-brand" href="dashboard.html">
-     <img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
-     <span>
-      <span class="brand-title">
+<nav aria-label="Primary navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar admin-topbar">
+<div class="container">
+<a class="navbar-brand pamana-brand" href="dashboard.html">
+<img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
+<span>
+<span class="brand-title">
        Pamana
       </span>
-      <span class="brand-subtitle">
+<span class="brand-subtitle">
        Administration
       </span>
-     </span>
-    </a>
-    <button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
-     <span class="navbar-toggler-icon">
-     </span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-     <div class="navbar-nav ms-auto">
-      <a class="nav-link" href="dashboard.html">
+</span>
+</a>
+<button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon">
+</span>
+</button>
+<div class="collapse navbar-collapse" id="mainNav">
+<div class="navbar-nav ms-auto">
+<a class="nav-link" href="dashboard.html">
        Dashboard
       </a>
-      <a class="nav-link active" href="heritage-sites.html">
+<a class="nav-link active" href="heritage-sites.html">
        Heritage Sites
       </a>
-      <a class="nav-link" href="submissions.html">
+<a class="nav-link" href="submissions.html">
        Submissions
       </a>
-     </div>
-    </div>
-   </div>
-  </nav>
-  <div class="container admin-shell">
-   <aside aria-label="Admin workspace navigation" class="admin-sidebar">
-    <div class="admin-sidebar-heading">
+</div>
+</div>
+</div>
+</nav>
+<div class="container admin-shell">
+<aside aria-label="Admin workspace navigation" class="admin-sidebar">
+<div class="admin-sidebar-heading">
      Workspace
     </div>
-    <a href="dashboard.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#home">
-      </use>
-     </svg>
+<a href="dashboard.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#home">
+</use>
+</svg>
      Dashboard
     </a>
-    <a class="active" href="heritage-sites.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#heritage-site">
-      </use>
-     </svg>
+<a class="active" href="heritage-sites.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#heritage-site">
+</use>
+</svg>
      Heritage Sites
     </a>
-    <a href="submissions.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#stories">
-      </use>
-     </svg>
+<a href="submissions.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#stories">
+</use>
+</svg>
      Story Review
     </a>
-    <a aria-current="page" class="active-secondary" href="heritage-form.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#add">
-      </use>
-     </svg>
+<a aria-current="page" class="active-secondary" href="heritage-form.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#add">
+</use>
+</svg>
      Add Heritage Site
     </a>
-    <div class="admin-sidebar-spacer">
-    </div>
-    <button data-logout="" type="button">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#logout">
-      </use>
-     </svg>
+<div class="admin-sidebar-spacer">
+</div>
+<button data-logout="" type="button">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#logout">
+</use>
+</svg>
      Logout
     </button>
-   </aside>
-   <main class="admin-main py-4 py-lg-5" id="mainContent" tabindex="-1">
-    <header class="admin-page-header admin-form-header">
-     <div>
-      <p class="portal-session mb-2" id="sessionStatus">
+</aside>
+<main class="admin-main py-4 py-lg-5" id="mainContent" tabindex="-1">
+<header class="admin-page-header admin-form-header">
+<div>
+<p class="portal-session mb-2" id="sessionStatus">
        Checking session...
       </p>
-      <p class="home-eyebrow">
+<p class="home-eyebrow">
        Heritage Record
       </p>
-      <h1 id="heritageFormTitle">
+<h1 id="heritageFormTitle">
        Add Heritage Site
       </h1>
-      <p class="text-muted mb-0" id="heritageFormHelp">
+<p class="text-muted mb-0" id="heritageFormHelp">
        Create an official heritage record for visitors and contributors to browse.
       </p>
-     </div>
-     <a class="btn btn-outline-secondary" href="heritage-sites.html">
+</div>
+<a class="btn btn-outline-secondary" href="heritage-sites.html">
       Back to Sites
      </a>
-    </header>
-    <form class="heritage-admin-form" id="heritageForm" novalidate="">
-     <p class="form-notice">
+</header>
+<form class="heritage-admin-form" id="heritageForm" novalidate="">
+<p class="form-notice">
       Fields marked * are required.
      </p>
-     <div aria-atomic="true" aria-live="polite" class="alert d-none" id="heritageFormMessage" role="status">
-     </div>
-     <section class="pamana-form-section">
-      <div class="form-section-title">
-       <span class="form-section-number">
+<div aria-atomic="true" aria-live="polite" class="alert d-none" id="heritageFormMessage" role="status">
+</div>
+<section class="pamana-form-section">
+<div class="form-section-title">
+<span class="form-section-number">
         1
        </span>
-       <div>
-        <h2 class="h4 mb-1">
+<div>
+<h2 class="h4 mb-1">
          Basic Information
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Name, location, period, and visitor-facing summary.
         </p>
-       </div>
-      </div>
-      <div class="row g-3">
-       <div class="col-md-6">
-        <label class="form-label" for="siteName">
+</div>
+</div>
+<div class="row g-3">
+<div class="col-md-6">
+<label class="form-label" for="siteName">
          Name
          <span aria-hidden="true" class="required-hint">
           *
          </span>
-        </label>
-        <input aria-describedby="siteNameFeedback" class="form-control" id="siteName" required="" type="text"/>
-        <div class="invalid-feedback" id="siteNameFeedback">
-        </div>
-       </div>
-       <div class="col-md-6">
-        <label class="form-label" for="siteLocation">
+</label>
+<input aria-describedby="siteNameFeedback siteSlugHelp" class="form-control" id="siteName" required="" type="text"/><p class="form-text">Use 3–150 characters. The address is generated from the site name.</p><p class="form-text" id="siteSlugHelp">Suggested address (availability checked on save): <output id="siteSlugPreview">Enter a site name</output></p>
+<div class="invalid-feedback" id="siteNameFeedback">
+</div>
+</div>
+<div class="col-md-6">
+<label class="form-label" for="siteLocation">
          Location
          <span aria-hidden="true" class="required-hint">
           *
          </span>
-        </label>
-        <input aria-describedby="siteLocationFeedback" class="form-control" id="siteLocation" required="" type="text"/>
-        <div class="invalid-feedback" id="siteLocationFeedback">
-        </div>
-       </div>
-       <div class="col-md-6">
-        <label class="form-label" for="historicalPeriod">
+</label>
+<input aria-describedby="siteLocationFeedback" class="form-control" id="siteLocation" required="" type="text"/>
+<div class="invalid-feedback" id="siteLocationFeedback">
+</div>
+</div>
+<div class="col-md-6">
+<label class="form-label" for="historicalPeriod">
          Historical period
          <span aria-hidden="true" class="required-hint">
           *
          </span>
-        </label>
-        <input aria-describedby="historicalPeriodFeedback" class="form-control" id="historicalPeriod" required="" type="text"/>
-        <div class="invalid-feedback" id="historicalPeriodFeedback">
-        </div>
-       </div>
-       <div class="col-12">
-        <label class="form-label" for="shortDescription">
+</label>
+<input aria-describedby="historicalPeriodFeedback" class="form-control" id="historicalPeriod" required="" type="text"/>
+<div class="invalid-feedback" id="historicalPeriodFeedback">
+</div>
+</div>
+<div class="col-12">
+<label class="form-label" for="shortDescription">
          Short description
          <span aria-hidden="true" class="required-hint">
           *
          </span>
-        </label>
-        <textarea aria-describedby="shortDescriptionFeedback" class="form-control" id="shortDescription" required="" rows="3"></textarea>
-        <div class="invalid-feedback" id="shortDescriptionFeedback">
-        </div>
-       </div>
-      </div>
-     </section>
-     <section class="pamana-form-section">
-      <div class="form-section-title">
-       <span class="form-section-number">
+</label>
+<textarea aria-describedby="shortDescriptionFeedback" class="form-control" id="shortDescription" required="" rows="3"></textarea><p class="form-text">A concise introduction, up to 500 characters.</p>
+<div class="invalid-feedback" id="shortDescriptionFeedback">
+</div>
+</div>
+</div>
+</section>
+<section class="pamana-form-section">
+<div class="form-section-title">
+<span class="form-section-number">
         2
        </span>
-       <div>
-        <h2 class="h4 mb-1">
+<div>
+<h2 class="h4 mb-1">
          Historical Information
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Long-form background and supporting references.
         </p>
-       </div>
-      </div>
-      <div class="mb-3">
-       <label class="form-label" for="historicalBackground">
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label" for="historicalBackground">
         Historical background
         <span aria-hidden="true" class="required-hint">
          *
         </span>
-       </label>
-       <textarea aria-describedby="historicalBackgroundFeedback" class="form-control" id="historicalBackground" required="" rows="7"></textarea>
-       <div class="invalid-feedback" id="historicalBackgroundFeedback">
-       </div>
-      </div>
-      <div>
-       <label class="form-label" for="sourceReference">
+</label>
+<textarea aria-describedby="historicalBackgroundFeedback" class="form-control" id="historicalBackground" required="" rows="7"></textarea>
+<div class="invalid-feedback" id="historicalBackgroundFeedback">
+</div>
+</div>
+<div>
+<label class="form-label" for="sourceReference">
         Source/reference
        </label>
-       <textarea aria-describedby="sourceReferenceFeedback" class="form-control" id="sourceReference" rows="3"></textarea>
-       <div class="invalid-feedback" id="sourceReferenceFeedback">
-       </div>
-      </div>
-     </section>
-     <section class="pamana-form-section">
-      <div class="form-section-title">
-       <span class="form-section-number">
+<textarea aria-describedby="sourceReferenceFeedback" class="form-control" id="sourceReference" rows="3"></textarea>
+<div class="invalid-feedback" id="sourceReferenceFeedback">
+</div>
+</div>
+</section>
+<section class="pamana-form-section">
+<div class="form-section-title">
+<span class="form-section-number">
         3
        </span>
-       <div>
-        <h2 class="h4 mb-1">
+<div>
+<h2 class="h4 mb-1">
          Media &amp; Sources
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Main photograph and additional archive images.
         </p>
-       </div>
-      </div>
-      <div class="upload-panel">
-       <label class="form-label" for="mainPhoto">
+</div>
+</div>
+<div class="upload-panel">
+<label class="form-label" for="mainPhoto">
         Main photograph
        </label>
-       <input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" aria-describedby="currentPhotoHelp mainPhotoFeedback mainPhotoFormats" class="form-control" id="mainPhoto" type="file"/>
-       <p class="form-text mb-0" id="mainPhotoFormats">
+<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" aria-describedby="currentPhotoHelp mainPhotoFeedback mainPhotoFormats" class="form-control" id="mainPhoto" type="file"/>
+<p class="form-text mb-0" id="mainPhotoFormats">
         JPG, JPEG, PNG, or WebP. Maximum file size: 5 MB.
        </p>
-       <div class="form-text" id="currentPhotoHelp">
+<div class="form-text" id="currentPhotoHelp">
         Leave this blank to keep the current photograph when editing.
        </div>
-       <div class="invalid-feedback" id="mainPhotoFeedback">
-       </div>
-      </div>
-      <section aria-labelledby="relatedPhotosHeading" class="related-photo-manager mt-4 d-none" id="relatedPhotosSection">
-       <div class="d-flex flex-wrap justify-content-between gap-2 align-items-start">
-        <div>
-         <h3 class="h5 mb-1" id="relatedPhotosHeading">
+<div class="invalid-feedback" id="mainPhotoFeedback">
+</div>
+</div>
+<section aria-labelledby="relatedPhotosHeading" class="related-photo-manager mt-4 d-none" id="relatedPhotosSection">
+<div class="d-flex flex-wrap justify-content-between gap-2 align-items-start">
+<div>
+<h3 class="h5 mb-1" id="relatedPhotosHeading">
           Related Heritage Photos
          </h3>
-         <p class="text-muted mb-0">
+<p class="text-muted mb-0">
           Add photographs without replacing the main image.
          </p>
-        </div>
-       </div>
-       <div aria-atomic="true" aria-live="polite" class="alert d-none mt-3" id="relatedPhotosMessage" role="status">
-       </div>
-       <div class="row g-3 mt-0">
-        <div class="col-md-6">
-         <label class="form-label" for="relatedPhoto">
+</div>
+</div>
+<div aria-atomic="true" aria-live="polite" class="alert d-none mt-3" id="relatedPhotosMessage" role="status">
+</div>
+<div class="row g-3 mt-0">
+<div class="col-md-6">
+<label class="form-label" for="relatedPhoto">
           Choose image
          </label>
-         <input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" aria-describedby="relatedPhotoFeedback relatedPhotoFormats" class="form-control" id="relatedPhoto" type="file"/>
-         <p class="form-text mb-0" id="relatedPhotoFormats">
+<input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" aria-describedby="relatedPhotoFeedback relatedPhotoFormats" class="form-control" id="relatedPhoto" type="file"/>
+<p class="form-text mb-0" id="relatedPhotoFormats">
           JPG, JPEG, PNG, or WebP. Maximum file size: 5 MB.
          </p>
-         <div class="invalid-feedback" id="relatedPhotoFeedback">
-         </div>
-        </div>
-        <div class="col-md-6">
-         <label class="form-label" for="relatedPhotoCaption">
+<div class="invalid-feedback" id="relatedPhotoFeedback">
+</div>
+</div>
+<div class="col-md-6">
+<label class="form-label" for="relatedPhotoCaption">
           Caption (optional)
          </label>
-         <input aria-describedby="relatedPhotoCaptionFeedback" class="form-control" id="relatedPhotoCaption" maxlength="255" type="text"/>
-         <div class="invalid-feedback" id="relatedPhotoCaptionFeedback">
-         </div>
-        </div>
-       </div>
-       <button class="btn btn-outline-success mt-3" id="uploadRelatedPhotoButton" type="button">
+<input aria-describedby="relatedPhotoCaptionFeedback" class="form-control" id="relatedPhotoCaption" maxlength="255" type="text"/>
+<div class="invalid-feedback" id="relatedPhotoCaptionFeedback">
+</div>
+</div>
+</div>
+<button class="btn btn-outline-success mt-3" id="uploadRelatedPhotoButton" type="button">
         Upload Related Photo
        </button>
-       <div class="mt-4">
-        <h4 class="h6 text-uppercase text-muted">
+<div class="mt-4">
+<h4 class="h6 text-uppercase text-muted">
          Existing Related Photos
         </h4>
-        <div class="row g-3" id="relatedPhotosList">
-         <p class="text-muted">
+<div class="row g-3" id="relatedPhotosList">
+<p class="text-muted">
           Loading related photos...
          </p>
-        </div>
-       </div>
-      </section>
-     </section>
-     <section class="pamana-form-section">
-      <div class="form-section-title">
-       <span class="form-section-number">
+</div>
+</div>
+</section>
+</section>
+<section class="pamana-form-section">
+<div class="form-section-title">
+<span class="form-section-number">
         4
        </span>
-       <div>
-        <h2 class="h4 mb-1">
+<div>
+<h2 class="h4 mb-1">
          Settings
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Control whether the record is available to public visitors.
         </p>
-       </div>
-      </div>
-      <label class="form-label" for="siteStatus">
+</div>
+</div>
+<label class="form-label" for="siteStatus">
        Status
        <span aria-hidden="true" class="required-hint">
         *
        </span>
-      </label>
-      <select aria-describedby="siteStatusFeedback" class="form-select" id="siteStatus" required="">
-       <option selected="" value="active">
+</label>
+<select aria-describedby="siteStatusFeedback" class="form-select" id="siteStatus" required="">
+<option selected="" value="active">
         Active
        </option>
-       <option value="archived">
+<option value="archived">
         Archived
        </option>
-      </select>
-      <div class="invalid-feedback" id="siteStatusFeedback">
-      </div>
-     </section>
-     <div class="admin-form-actions">
-      <button class="btn btn-success" id="heritageFormButton" type="submit">
+</select>
+<div class="invalid-feedback" id="siteStatusFeedback">
+</div>
+</section>
+<div class="admin-form-actions">
+<button class="btn btn-success" id="heritageFormButton" type="submit">
        Save Heritage Site
       </button>
-      <a class="btn btn-outline-secondary" href="heritage-sites.html">
+<a class="btn btn-outline-secondary" href="heritage-sites.html">
        Cancel
       </a>
-     </div>
-    </form>
-   </main>
-  </div>
-  <nav aria-label="Admin mobile navigation" class="pamana-mobile-nav admin-mobile-nav">
-   <a href="dashboard.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#home">
-     </use>
-    </svg>
+</div>
+</form>
+</main>
+</div>
+<nav aria-label="Admin mobile navigation" class="pamana-mobile-nav admin-mobile-nav">
+<a href="dashboard.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#home">
+</use>
+</svg>
     Dashboard
    </a>
-   <a class="active" href="heritage-sites.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#heritage-site">
-     </use>
-    </svg>
+<a class="active" href="heritage-sites.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#heritage-site">
+</use>
+</svg>
     Sites
    </a>
-   <a href="submissions.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#stories">
-     </use>
-    </svg>
+<a href="submissions.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#stories">
+</use>
+</svg>
     Stories
    </a>
-   <button data-logout="" type="button">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#logout">
-     </use>
-    </svg>
+<button data-logout="" type="button">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#logout">
+</use>
+</svg>
     Logout
    </button>
-  </nav>
-  <footer class="site-footer">
-   <div class="container footer-inner">
-    <p class="mb-0">
+</nav>
+<footer class="site-footer">
+<div class="container footer-inner">
+<p class="mb-0">
      Pamana
      <span aria-hidden="true">
       ·
      </span>
      Our Heritage Lives On
     </p>
-    <nav aria-label="Footer navigation" class="footer-links">
-     <a href="../index.html">
+<nav aria-label="Footer navigation" class="footer-links">
+<a href="../index.html">
       Home
      </a>
-     <a href="../browse.html">
+<a href="../browse.html">
       Browse heritage
      </a>
-    </nav>
-   </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/core.js"></script>
-  <script src="../js/supabase.js"></script>
-  <script src="../js/queries.js"></script>
-  <script src="../js/session.js"></script>
-  <script src="../js/storage.js"></script>
-  <script src="../js/validation.js"></script>
-  <script src="../js/search-matching.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/heritage-photos.js"></script>
-  <script src="../js/heritage-form.js"></script>
- </body>
+</nav>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/core.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/queries.js"></script>
+<script src="../js/session.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/validation.js"></script><script src="../js/ui.js"></script><script src="../js/system-modal.js"></script>
+<script src="../js/search-matching.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/heritage-photos.js"></script>
+<script src="../js/heritage-form.js"></script>
+</body>
 </html>

@@ -45,9 +45,9 @@ const STATUS_BADGES = {
 const APP_MESSAGES = {
   registrationFailed: 'Registration could not be completed. Please try again.',
   existingEmail: 'This email is already registered. Please log in instead.',
-  invalidEmail: 'Please enter a valid email address.',
+  invalidEmail: 'Enter a valid email address.',
   weakPassword: 'Please check your password and try again.',
-  loginFailed: 'Invalid email or password.',
+  loginFailed: 'Incorrect email or password. Please check your details and try again.',
   loginRequired: 'You need to log in before continuing.',
   contributorLoginRequired: 'You need to log in before submitting a story.',
   unauthorized: 'You do not have permission to access this page.',
@@ -60,14 +60,22 @@ const APP_MESSAGES = {
   heritageNotFound: 'This heritage site was not found or is not currently active.',
   storyNotFound: 'This story is unavailable or has not been published.',
   noSearchResults: 'No public heritage results matched your search.',
-  networkFailed: 'Network connection problem. Please check your internet connection and try again.',
+  networkFailed: "We couldn't connect to the server. Check your internet connection and try again.",
   unauthorizedSubmission: 'Only logged-in contributors can submit stories.',
   unauthorizedAdminAction: 'Only administrators can perform this action.',
   notConfigured: 'The Supabase connection is not configured yet.',
   profileUnavailable: 'Your account was found, but your profile is not ready yet. Please contact an administrator.',
   qrUnavailable: 'QR code tools are not ready yet. Please refresh the page and try again.',
   popupBlocked: 'Please allow popups to print the QR code.',
-  qrNotReady: 'QR image is not ready yet.'
+  qrNotReady: 'QR image is not ready yet.',
+  passwordRequirements: 'Password must contain 8\u201364 characters, including uppercase, lowercase, and a number.',
+  rateLimited: 'Too many attempts. Please wait a few minutes before trying again.',
+  emailNotConfirmed: 'Please confirm your email address before signing in. Check your inbox and spam folder.',
+  duplicateRecord: 'This information already exists. Check the existing record before trying again.',
+  invalidRecovery: 'This reset link is invalid or has expired. Request a new link to continue.',
+  recoverySent: 'If an account exists for this email, a password reset link has been sent.',
+  passwordUpdated: 'Your password has been updated successfully.',
+  confirmUnavailable: 'The confirmation dialog could not load. Refresh the page and try again. No action was taken.'
 };
 
 /* ---------------------------------------------------------------------------
@@ -75,69 +83,45 @@ const APP_MESSAGES = {
  * ------------------------------------------------------------------------ */
 
 function logAppError(context, error) {
+  // Never log credentials, tokens, full request URLs, or raw provider payloads.
   if (error) {
-    console.error(context, error);
+    const code = String(error.code || error.status || 'request-failed').slice(0, 60);
+    console.error(context, /^[a-zA-Z0-9_-]+$/.test(code) ? code : 'request-failed');
   }
 }
 
 function createAppError(message) {
-  return new Error(message || APP_MESSAGES.saveFailed);
+  const error = new Error(message || APP_MESSAGES.saveFailed);
+  error.isPamanaError = true;
+  return error;
 }
 
 function createErrorResult(message) {
-  return {
-    data: null,
-    error: createAppError(message)
-  };
+  return { data: null, error: createAppError(message) };
 }
 
 function getAppErrorMessage(error, fallbackMessage) {
-  if (!error) {
-    return fallbackMessage || APP_MESSAGES.saveFailed;
-  }
+  if (!error) return fallbackMessage || APP_MESSAGES.saveFailed;
+  // Only errors explicitly created by our own code can provide display text.
+  if (error.isPamanaError) return error.message;
+  const message = String(error.message || '').toLowerCase();
+  const code = String(error.code || '');
+  const status = Number(error.status);
 
-  const message = String(error.message || error).toLowerCase();
-  const status = error.status || error.code;
-
-  if (
-    message.includes('failed to fetch')
-    || message.includes('network')
-    || message.includes('fetch')
-    || message.includes('offline')
-  ) {
-    return APP_MESSAGES.networkFailed;
-  }
-
-  if (message.includes('already') || message.includes('registered') || message.includes('user already exists')) {
-    return APP_MESSAGES.existingEmail;
-  }
-
-  if (message.includes('invalid email')) {
-    return APP_MESSAGES.invalidEmail;
-  }
-
-  if (message.includes('password')) {
-    return APP_MESSAGES.weakPassword;
-  }
-
-  if (message.includes('image') || message.includes('upload')) {
-    return message.includes('valid jpg')
-      ? APP_MESSAGES.invalidImage
-      : APP_MESSAGES.storageFailed;
-  }
-
-  if (status === 401 || message.includes('jwt') || message.includes('session')) {
-    return APP_MESSAGES.sessionExpired;
-  }
-
-  if (status === 403 || message.includes('permission') || message.includes('row-level security') || message.includes('rls')) {
-    return APP_MESSAGES.unauthorized;
-  }
-
-  if (status === '23505' || message.includes('duplicate') || message.includes('unique')) {
-    return APP_MESSAGES.duplicateSlug;
-  }
-
+  if (status === 429 || /rate_limit|too_many_requests/.test(code)) return APP_MESSAGES.rateLimited;
+  if (code === 'invalid_credentials' || message.includes('invalid login credentials')) return APP_MESSAGES.loginFailed;
+  if (code === 'email_not_confirmed' || message.includes('email not confirmed')) return APP_MESSAGES.emailNotConfirmed;
+  if (/failed to fetch|network|offline|load failed/.test(message)) return APP_MESSAGES.networkFailed;
+  if (code === '23505' || /duplicate|unique constraint/.test(message)) return APP_MESSAGES.duplicateRecord;
+  if (code === 'otp_expired' || /expired.*link|link.*expired/.test(message)) return APP_MESSAGES.invalidRecovery;
+  if (code === 'same_password') return 'Choose a different password from your current password.';
+  if (code === 'reauthentication_needed') return 'For your security, request a new reset link and try again.';
+  if (status === 403 || /permission|row-level security|rls/.test(message)) return APP_MESSAGES.unauthorized;
+  if (status === 401 || /jwt|session.*expired|refresh.token/.test(message)) return APP_MESSAGES.sessionExpired;
+  if (/user_already_exists|email_exists/.test(code) || /already registered/.test(message)) return APP_MESSAGES.existingEmail;
+  if (code === 'email_address_invalid' || /invalid email/.test(message)) return APP_MESSAGES.invalidEmail;
+  if (code === 'weak_password') return APP_MESSAGES.passwordRequirements;
+  if (/image|upload|storage/.test(message)) return APP_MESSAGES.storageFailed;
   return fallbackMessage || APP_MESSAGES.saveFailed;
 }
 
@@ -155,16 +139,24 @@ function escapeHtml(value) {
 }
 
 function showAppMessage(elementOrId, message, type) {
-  const element = typeof elementOrId === 'string'
-    ? document.getElementById(elementOrId)
-    : elementOrId;
-
-  if (!element) {
-    return;
+  const element = typeof elementOrId === 'string' ? document.getElementById(elementOrId) : elementOrId;
+  if (!element) return;
+  const tone = ['success', 'info', 'warning', 'danger'].includes(type) ? type : 'info';
+  element.classList.remove('d-none', 'alert-success', 'alert-info', 'alert-warning', 'alert-danger');
+  element.classList.add('alert', `alert-${tone}`);
+  element.setAttribute('role', tone === 'danger' ? 'alert' : 'status');
+  element.setAttribute('aria-live', tone === 'danger' ? 'assertive' : 'polite');
+  element.setAttribute('aria-atomic', 'true');
+  element.replaceChildren();
+  const loading = tone === 'info' && /^(loading|checking|signing|logging|creating|sending|uploading|submitting|saving|publishing|rejecting|generating|regenerating|updating|removing|searching)/i.test(message);
+  element.dataset.loading = String(loading);
+  if (loading) {
+    const spinner = document.createElement('span');
+    spinner.className = 'spinner-border spinner-border-sm me-2';
+    spinner.setAttribute('aria-hidden', 'true');
+    element.appendChild(spinner);
   }
-
-  element.textContent = message;
-  element.className = `alert alert-${type}`;
+  element.appendChild(document.createTextNode(message));
 }
 
 // Writes display text with a fallback for empty values.

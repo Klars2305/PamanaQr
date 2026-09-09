@@ -22,11 +22,46 @@ function validateImageFile(file) {
     return 'The image file extension must be JPG, JPEG, PNG, or WEBP.';
   }
 
+  if (!file.size) {
+    return 'This image is empty. Please choose a valid image.';
+  }
+
   if (file.size > MAX_IMAGE_SIZE_BYTES) {
     return 'Please upload an image smaller than 5 MB.';
   }
 
   return '';
+}
+
+// Validate the actual bytes, not only the browser-provided MIME/extension.
+// File objects are immutable; cache by object to avoid decoding twice when the
+// preview and the submit handler validate the same selection.
+const checkedImages = new WeakMap();
+async function inspectImageContents(file) {
+  const metadataError = validateImageFile(file);
+  if (metadataError) return metadataError;
+  try {
+    const b = new Uint8Array(await file.slice(0, 16).arrayBuffer());
+    const jpeg = b[0] === 255 && b[1] === 216 && b[2] === 255;
+    const png = [137, 80, 78, 71, 13, 10, 26, 10].every((value, index) => b[index] === value);
+    const webp = String.fromCharCode(...b.slice(0, 4)) === 'RIFF' && String.fromCharCode(...b.slice(8, 12)) === 'WEBP';
+    const matches = { 'image/jpeg': jpeg, 'image/png': png, 'image/webp': webp };
+    if (!matches[file.type]) return 'This file is not a valid JPG, PNG, or WebP image. Choose another photo.';
+    if (typeof createImageBitmap === 'function') {
+      const bitmap = await createImageBitmap(file);
+      const valid = bitmap.width > 0 && bitmap.height > 0;
+      bitmap.close();
+      if (!valid) return 'This image could not be opened. Choose another photo.';
+    }
+    return '';
+  } catch (_) {
+    return 'This image could not be opened. It may be damaged. Choose another photo.';
+  }
+}
+function validateImageContents(file) {
+  if (!file) return Promise.resolve('');
+  if (!checkedImages.has(file)) checkedImages.set(file, inspectImageContents(file));
+  return checkedImages.get(file);
 }
 
 function createUniqueImageName(file) {
@@ -45,12 +80,12 @@ function createStoryImagePath(storyId, contributorId, file) {
 }
 
 async function uploadImageFile(path, file) {
-  const validationMessage = validateImageFile(file);
+  const validationMessage = !file ? validateImageFile(file) : await validateImageContents(file);
 
   if (validationMessage) {
     return {
       data: null,
-      error: createAppError(APP_MESSAGES.invalidImage)
+      error: createAppError(validationMessage)
     };
   }
 
@@ -84,7 +119,7 @@ async function uploadImageFile(path, file) {
     };
   }
 
-  if (error) {
+  if (error || !data || !data.path) {
     logAppError('Image upload failed.', error);
     return {
       data: null,
@@ -99,13 +134,23 @@ async function uploadImageFile(path, file) {
 }
 
 async function uploadHeritageImage(heritageSiteId, file) {
-  const path = createHeritageImagePath(heritageSiteId, file);
-  return uploadImageFile(path, file);
+  try {
+    const path = createHeritageImagePath(heritageSiteId, file);
+    return await uploadImageFile(path, file);
+  } catch (error) {
+    logAppError('Could not prepare heritage photo upload.', error);
+    return createErrorResult(APP_MESSAGES.storageFailed);
+  }
 }
 
 async function uploadStoryImage(storyId, contributorId, file) {
-  const path = createStoryImagePath(storyId, contributorId, file);
-  return uploadImageFile(path, file);
+  try {
+    const path = createStoryImagePath(storyId, contributorId, file);
+    return await uploadImageFile(path, file);
+  } catch (error) {
+    logAppError('Could not prepare story photo upload.', error);
+    return createErrorResult(APP_MESSAGES.storageFailed);
+  }
 }
 
 async function removeImageFile(path) {
@@ -143,7 +188,7 @@ async function createSignedImageUrl(path, expiresInSeconds) {
     };
   }
 
-  if (error) {
+  if (error || !data || !data.signedUrl) {
     logAppError('Could not create signed image URL.', error);
     return {
       signedUrl: '',

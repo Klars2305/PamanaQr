@@ -12,74 +12,125 @@ function getQrBaseUrl() {
   return getAppBasePath();
 }
 
+// With no production URL configured the QR code encodes whatever host the
+// browser is on. That produces a code that scans to a local address and
+// resolves for nobody once it is printed, so say so at generation time
+// instead of leaving it to the README.
+const LOCAL_QR_HOSTNAMES = ['localhost', '127.0.0.1', '0.0.0.0', '::1', ''];
+
+function isQrBaseUrlPublishable() {
+  if (PAMANA_CONFIG.productionBaseUrl) {
+    return true;
+  }
+
+  try {
+    const base = new URL(getQrBaseUrl());
+
+    if (base.protocol !== 'http:' && base.protocol !== 'https:') {
+      return false;
+    }
+
+    const hostname = base.hostname.replace(/^\[|\]$/g, '').toLowerCase();
+
+    return !LOCAL_QR_HOSTNAMES.includes(hostname) && !hostname.endsWith('.local');
+  } catch (_) {
+    return false;
+  }
+}
+
+function getQrBaseUrlWarning() {
+  if (isQrBaseUrlPublishable()) {
+    return '';
+  }
+
+  return 'This QR code points at this computer, not a public address. Set productionBaseUrl in js/config.js before printing or sharing it.';
+}
+
 function getHeritagePublicUrl(slug) {
   return new URL(`heritage.html?site=${encodeURIComponent(slug)}`, getQrBaseUrl()).href;
 }
 
-function renderQrCode(url) {
-  const qrCodeBox = document.getElementById('qrCodeBox');
-
-  if (!qrCodeBox || !window.QRCode) {
-    logAppError('QR code library is not available.', createAppError(APP_MESSAGES.qrUnavailable));
-    showAppMessage('heritageManagementMessage', APP_MESSAGES.qrUnavailable, 'danger');
-    return;
-  }
-
-  qrCodeBox.innerHTML = '';
-
-  new QRCode(qrCodeBox, {
-    text: url,
-    width: 220,
-    height: 220,
-    correctLevel: QRCode.CorrectLevel.M
+let lastQrTrigger = null;
+function setQrReady(ready) {
+  ['saveQrButton', 'printQrButton'].forEach(function (id) {
+    const button = document.getElementById(id);
+    if (button) button.disabled = !ready;
   });
 }
-
-function showHeritageQrCode(slug, siteName) {
-  const qrCodeBox = document.getElementById('qrCodeBox');
-  const qrCodeUrl = document.getElementById('qrCodeUrl');
-  const qrModalTitle = document.getElementById('qrModalTitle');
-
-  if (!qrCodeBox) {
-    logAppError('QR code container is missing.', createAppError(APP_MESSAGES.qrUnavailable));
-    showAppMessage('heritageManagementMessage', APP_MESSAGES.qrUnavailable, 'danger');
-    return;
+function renderQrCode(url) {
+  const box = document.getElementById('qrCodeBox');
+  setQrReady(false);
+  if (!box || !window.QRCode) {
+    showAppMessage('qrMessage', APP_MESSAGES.qrUnavailable, 'danger');
+    return false;
   }
-
-  const publicUrl = getHeritagePublicUrl(slug);
-  currentQrDetails = {
-    slug: slug,
-    siteName: siteName,
-    url: publicUrl
-  };
-
-  renderQrCode(publicUrl);
-
-  if (qrCodeUrl) {
-    qrCodeUrl.textContent = publicUrl;
+  showAppMessage('qrMessage', 'Generating QR code...', 'info');
+  try {
+    box.innerHTML = '';
+    // Keep the original payload, dimensions and error-correction level.
+    new QRCode(box, { text: url, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+    setQrReady(true);
+    return true;
+  } catch (error) {
+    logAppError('QR rendering failed.', error);
+    showAppMessage('qrMessage', 'The QR code could not be generated. Please try again.', 'danger');
+    return false;
   }
-
-  if (qrModalTitle) {
-    qrModalTitle.textContent = `QR Code: ${siteName}`;
-  }
-
-  const qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
-  qrModal.show();
 }
-
-function regenerateCurrentQrCode() {
-  if (!currentQrDetails.slug) {
+function updateQrAddress(url) {
+  const text = document.getElementById('qrCodeUrl');
+  if (text) text.textContent = url;
+  let link = document.getElementById('qrOpenPublicLink');
+  if (!link && text) {
+    link = document.createElement('a');
+    link.id = 'qrOpenPublicLink';
+    link.className = 'btn btn-link';
+    link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.textContent = 'Open public heritage page';
+    text.insertAdjacentElement('afterend', link);
+  }
+  if (link) link.href = url;
+}
+// Feedback about a QR code that is already on screen stays inside the QR modal
+// itself. Only failures raised before that modal opens are reported through the
+// shared notification dialog, so a second dialog is never stacked over the QR.
+function showHeritageQrCode(slug, siteName) {
+  const box = document.getElementById('qrCodeBox');
+  const modal = document.getElementById('qrModal');
+  if (!box || !modal || !window.bootstrap || !window.bootstrap.Modal) {
+    showAppMessage('heritageManagementMessage', APP_MESSAGES.qrUnavailable, 'danger');
+    showSystemError('QR code unavailable', APP_MESSAGES.qrUnavailable);
     return;
   }
-
-  currentQrDetails.url = getHeritagePublicUrl(currentQrDetails.slug);
-  renderQrCode(currentQrDetails.url);
-
-  const qrCodeUrl = document.getElementById('qrCodeUrl');
-
-  if (qrCodeUrl) {
-    qrCodeUrl.textContent = currentQrDetails.url;
+  try {
+    const publicUrl = getHeritagePublicUrl(slug);
+    currentQrDetails = { slug, siteName, url: publicUrl };
+    lastQrTrigger = document.activeElement;
+    setText('qrModalTitle', `QR Code: ${siteName}`);
+    updateQrAddress(publicUrl);
+    bootstrap.Modal.getOrCreateInstance(modal).show();
+    if (!renderQrCode(publicUrl)) return;
+    const warning = getQrBaseUrlWarning();
+    showAppMessage('qrMessage', warning || 'QR code ready. Check the public address before saving or printing.', warning ? 'warning' : 'success');
+  } catch (error) {
+    logAppError('QR preparation failed.', error);
+    showAppMessage('heritageManagementMessage', 'Check the configured public website address before generating a QR code.', 'danger');
   }
+}
+function regenerateCurrentQrCode() {
+  if (!currentQrDetails.slug) return;
+  const button = document.getElementById('regenerateQrButton');
+  if (!claimButtonAction(button)) return;
+  try {
+    setSubmitLoading(button, true, 'Generating...', 'Regenerate');
+    currentQrDetails.url = getHeritagePublicUrl(currentQrDetails.slug);
+    updateQrAddress(currentQrDetails.url);
+    if (!renderQrCode(currentQrDetails.url)) return;
+    const warning = getQrBaseUrlWarning();
+    showAppMessage('qrMessage', warning || 'QR code regenerated.', warning ? 'warning' : 'success');
+  } catch (error) {
+    showAppMessage('qrMessage', getAppErrorMessage(error, APP_MESSAGES.qrUnavailable), 'danger');
+  } finally { setSubmitLoading(button, false, '', 'Regenerate'); }
 }
 
 const QR_PRINT_STYLES = 'body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }'
@@ -89,58 +140,59 @@ const QR_PRINT_STYLES = 'body { font-family: Arial, sans-serif; text-align: cent
 // Built with DOM APIs rather than document.write. The site name is admin-entered
 // text, so it goes in as textContent and the QR node is imported as a node,
 // never as markup.
-function buildQrPrintDocument(printDocument, qrCodeBox) {
+function getQrImageDataUrl() {
+  const canvas = document.querySelector('#qrCodeBox canvas');
+  const image = document.querySelector('#qrCodeBox img');
+  return canvas ? canvas.toDataURL('image/png') : image && image.getAttribute('src') || '';
+}
+function buildQrPrintDocument(printDocument) {
   const style = printDocument.createElement('style');
   style.textContent = QR_PRINT_STYLES;
   printDocument.head.appendChild(style);
-
   printDocument.title = `${currentQrDetails.siteName} QR Code`;
-
   const heading = printDocument.createElement('h1');
   heading.textContent = currentQrDetails.siteName;
-  printDocument.body.appendChild(heading);
-
-  Array.prototype.forEach.call(qrCodeBox.childNodes, function (node) {
-    printDocument.body.appendChild(printDocument.importNode(node, true));
-  });
-
-  const urlLine = printDocument.createElement('p');
-  urlLine.textContent = currentQrDetails.url;
-  printDocument.body.appendChild(urlLine);
+  const image = printDocument.createElement('img');
+  image.alt = `QR code for ${currentQrDetails.siteName}`;
+  // Cloning a canvas node loses its bitmap. Use the existing generated pixels.
+  image.src = getQrImageDataUrl();
+  const url = printDocument.createElement('p');
+  url.textContent = currentQrDetails.url;
+  printDocument.body.append(heading, image, url);
+  return image;
 }
-
 function printCurrentQrCode() {
-  const qrCodeBox = document.getElementById('qrCodeBox');
-
-  if (!qrCodeBox || !currentQrDetails.url) {
-    return;
+  if (!currentQrDetails.url || !getQrImageDataUrl()) {
+    showAppMessage('qrMessage', APP_MESSAGES.qrNotReady, 'warning'); return;
   }
-
-  const printWindow = window.open('', '_blank');
-
-  if (!printWindow) {
-    showAppMessage('heritageManagementMessage', APP_MESSAGES.popupBlocked, 'warning');
-    return;
+  const popup = window.open('', '_blank');
+  if (!popup) { showAppMessage('qrMessage', APP_MESSAGES.popupBlocked, 'warning'); return; }
+  popup.opener = null;
+  try {
+    const image = buildQrPrintDocument(popup.document);
+    const print = function () { if (!popup.closed) { popup.focus(); popup.print(); } };
+    if (image.complete) print(); else image.addEventListener('load', print, { once: true });
+    showAppMessage('qrMessage', 'Print preview opened. Check the QR code before printing.', 'info');
+  } catch (error) {
+    logAppError('QR print preview failed.', error);
+    showAppMessage('qrMessage', 'The print preview could not open. Try saving the QR image instead.', 'danger');
   }
-
-  buildQrPrintDocument(printWindow.document, qrCodeBox);
-  printWindow.focus();
-  printWindow.print();
 }
-
 function saveCurrentQrCode() {
-  const qrImage = document.querySelector('#qrCodeBox img');
-  const qrCanvas = document.querySelector('#qrCodeBox canvas');
-
-  if (!currentQrDetails.slug || (!qrImage && !qrCanvas)) {
-    showAppMessage('heritageManagementMessage', APP_MESSAGES.qrNotReady, 'warning');
-    return;
+  try {
+    const imageUrl = getQrImageDataUrl();
+    if (!currentQrDetails.slug || !imageUrl) {
+      showAppMessage('qrMessage', APP_MESSAGES.qrNotReady, 'warning'); return;
+    }
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = `${currentQrDetails.slug}-qr-code.png`;
+    link.click();
+    showAppMessage('qrMessage', 'QR image download requested. Check your browser downloads.', 'success');
+  } catch (error) {
+    logAppError('QR image export failed.', error);
+    showAppMessage('qrMessage', 'The QR image could not be saved. Regenerate it and try again.', 'danger');
   }
-
-  const link = document.createElement('a');
-  link.href = qrImage ? qrImage.src : qrCanvas.toDataURL('image/png');
-  link.download = `${currentQrDetails.slug}-qr-code.png`;
-  link.click();
 }
 
 const regenerateQrButton = document.getElementById('regenerateQrButton');
@@ -158,3 +210,16 @@ if (printQrButton) {
 if (saveQrButton) {
   saveQrButton.addEventListener('click', saveCurrentQrCode);
 }
+
+// Print and Save act on a rendered QR image. They stay disabled until one
+// exists, and go back to disabled when the modal closes.
+setQrReady(false);
+
+const qrModalElement = document.getElementById('qrModal');
+if (qrModalElement) qrModalElement.addEventListener('hidden.bs.modal', function () {
+  setQrReady(false);
+  currentQrDetails = { slug: '', siteName: '', url: '' };
+  const box = document.getElementById('qrCodeBox');
+  if (box) box.innerHTML = '';
+  if (lastQrTrigger && lastQrTrigger.isConnected) lastQrTrigger.focus();
+});

@@ -25,26 +25,31 @@ function countStoriesByStatus(stories) {
 async function loadContributorDashboard() {
   showAppMessage('dashboardMessage', 'Loading your dashboard...', 'info');
 
-  const profile = await requireContributor();
+  try {
+    const profile = await requireContributor();
 
-  if (!profile) {
-    return;
-  }
+    if (!profile) {
+      return;
+    }
 
-  const { data, error } = await getContributorStoryCounts(profile.id);
+    const { data, error } = await getContributorStoryCounts(profile.id);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load contributor dashboard.', error);
+      showAppMessage('dashboardMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    const counts = countStoriesByStatus(data || []);
+
+    setCount('submittedCount', counts.submitted);
+    setCount('publishedCount', counts.published);
+    setCount('rejectedCount', counts.rejected);
+    showAppMessage('dashboardMessage', 'Dashboard loaded successfully.', 'success');
+  } catch (error) {
     logAppError('Could not load contributor dashboard.', error);
     showAppMessage('dashboardMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
   }
-
-  const counts = countStoriesByStatus(data || []);
-
-  setCount('submittedCount', counts.submitted);
-  setCount('publishedCount', counts.published);
-  setCount('rejectedCount', counts.rejected);
-  showAppMessage('dashboardMessage', 'Dashboard loaded successfully.', 'success');
 }
 
 if (document.body.dataset.page === 'contributor-dashboard') {

@@ -1,242 +1,243 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>
    Pamana Contributor | Dashboard
   </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="../css/style.css" rel="stylesheet"/>
-  <meta content="#174C3A" name="theme-color"/>
-  <link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
-  <meta content="Pamana heritage archive workspace." name="description"/>
- </head>
- <body class="portal-page contributor-portal pamana-polished" data-page="contributor-dashboard" data-require-role="contributor">
-  <a class="skip-link" href="#mainContent">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet"/>
+<meta content="#174C3A" name="theme-color"/>
+<link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Pamana heritage archive workspace." name="description"/>
+</head>
+<body class="portal-page contributor-portal pamana-polished" data-page="contributor-dashboard" data-require-role="contributor">
+<a class="skip-link" href="#mainContent">
    Skip to main content
   </a>
-  <nav aria-label="Contributor navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar portal-navbar">
-   <div class="container">
-    <a class="navbar-brand pamana-brand" href="../index.html">
-     <img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
-     <span>
-      <span class="brand-title">
+<nav aria-label="Contributor navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar portal-navbar">
+<div class="container">
+<a class="navbar-brand pamana-brand" href="../index.html">
+<img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
+<span>
+<span class="brand-title">
        Pamana
       </span>
-      <span class="brand-subtitle">
+<span class="brand-subtitle">
        Contributor
       </span>
-     </span>
-    </a>
-    <button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
-     <span class="navbar-toggler-icon">
-     </span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-     <div class="navbar-nav ms-auto align-items-lg-center">
-      <a class="nav-link" href="../browse.html">
+</span>
+</a>
+<button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon">
+</span>
+</button>
+<div class="collapse navbar-collapse" id="mainNav">
+<div class="navbar-nav ms-auto align-items-lg-center">
+<a class="nav-link" href="../browse.html">
        Browse
       </a>
-      <a class="nav-link" href="../contribute.html">
+<a class="nav-link" href="../contribute.html">
        Submit Story
       </a>
-      <button class="btn btn-outline-success btn-sm ms-lg-3" data-logout="" type="button">
+<button class="btn btn-outline-success btn-sm ms-lg-3" data-logout="" type="button">
        Logout
       </button>
-     </div>
-    </div>
-   </div>
-  </nav>
-  <main class="container portal-main py-4 py-lg-5" id="mainContent" tabindex="-1">
-   <header class="portal-hero mb-4">
-    <div>
-     <p class="portal-session mb-2" id="sessionStatus">
+</div>
+</div>
+</div>
+</nav>
+<main class="container portal-main py-4 py-lg-5" id="mainContent" tabindex="-1">
+<header class="portal-hero mb-4">
+<div>
+<p class="portal-session mb-2" id="sessionStatus">
       Checking session...
      </p>
-     <p class="home-eyebrow">
+<p class="home-eyebrow">
       Contributor Workspace
      </p>
-     <h1>
+<h1>
       Welcome to your heritage desk.
      </h1>
-     <p class="text-muted mb-0">
+<p class="text-muted mb-0">
       Track submissions, share new stories, and explore the public archive.
      </p>
-    </div>
-    <a class="btn btn-success portal-primary-action" href="../contribute.html">
+</div>
+<a class="btn btn-success portal-primary-action" href="../contribute.html">
      Submit New Story
     </a>
-   </header>
-   <div aria-atomic="true" aria-live="polite" class="alert d-none" id="dashboardMessage" role="status">
-   </div>
-   <section aria-label="Story status counts" class="row g-3 mb-4 portal-stats">
-    <div class="col-md-4">
-     <article class="starter-card pamana-stat-card h-100">
-      <span aria-hidden="true" class="stat-icon stat-pending">
-       <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-        <use href="../assets/icons/sprite.svg#pending">
-        </use>
-       </svg>
-      </span>
-      <div>
-       <p class="text-muted mb-1">
+</header>
+<div aria-atomic="true" aria-live="polite" class="alert d-none" id="dashboardMessage" role="status">
+</div>
+<section aria-label="Story status counts" class="row g-3 mb-4 portal-stats">
+<div class="col-md-4">
+<article class="starter-card pamana-stat-card h-100">
+<span aria-hidden="true" class="stat-icon stat-pending">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#pending">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
         Submitted
        </p>
-       <strong class="dashboard-count" id="submittedCount">
+<strong class="dashboard-count" id="submittedCount">
         0
        </strong>
-       <small>
+<small>
         Awaiting review
        </small>
-      </div>
-     </article>
-    </div>
-    <div class="col-md-4">
-     <article class="starter-card pamana-stat-card h-100">
-      <span aria-hidden="true" class="stat-icon stat-published">
-       <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-        <use href="../assets/icons/sprite.svg#published">
-        </use>
-       </svg>
-      </span>
-      <div>
-       <p class="text-muted mb-1">
+</div>
+</article>
+</div>
+<div class="col-md-4">
+<article class="starter-card pamana-stat-card h-100">
+<span aria-hidden="true" class="stat-icon stat-published">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#published">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
         Published
        </p>
-       <strong class="dashboard-count" id="publishedCount">
+<strong class="dashboard-count" id="publishedCount">
         0
        </strong>
-       <small>
+<small>
         Visible to visitors
        </small>
-      </div>
-     </article>
-    </div>
-    <div class="col-md-4">
-     <article class="starter-card pamana-stat-card h-100">
-      <span aria-hidden="true" class="stat-icon stat-rejected">
-       <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-        <use href="../assets/icons/sprite.svg#rejected">
-        </use>
-       </svg>
-      </span>
-      <div>
-       <p class="text-muted mb-1">
+</div>
+</article>
+</div>
+<div class="col-md-4">
+<article class="starter-card pamana-stat-card h-100">
+<span aria-hidden="true" class="stat-icon stat-rejected">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#rejected">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
         Rejected
        </p>
-       <strong class="dashboard-count" id="rejectedCount">
+<strong class="dashboard-count" id="rejectedCount">
         0
        </strong>
-       <small>
+<small>
         Not published
        </small>
-      </div>
-     </article>
-    </div>
-   </section>
-   <section class="starter-panel pamana-info-card portal-actions-card">
-    <div>
-     <p class="home-eyebrow">
+</div>
+</article>
+</div>
+</section>
+<section class="starter-panel pamana-info-card portal-actions-card">
+<div>
+<p class="home-eyebrow">
       Quick Actions
      </p>
-     <h2 class="h3 mb-2">
+<h2 class="h3 mb-2">
       Keep contributing
      </h2>
-     <p class="text-muted mb-0">
+<p class="text-muted mb-0">
       Review your submissions or discover another heritage site to explore.
      </p>
-    </div>
-    <div class="d-flex flex-wrap gap-2">
-     <a class="btn btn-success" href="../contribute.html">
+</div>
+<div class="d-flex flex-wrap gap-2">
+<a class="btn btn-success" href="../contribute.html">
       Submit New Story
      </a>
-     <a class="btn btn-outline-success" href="submissions.html">
+<a class="btn btn-outline-success" href="submissions.html">
       My Submissions
      </a>
-     <a class="btn btn-outline-secondary" href="../browse.html">
+<a class="btn btn-outline-secondary" href="../browse.html">
       Browse Heritage
      </a>
-     <button class="btn btn-outline-danger" data-logout="" type="button">
+<button class="btn btn-outline-danger" data-logout="" type="button">
       Logout
      </button>
-    </div>
-   </section>
-   <section aria-labelledby="contributorGuideTitle" class="portal-guide">
-    <div>
-     <p class="home-eyebrow">
+</div>
+</section>
+<section aria-labelledby="contributorGuideTitle" class="portal-guide">
+<div>
+<p class="home-eyebrow">
       Keep local knowledge alive
      </p>
-     <h2 id="contributorGuideTitle">
+<h2 id="contributorGuideTitle">
       Small memories. Lasting meaning.
      </h2>
-     <p>
+<p>
       A personal recollection or supporting photograph can add context to a place. All stories go through review before they appear in the public archive.
      </p>
-    </div>
-    <img alt="" decoding="async" height="950" loading="lazy" src="../assets/images/community-archive.webp" width="1200"/>
-   </section>
-  </main>
-  <nav aria-label="Contributor mobile navigation" class="pamana-mobile-nav portal-mobile-nav">
-   <a aria-current="page" class="active" href="dashboard.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#home">
-     </use>
-    </svg>
+</div>
+<img alt="" decoding="async" height="950" loading="lazy" src="../assets/images/community-archive.webp" width="1200"/>
+</section>
+</main>
+<nav aria-label="Contributor mobile navigation" class="pamana-mobile-nav portal-mobile-nav">
+<a aria-current="page" class="active" href="dashboard.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#home">
+</use>
+</svg>
     Home
    </a>
-   <a href="submissions.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#stories">
-     </use>
-    </svg>
+<a href="submissions.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#stories">
+</use>
+</svg>
     Submissions
    </a>
-   <a href="../contribute.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#contribute">
-     </use>
-    </svg>
+<a href="../contribute.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#contribute">
+</use>
+</svg>
     Submit
    </a>
-   <button data-logout="" type="button">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#logout">
-     </use>
-    </svg>
+<button data-logout="" type="button">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#logout">
+</use>
+</svg>
     Logout
    </button>
-  </nav>
-  <footer class="site-footer">
-   <div class="container footer-inner">
-    <p class="mb-0">
+</nav>
+<footer class="site-footer">
+<div class="container footer-inner">
+<p class="mb-0">
      Pamana
      <span aria-hidden="true">
       ·
      </span>
      Our Heritage Lives On
     </p>
-    <nav aria-label="Footer navigation" class="footer-links">
-     <a href="../index.html">
+<nav aria-label="Footer navigation" class="footer-links">
+<a href="../index.html">
       Home
      </a>
-     <a href="../browse.html">
+<a href="../browse.html">
       Browse heritage
      </a>
-    </nav>
-   </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/core.js"></script>
-  <script src="../js/supabase.js"></script>
-  <script src="../js/queries.js"></script>
-  <script src="../js/session.js"></script>
-  <script src="../js/storage.js"></script>
-  <script src="../js/validation.js"></script>
-  <script src="../js/search-matching.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/contributor-dashboard.js"></script>
- </body>
+</nav>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/core.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/queries.js"></script>
+<script src="../js/session.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/validation.js"></script><script src="../js/ui.js"></script><script src="../js/system-modal.js"></script>
+<script src="../js/search-matching.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/contributor-dashboard.js"></script>
+</body>
 </html>

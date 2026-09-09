@@ -1,0 +1,364 @@
+TAP version 13
+# Subtest: Password: valid example
+ok 1 - Password: valid example
+  ---
+  duration_ms: 2.103437
+  type: 'test'
+  ...
+# Subtest: Password: minimum 8
+ok 2 - Password: minimum 8
+  ---
+  duration_ms: 0.358389
+  type: 'test'
+  ...
+# Subtest: Password: maximum 64
+ok 3 - Password: maximum 64
+  ---
+  duration_ms: 0.184879
+  type: 'test'
+  ...
+# Subtest: Password: reject 7
+ok 4 - Password: reject 7
+  ---
+  duration_ms: 0.183216
+  type: 'test'
+  ...
+# Subtest: Password: reject 65 without truncation
+ok 5 - Password: reject 65 without truncation
+  ---
+  duration_ms: 0.202836
+  type: 'test'
+  ...
+# Subtest: Password: reject lowercase only
+ok 6 - Password: reject lowercase only
+  ---
+  duration_ms: 0.179751
+  type: 'test'
+  ...
+# Subtest: Password: reject uppercase only
+ok 7 - Password: reject uppercase only
+  ---
+  duration_ms: 0.165179
+  type: 'test'
+  ...
+# Subtest: Password: reject no number
+ok 8 - Password: reject no number
+  ---
+  duration_ms: 0.154983
+  type: 'test'
+  ...
+# Subtest: Password: optional symbol is allowed
+ok 9 - Password: optional symbol is allowed
+  ---
+  duration_ms: 0.479672
+  type: 'test'
+  ...
+# Subtest: Password: spaces are preserved and allowed
+ok 10 - Password: spaces are preserved and allowed
+  ---
+  duration_ms: 0.585331
+  type: 'test'
+  ...
+# Subtest: Confirmation: mismatch
+ok 11 - Confirmation: mismatch
+  ---
+  duration_ms: 0.256716
+  type: 'test'
+  ...
+# Subtest: Confirmation: required
+ok 12 - Confirmation: required
+  ---
+  duration_ms: 0.136626
+  type: 'test'
+  ...
+# Subtest: Email: valid with surrounding whitespace
+ok 13 - Email: valid with surrounding whitespace
+  ---
+  duration_ms: 0.218079
+  type: 'test'
+  ...
+# Subtest: Email: incomplete domain
+ok 14 - Email: incomplete domain
+  ---
+  duration_ms: 0.155934
+  type: 'test'
+  ...
+# Subtest: Email: internal spaces
+ok 15 - Email: internal spaces
+  ---
+  duration_ms: 0.194172
+  type: 'test'
+  ...
+# Subtest: Email: blank
+ok 16 - Email: blank
+  ---
+  duration_ms: 0.107071
+  type: 'test'
+  ...
+# Subtest: Story: content required
+ok 17 - Story: content required
+  ---
+  duration_ms: 0.135454
+  type: 'test'
+  ...
+# Subtest: Story: 49 too short
+ok 18 - Story: 49 too short
+  ---
+  duration_ms: 0.121403
+  type: 'test'
+  ...
+# Subtest: Story: 50 allowed
+ok 19 - Story: 50 allowed
+  ---
+  duration_ms: 0.115714
+  type: 'test'
+  ...
+# Subtest: Story: 3000 allowed
+ok 20 - Story: 3000 allowed
+  ---
+  duration_ms: 0.114762
+  type: 'test'
+  ...
+# Subtest: Story: 3001 blocked
+ok 21 - Story: 3001 blocked
+  ---
+  duration_ms: 0.15278
+  type: 'test'
+  ...
+# Subtest: Story: title 4 blocked
+ok 22 - Story: title 4 blocked
+  ---
+  duration_ms: 0.170967
+  type: 'test'
+  ...
+# Subtest: Story: title 5 allowed
+ok 23 - Story: title 5 allowed
+  ---
+  duration_ms: 0.118058
+  type: 'test'
+  ...
+# Subtest: Story: title 101 blocked
+ok 24 - Story: title 101 blocked
+  ---
+  duration_ms: 0.11927
+  type: 'test'
+  ...
+# Subtest: Story: suggested classification stays optional
+ok 25 - Story: suggested classification stays optional
+  ---
+  duration_ms: 1.08252
+  type: 'test'
+  ...
+# Subtest: Story: unsupported classification blocked
+ok 26 - Story: unsupported classification blocked
+  ---
+  duration_ms: 0.185249
+  type: 'test'
+  ...
+# Subtest: Heritage: name min 3
+ok 27 - Heritage: name min 3
+  ---
+  duration_ms: 0.160252
+  type: 'test'
+  ...
+# Subtest: Heritage: name 151 blocked
+ok 28 - Heritage: name 151 blocked
+  ---
+  duration_ms: 0.137217
+  type: 'test'
+  ...
+# Subtest: Heritage: short description 501 blocked
+ok 29 - Heritage: short description 501 blocked
+  ---
+  duration_ms: 0.17298
+  type: 'test'
+  ...
+# Subtest: Slug: test record URL stays compatible
+ok 30 - Slug: test record URL stays compatible
+  ---
+  duration_ms: 0.327693
+  type: 'test'
+  ...
+# Subtest: Slug: unsafe punctuation removed
+ok 31 - Slug: unsafe punctuation removed
+  ---
+  duration_ms: 0.184207
+  type: 'test'
+  ...
+# Subtest: Status: unsupported heritage status rejected
+ok 32 - Status: unsupported heritage status rejected
+  ---
+  duration_ms: 0.194332
+  type: 'test'
+  ...
+# Subtest: Publish: final classification required
+ok 33 - Publish: final classification required
+  ---
+  duration_ms: 0.267292
+  type: 'test'
+  ...
+# Subtest: Reject: reason required
+ok 34 - Reject: reason required
+  ---
+  duration_ms: 0.123516
+  type: 'test'
+  ...
+# Subtest: Reject: classification not required
+ok 35 - Reject: classification not required
+  ---
+  duration_ms: 0.654365
+  type: 'test'
+  ...
+# Subtest: Image: existing 5 MiB limit
+ok 36 - Image: existing 5 MiB limit
+  ---
+  duration_ms: 0.124898
+  type: 'test'
+  ...
+# Subtest: Image: valid JPEG metadata
+ok 37 - Image: valid JPEG metadata
+  ---
+  duration_ms: 0.19308
+  type: 'test'
+  ...
+# Subtest: Image: limit inclusive
+ok 38 - Image: limit inclusive
+  ---
+  duration_ms: 0.131598
+  type: 'test'
+  ...
+# Subtest: Image: oversized rejected
+ok 39 - Image: oversized rejected
+  ---
+  duration_ms: 0.120121
+  type: 'test'
+  ...
+# Subtest: Image: empty rejected
+ok 40 - Image: empty rejected
+  ---
+  duration_ms: 0.137547
+  type: 'test'
+  ...
+# Subtest: Image: wrong MIME rejected
+ok 41 - Image: wrong MIME rejected
+  ---
+  duration_ms: 0.137758
+  type: 'test'
+  ...
+# Subtest: Image: wrong extension rejected
+ok 42 - Image: wrong extension rejected
+  ---
+  duration_ms: 0.126441
+  type: 'test'
+  ...
+# Subtest: Friendly error: invalid credentials
+ok 43 - Friendly error: invalid credentials
+  ---
+  duration_ms: 0.256707
+  type: 'test'
+  ...
+# Subtest: Friendly error: network
+ok 44 - Friendly error: network
+  ---
+  duration_ms: 0.260823
+  type: 'test'
+  ...
+# Subtest: Friendly error: duplicate not email
+ok 45 - Friendly error: duplicate not email
+  ---
+  duration_ms: 0.518471
+  type: 'test'
+  ...
+# Subtest: Friendly error: raw provider detail not exposed
+ok 46 - Friendly error: raw provider detail not exposed
+  ---
+  duration_ms: 0.332621
+  type: 'test'
+  ...
+# Subtest: Friendly error: rate limit
+ok 47 - Friendly error: rate limit
+  ---
+  duration_ms: 0.197287
+  type: 'test'
+  ...
+# Subtest: Friendly error: safe internal validation retained
+ok 48 - Friendly error: safe internal validation retained
+  ---
+  duration_ms: 0.171668
+  type: 'test'
+  ...
+# Subtest: XSS: database text is escaped
+ok 49 - XSS: database text is escaped
+  ---
+  duration_ms: 0.255685
+  type: 'test'
+  ...
+# Subtest: XSS: unsafe image URL blocked
+ok 50 - XSS: unsafe image URL blocked
+  ---
+  duration_ms: 0.213171
+  type: 'test'
+  ...
+# Subtest: Search: matching behavior unchanged
+ok 51 - Search: matching behavior unchanged
+  ---
+  duration_ms: 0.254573
+  type: 'test'
+  ...
+# Subtest: Search: empty matches existing supplied rows
+ok 52 - Search: empty matches existing supplied rows
+  ---
+  duration_ms: 0.142074
+  type: 'test'
+  ...
+# Subtest: QR: subfolder URL remains correct
+ok 53 - QR: subfolder URL remains correct
+  ---
+  duration_ms: 0.305771
+  type: 'test'
+  ...
+# Subtest: Guard: duplicate button claim is rejected
+ok 54 - Guard: duplicate button claim is rejected
+  ---
+  duration_ms: 0.168884
+  type: 'test'
+  ...
+# Subtest: Guard: release restores action
+ok 55 - Guard: release restores action
+  ---
+  duration_ms: 0.170767
+  type: 'test'
+  ...
+# Subtest: Workflow: new story never published
+ok 56 - Workflow: new story never published
+  ---
+  duration_ms: 0.193481
+  type: 'test'
+  ...
+# Subtest: Privacy: new story defaults to hidden public name
+ok 57 - Privacy: new story defaults to hidden public name
+  ---
+  duration_ms: 0.128083
+  type: 'test'
+  ...
+# Subtest: Service boundary blocks invalid registration before Supabase
+ok 58 - Service boundary blocks invalid registration before Supabase
+  ---
+  duration_ms: 0.450729
+  type: 'test'
+  ...
+# Subtest: Byte preflight rejects renamed non-image content
+ok 59 - Byte preflight rejects renamed non-image content
+  ---
+  duration_ms: 0.746173
+  type: 'test'
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 113.564566

@@ -1,0 +1,614 @@
+[
+  {
+    "page": "index.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "index.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "index.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "index.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "index.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "index.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "browse.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "browse.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "browse.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "browse.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "browse.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "browse.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "heritage.html?site=fort-santiago-fixture",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "story.html?id=1",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "login.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "login.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "login.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "login.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "login.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "login.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "register.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "register.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "register.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "register.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "register.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "register.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "forgot-password.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "reset-password.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "reset-password.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "reset-password.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "reset-password.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "reset-password.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "reset-password.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "contribute.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "contribute.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "contribute.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "contribute.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "contribute.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "contribute.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "contributor/dashboard.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "contributor/submissions.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/login.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/login.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/login.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/login.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/login.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/login.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/dashboard.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/heritage-sites.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/heritage-form.html?id=1",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/submissions.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024
+  },
+  {
+    "page": "admin/review-story.html?id=1",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  }
+]

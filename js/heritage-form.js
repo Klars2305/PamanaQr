@@ -23,20 +23,34 @@ function getHeritageFormSiteId() {
  * Rendering
  * ------------------------------------------------------------------------ */
 
+// A missing field used to throw here and abandon the rest of the fill, leaving
+// a partly populated form that would then save the wrong values.
+function setHeritageFieldValue(elementId, value) {
+  const field = document.getElementById(elementId);
+
+  if (!field) {
+    return;
+  }
+
+  field.value = value;
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 function fillHeritageForm(site) {
-  document.getElementById('heritageFormTitle').textContent = 'Edit Heritage Site';
-  document.getElementById('heritageFormHelp').textContent = 'Update official heritage information. Leave the photograph blank to keep the current image.';
-  document.getElementById('heritageFormButton').textContent = 'Update Heritage Site';
-  document.getElementById('siteName').value = site.name || '';
-  document.getElementById('siteLocation').value = site.location || '';
-  document.getElementById('historicalPeriod').value = site.historical_period || '';
-  document.getElementById('shortDescription').value = site.short_description || '';
-  document.getElementById('historicalBackground').value = site.historical_background || '';
-  document.getElementById('sourceReference').value = site.source_reference || '';
-  document.getElementById('siteStatus').value = site.status || SITE_STATUSES.active;
+  setText('heritageFormTitle', 'Edit Heritage Site');
+  setText('heritageFormHelp', 'Update official heritage information. Leave the photograph blank to keep the current image.');
+  setText('heritageFormButton', 'Update Heritage Site');
+
+  setHeritageFieldValue('siteName', site.name || '');
+  setHeritageFieldValue('siteLocation', site.location || '');
+  setHeritageFieldValue('historicalPeriod', site.historical_period || '');
+  setHeritageFieldValue('shortDescription', site.short_description || '');
+  setHeritageFieldValue('historicalBackground', site.historical_background || '');
+  setHeritageFieldValue('sourceReference', site.source_reference || '');
+  setHeritageFieldValue('siteStatus', site.status || SITE_STATUSES.active);
 
   if (site.main_photo) {
-    document.getElementById('currentPhotoHelp').textContent = `Current photograph path: ${site.main_photo}`;
+    setText('currentPhotoHelp', 'The existing photograph will be kept unless you choose a new main photograph.');
   }
 }
 
@@ -59,13 +73,13 @@ function collectHeritageFormData() {
 
 function validateHeritageSiteForm(formData) {
   return {
-    siteName: validateRequired(formData.name, 'the heritage site name'),
+    siteName: validateTextLength(formData.name, 'Heritage name', FORM_LIMITS.siteName) || (!createSlug(formData.name) ? 'Use a heritage name that can produce a URL-safe address.' : ''),
     siteLocation: validateRequired(formData.location, 'the location'),
     historicalPeriod: validateRequired(formData.historicalPeriod, 'the historical period'),
-    shortDescription: validateRequired(formData.shortDescription, 'a short description'),
+    shortDescription: validateTextLength(formData.shortDescription, 'Short description', FORM_LIMITS.shortDescription),
     historicalBackground: validateRequired(formData.historicalBackground, 'the historical background'),
     sourceReference: validateOptionalUrlOrText(formData.sourceReference, 'source/reference'),
-    mainPhoto: validateImageInput(document.getElementById('mainPhoto'), false),
+    mainPhoto: formData.mainPhoto ? validateImageFile(formData.mainPhoto) : '',
     siteStatus: validateAllowedValue(formData.status, SITE_STATUS_VALUES, 'status')
   };
 }
@@ -149,7 +163,7 @@ function buildHeritageSiteRecord(formData, slug) {
   };
 }
 
-async function addHeritageSite(formData, adminProfile) {
+async function addHeritageSite(formData, adminProfile, onProgress) {
   const slugResult = await resolveHeritageSlug(formData);
 
   if (slugResult.error) {
@@ -165,7 +179,7 @@ async function addHeritageSite(formData, adminProfile) {
 
   const { data: site, error: insertError } = await HeritageQueries.insert(record);
 
-  if (insertError) {
+  if (insertError || !site) {
     logAppError('Could not create heritage site.', insertError);
     return createErrorResult(getAppErrorMessage(insertError, APP_MESSAGES.saveFailed));
   }
@@ -177,9 +191,11 @@ async function addHeritageSite(formData, adminProfile) {
     };
   }
 
+  if (onProgress) onProgress('Uploading the main photograph...');
   const uploadResult = await uploadHeritageImage(site.id, formData.mainPhoto);
 
-  if (uploadResult.error) {
+  // An upload that reports no error but returns no path is still a failure.
+  if (uploadResult.error || !uploadResult.data || !uploadResult.data.path) {
     return {
       data: site,
       error: createAppError(APP_MESSAGES.storageFailed)
@@ -203,7 +219,7 @@ async function addHeritageSite(formData, adminProfile) {
   };
 }
 
-async function updateHeritageSite(siteId, formData) {
+async function updateHeritageSite(siteId, formData, onProgress, existingPhotoPath) {
   const slugResult = await resolveHeritageSlug(formData, siteId);
 
   if (slugResult.error) {
@@ -215,10 +231,14 @@ async function updateHeritageSite(siteId, formData) {
 
   const updates = buildHeritageSiteRecord(formData, slugResult.slug);
 
+  // Kept so the previous file can be removed once the new path is committed.
+  const previousPhoto = existingPhotoPath || '';
+
   if (formData.mainPhoto) {
+    if (onProgress) onProgress('Uploading the main photograph...');
     const uploadResult = await uploadHeritageImage(siteId, formData.mainPhoto);
 
-    if (uploadResult.error) {
+    if (uploadResult.error || !uploadResult.data || !uploadResult.data.path) {
       return createErrorResult(APP_MESSAGES.storageFailed);
     }
 
@@ -227,12 +247,22 @@ async function updateHeritageSite(siteId, formData) {
 
   const { data, error } = await HeritageQueries.update(siteId, updates);
 
-  if (error) {
+  if (error || !data) {
     logAppError('Could not update heritage site.', error);
     if (formData.mainPhoto && updates.main_photo) {
       await removeImageFile(updates.main_photo);
     }
     return createErrorResult(getAppErrorMessage(error, APP_MESSAGES.saveFailed));
+  }
+
+  // The replaced file is now unreferenced. A failure to delete it is not worth
+  // reporting to the administrator; the record itself saved correctly.
+  if (updates.main_photo && previousPhoto && previousPhoto !== updates.main_photo) {
+    try {
+      await removeImageFile(previousPhoto);
+    } catch (removeError) {
+      logAppError('Could not remove the replaced heritage photo.', removeError);
+    }
   }
 
   return {
@@ -241,89 +271,119 @@ async function updateHeritageSite(siteId, formData) {
   };
 }
 
-function saveHeritageSite(siteId, formData, adminProfile) {
+async function saveHeritageSite(siteId, formData, adminProfile, onProgress) {
+  const invalid = Object.values(validateHeritageSiteForm(formData)).find(Boolean);
+  if (invalid) return createErrorResult(invalid);
+  const imageError = await validateImageContents(formData.mainPhoto);
+  if (imageError) return createErrorResult(imageError);
   return siteId
-    ? updateHeritageSite(siteId, formData)
-    : addHeritageSite(formData, adminProfile);
+    ? updateHeritageSite(siteId, formData, onProgress, loadedHeritagePhotoPath)
+    : addHeritageSite(formData, adminProfile, onProgress);
 }
 
 /* ---------------------------------------------------------------------------
  * Data loading
  * ------------------------------------------------------------------------ */
 
+// The photo path already stored for the site being edited, so a replacement
+// upload can remove the file it supersedes.
+let loadedHeritagePhotoPath = '';
+
 async function loadHeritageSiteForEditing(siteId) {
-  const adminProfile = await requireAdmin();
-
-  if (!adminProfile) {
-    return;
-  }
-
+  const form = document.getElementById('heritageForm');
+  const button = document.getElementById('heritageFormButton');
+  if (button) button.disabled = true;
+  setFormBusy(form, true);
   showAppMessage('heritageFormMessage', 'Loading heritage site...', 'info');
-
-  const { data, error } = await HeritageQueries.getForEditing(siteId);
-
-  if (error) {
+  let loaded = false;
+  try {
+    if (!await requireAdmin()) return;
+    const { data, error } = await HeritageQueries.getForEditing(siteId);
+    if (error) throw error;
+    if (!data) {
+      showAppMessage('heritageFormMessage', 'This heritage record was not found. Return to Heritage Management and select a site.', 'warning');
+      return;
+    }
+    loadedHeritagePhotoPath = data.main_photo || '';
+    fillHeritageForm(data);
+    const relatedSection = document.getElementById('relatedPhotosSection');
+    if (relatedSection) relatedSection.classList.remove('d-none');
+    await loadRelatedHeritagePhotos(siteId);
+    loaded = true;
+    showAppMessage('heritageFormMessage', 'Heritage site loaded. Renaming a site can change its public URL; regenerate QR codes after renaming.', 'info');
+  } catch (error) {
     logAppError('Could not load heritage site for editing.', error);
     showAppMessage('heritageFormMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+  } finally {
+    if (loaded) {
+      setFormBusy(form, false);
+      if (button) button.disabled = false;
+    } else if (form) {
+      // Fields stay disabled on purpose: there is no record to edit. Release the
+      // busy bookkeeping through the helper so its snapshot is not left behind.
+      setFormBusy(form, false);
+      form.querySelectorAll('input, select, textarea, [data-password-toggle], [data-remove-selected-photo]').forEach(function (field) {
+        field.disabled = true;
+      });
+      appendAppLink('heritageFormMessage', 'admin/heritage-sites.html', 'Return to Heritage Management');
+    }
   }
-
-  fillHeritageForm(data);
-
-  document.getElementById('relatedPhotosSection').classList.remove('d-none');
-  await loadRelatedHeritagePhotos(siteId);
-
-  showAppMessage('heritageFormMessage', 'Heritage site loaded. You can now edit it.', 'success');
 }
-
-/* ---------------------------------------------------------------------------
- * Event handling
- * ------------------------------------------------------------------------ */
 
 async function handleHeritageFormSubmit(event) {
   event.preventDefault();
-
+  const form = event.currentTarget;
   const button = document.getElementById('heritageFormButton');
   const siteId = getHeritageFormSiteId();
-  const normalLabel = siteId ? 'Update Heritage Site' : 'Save Heritage Site';
-
-  // Claimed before the first await, so a double click cannot create the same
-  // heritage site twice.
-  if (!claimButtonAction(button)) {
-    return;
-  }
-
-  clearFormValidation(event.target);
-
-  const formData = collectHeritageFormData();
-
-  if (!reportValidationResult(validateHeritageSiteForm(formData), 'heritageFormMessage')) {
-    releaseButtonAction(button);
-    return;
-  }
-
-  const adminProfile = await requireAdmin();
-
-  if (!adminProfile) {
-    return;
-  }
-
-  setSubmitLoading(button, true, 'Saving...', normalLabel);
-  showAppMessage('heritageFormMessage', 'Saving heritage site...', 'info');
-
-  const { data, error } = await saveHeritageSite(siteId, formData, adminProfile);
-
-  if (error) {
+  const label = siteId ? 'Update Heritage Site' : 'Save Heritage Site';
+  if (!claimButtonAction(button)) return;
+  let saved = false;
+  try {
+    clearFormValidation(form);
+    const dataToSave = collectHeritageFormData();
+    if (!reportValidationResult(validateHeritageSiteForm(dataToSave), 'heritageFormMessage')) return;
+    setFormBusy(form, true);
+    setSubmitLoading(button, true, 'Saving heritage site...', label);
+    showAppMessage('heritageFormMessage', 'Checking heritage information and photo...', 'info');
+    const photoError = await validateImageContents(dataToSave.mainPhoto);
+    if (photoError) {
+      setFormBusy(form, false);
+      reportValidationResult({ mainPhoto: photoError }, 'heritageFormMessage');
+      return;
+    }
+    const profile = await requireAdmin();
+    if (!profile) return;
+    showAppMessage('heritageFormMessage', 'Saving heritage site...', 'info');
+    const { data, error } = await saveHeritageSite(siteId, dataToSave, profile, message => showAppMessage('heritageFormMessage', message, 'info'));
+    if (error && data) {
+      saved = true;
+      showAppMessage('heritageFormMessage', 'The heritage record was saved, but its photo could not be attached. Continue editing the saved record to retry the photo; do not create the site again.', 'warning');
+      appendAppLink('heritageFormMessage', `admin/heritage-form.html?id=${encodeURIComponent(data.id)}`, 'Continue editing the saved site');
+      await showSystemWarning('Upload failed', 'The heritage record was saved, but its photo could not be attached. Continue editing the saved record to retry the photo; do not create the site again.');
+      return;
+    }
+    if (error) {
+      const message = getAppErrorMessage(error, APP_MESSAGES.saveFailed);
+      showAppMessage('heritageFormMessage', message + (message === APP_MESSAGES.networkFailed ? ' Check Heritage Management before retrying, in case the record was saved.' : ''), 'danger');
+      await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+      return;
+    }
+    saved = true;
+    showAppMessage('heritageFormMessage', 'Heritage site saved. Returning to Heritage Management...', 'success');
+    rememberAppFeedback('Heritage site saved successfully.', 'success');
+    const savedSlug = data && data.slug ? `?created=${encodeURIComponent(data.slug)}` : '';
+    // Same destination as before; opened once the administrator acknowledges.
+    await showSystemSuccess('Heritage site saved', 'The heritage record was saved. Returning to Heritage Management.', 'Back to Heritage Management');
+    window.location.href = `heritage-sites.html${savedSlug}`;
+  } catch (error) {
+    logAppError('Heritage save request failed.', error);
     showAppMessage('heritageFormMessage', getAppErrorMessage(error, APP_MESSAGES.saveFailed), 'danger');
-    setSubmitLoading(button, false, 'Saving...', normalLabel);
-    return;
+    await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+  } finally {
+    setFormBusy(form, false);
+    setSubmitLoading(button, false, '', label);
+    if (saved) { button.disabled = true; button.textContent = 'Record saved'; }
   }
-
-  showAppMessage('heritageFormMessage', 'Heritage site saved successfully. Redirecting...', 'success');
-
-  setTimeout(function () {
-    window.location.href = `heritage-sites.html?created=${data.slug}`;
-  }, 1200);
 }
 
 const heritageForm = document.getElementById('heritageForm');
@@ -336,4 +396,15 @@ if (heritageForm) {
   }
 
   heritageForm.addEventListener('submit', handleHeritageFormSubmit);
+}
+
+// Preview only: preserve the existing automatic slug and uniqueness algorithm.
+const siteNameInput = document.getElementById('siteName');
+if (siteNameInput) {
+  const updateSlugPreview = function () {
+    const output = document.getElementById('siteSlugPreview');
+    if (output) output.textContent = createSlug(siteNameInput.value.trim()) || 'Enter a site name';
+  };
+  siteNameInput.addEventListener('input', updateSlugPreview);
+  updateSlugPreview();
 }

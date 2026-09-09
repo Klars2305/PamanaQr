@@ -35,12 +35,14 @@ function createHeritageSiteRow(site) {
   `;
 }
 
-function bindHeritageSiteRowActions() {
-  document.querySelectorAll('[data-status-toggle]').forEach(function (button) {
+// Scoped to the table body just rendered. A document-wide query re-bound every
+// matching button on the page each time the table reloaded.
+function bindHeritageSiteRowActions(tableBody) {
+  tableBody.querySelectorAll('[data-status-toggle]').forEach(function (button) {
     button.addEventListener('click', handleHeritageStatusToggle);
   });
 
-  document.querySelectorAll('[data-qr-slug]').forEach(function (button) {
+  tableBody.querySelectorAll('[data-qr-slug]').forEach(function (button) {
     button.addEventListener('click', function () {
       showHeritageQrCode(button.dataset.qrSlug, button.dataset.qrName);
     });
@@ -55,12 +57,12 @@ function renderHeritageSitesTable(sites) {
   }
 
   if (!sites.length) {
-    setSafeHtml(tableBody, trustedHtml('<tr><td colspan="5" class="text-muted">No heritage sites found.</td></tr>'));
+    setSafeHtml(tableBody, trustedHtml('<tr><td colspan="5"><p class="text-muted">No heritage sites have been added yet.</p><a class="btn btn-outline-success" href="heritage-form.html">Add the first heritage site</a></td></tr>'));
     return;
   }
 
   setSafeHtml(tableBody, sites.map(createHeritageSiteRow));
-  bindHeritageSiteRowActions();
+  bindHeritageSiteRowActions(tableBody);
 }
 
 /* ---------------------------------------------------------------------------
@@ -70,22 +72,29 @@ function renderHeritageSitesTable(sites) {
 async function loadAdminHeritageSites() {
   showAppMessage('heritageManagementMessage', 'Loading heritage sites...', 'info');
 
-  const adminProfile = await requireAdmin();
+  try {
+    const adminProfile = await requireAdmin();
 
-  if (!adminProfile) {
-    return;
-  }
+    if (!adminProfile) {
+      return false;
+    }
 
-  const { data, error } = await HeritageQueries.listAll();
+    const { data, error } = await HeritageQueries.listAll();
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load heritage sites.', error);
+      showAppMessage('heritageManagementMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return false;
+    }
+
+    renderHeritageSitesTable(data || []);
+    showAppMessage('heritageManagementMessage', 'Heritage sites loaded successfully.', 'success');
+    return true;
+  } catch (error) {
     logAppError('Could not load heritage sites.', error);
     showAppMessage('heritageManagementMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+    return false;
   }
-
-  renderHeritageSitesTable(data || []);
-  showAppMessage('heritageManagementMessage', 'Heritage sites loaded successfully.', 'success');
 }
 
 /* ---------------------------------------------------------------------------
@@ -95,39 +104,39 @@ async function loadAdminHeritageSites() {
 async function handleHeritageStatusToggle(event) {
   const button = event.currentTarget;
   const siteId = button.dataset.siteId;
-  const siteName = button.dataset.siteName;
-  const nextStatus = button.dataset.nextStatus;
-  const actionLabel = nextStatus === SITE_STATUSES.archived ? 'archive' : 'activate';
-
-  if (!confirm(`Are you sure you want to ${actionLabel} "${siteName}"?`)) {
-    return;
-  }
-
-  // Claimed before the first await, so a double click cannot send two status
-  // changes for the same site.
-  if (!claimButtonAction(button)) {
-    return;
-  }
-
-  const adminProfile = await requireAdmin();
-
-  if (!adminProfile) {
-    showAppMessage('heritageManagementMessage', APP_MESSAGES.unauthorizedAdminAction, 'danger');
-    return;
-  }
-
-  showAppMessage('heritageManagementMessage', `Updating ${siteName}...`, 'info');
-
-  const { error } = await HeritageQueries.setStatus(siteId, nextStatus);
-
-  if (error) {
+  const name = button.dataset.siteName;
+  const status = button.dataset.nextStatus;
+  if (!SITE_STATUS_VALUES.includes(status) || !claimButtonAction(button)) return;
+  const archive = status === SITE_STATUSES.archived;
+  const label = archive ? 'Archive' : 'Activate';
+  try {
+    await showConfirmationModal({
+      title: archive ? 'Archive Heritage Site?' : 'Activate Heritage Site?',
+      message: archive
+        ? `"${name}" will no longer appear publicly as an active heritage site, but its record will remain stored.`
+        : `"${name}" will become available in public heritage browsing.`,
+      confirmText: label,
+      cancelText: archive ? 'Keep Active' : 'Keep Archived',
+      variant: archive ? 'warning' : 'success',
+      trigger: button,
+      onConfirm: async function () {
+        setSubmitLoading(button, true, archive ? 'Archiving...' : 'Activating...', label);
+        if (!await requireAdmin()) return;
+        showAppMessage('heritageManagementMessage', `Updating ${name}...`, 'info');
+        const { error } = await HeritageQueries.setStatus(siteId, status);
+        if (error) throw error;
+        const loaded = await loadAdminHeritageSites();
+        if (loaded) showAppMessage('heritageManagementMessage', archive ? 'Heritage site archived. Its record is still stored.' : 'Heritage site activated.', 'success');
+        else showAppMessage('heritageManagementMessage', 'The status was saved, but the list could not reload. Refresh the page before making another change.', 'warning');
+      }
+    });
+  } catch (error) {
     logAppError('Could not update heritage status.', error);
     showAppMessage('heritageManagementMessage', getAppErrorMessage(error, APP_MESSAGES.saveFailed), 'danger');
-    releaseButtonAction(button);
-    return;
+    await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+  } finally {
+    setSubmitLoading(button, false, '', label);
   }
-
-  await loadAdminHeritageSites();
 }
 
 if (document.body.dataset.page === 'heritage-sites-admin') {

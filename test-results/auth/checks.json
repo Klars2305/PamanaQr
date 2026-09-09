@@ -1,0 +1,10 @@
+[
+  "login: ten responsive widths, assets and desktop order pass",
+  "register: ten responsive widths, assets and desktop order pass",
+  "forgot-password: ten responsive widths, assets and desktop order pass",
+  "Login: required validation, keyboard toggle, loading, duplicate guard, error, exact password and restored button icon pass",
+  "Both roles retain dashboard destinations through existing handlers (mocked provider)",
+  "Registration: required/email/weak/mismatch validation, checklist, both toggles, loading, duplicate guard, error, success and original signup payload/redirect pass",
+  "Forgot-password navigation and recovery request destination pass (mocked provider)",
+  "No uncaught browser errors; reduced motion pass"
+]

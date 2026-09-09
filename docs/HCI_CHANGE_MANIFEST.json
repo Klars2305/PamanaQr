@@ -1,0 +1,204 @@
+{
+  "scope": "HCI update relative to supplied pamana-ui-polished.zip",
+  "modified": [
+    {
+      "path": "README.md",
+      "before_sha256": "94bea2f9a8b56c508268251a623b0bf8b9852695aa7245f992f17bd1129a4b43",
+      "after_sha256": "1afa1fa23a0bc40278167aeff8d49e07894784c3dc73c24e0fa8a440c9294f20"
+    },
+    {
+      "path": "TEST_CASES.md",
+      "before_sha256": "3e572367a634aa42376e2874c4b706cc13b7f40106b2b503361ef6217699be01",
+      "after_sha256": "42dff289edf1667ae8e7e5083064c12d2e7f0d1db29752c49dbfad51425b74da"
+    },
+    {
+      "path": "admin/dashboard.html",
+      "before_sha256": "483804613aefbab646870457b94914331ad932dd7470099d272c1ba3d41026a2",
+      "after_sha256": "96624ac55e3d967cce73e6248b59ae157a17809a26bd706b5ce242431af5d183"
+    },
+    {
+      "path": "admin/heritage-form.html",
+      "before_sha256": "6fa393fb12ec9f209cdca63dce157dc81d7c239506dc844144f9ebbd5f5041f6",
+      "after_sha256": "ff303b3528fcd6c6811ff5450ea237f3060d46d54f91dbf56251122e19416da6"
+    },
+    {
+      "path": "admin/heritage-sites.html",
+      "before_sha256": "ec68c4b13f67f9feb8ffc8267c36208cb9a2902efeb21c8624207c8a7b09ed45",
+      "after_sha256": "fa01ee913c321b447ba66776e010fff87ac23ab95f27c3dd8b1e4410095743a3"
+    },
+    {
+      "path": "admin/login.html",
+      "before_sha256": "e23b1d28ed504f8012faa256be3d23b3905178f2a0c3ebc37d4cd83c78ad36f1",
+      "after_sha256": "e840e73f69b8fec59725be941c127403339174b6d41e203bf4c9b6708ef7198c"
+    },
+    {
+      "path": "admin/review-story.html",
+      "before_sha256": "df904a70aa7af6cf78fc6fa3b1726286039e386ccd758f261b48a1696e5594e2",
+      "after_sha256": "5495a661a38ec32e3180778efe2c08e9bdfbc9f388bb78ee10f163b58dcfe916"
+    },
+    {
+      "path": "admin/submissions.html",
+      "before_sha256": "61233b47c8c09910e9c274d43880de798b3ac4494762ca1f758520521b6fba3a",
+      "after_sha256": "97ca0b2ce540f3eb4b365d62c3d771f2681e4686d8d9cb0c8642396e467f08e7"
+    },
+    {
+      "path": "assets/icons/sprite.svg",
+      "before_sha256": "990a3a61afd2ee29383c707542a888176466f2b279ee52427ebb738a1c6e4b0f",
+      "after_sha256": "f622a8665161d7f73235ea18d18433479a3eadb374e69b6da23b6978f72baf72"
+    },
+    {
+      "path": "browse.html",
+      "before_sha256": "3124953e24cb85aea661ff5d671495056123e4dc826693b8570beb2a78f027fb",
+      "after_sha256": "c2b9c4914482664b8450066b36269b408a43efefacba9cfd891b00bca6c9da86"
+    },
+    {
+      "path": "contribute.html",
+      "before_sha256": "08b7b32e183b642955843dba0cee493a6a9d2f6f99fe7c78e2f64447da9796e7",
+      "after_sha256": "abede33da88bba84552a63f0cb15f3c774d708f72fcba394d69507a4b7ea44cd"
+    },
+    {
+      "path": "contributor/dashboard.html",
+      "before_sha256": "45ab45d26f3351c6ae26816c2ec01261697f53c23f83450c2a9dc2056d4a59df",
+      "after_sha256": "e30ff7604d6e9e079b0e474f46b193973a2df6cea7812d8c26c8dd6b111191e3"
+    },
+    {
+      "path": "contributor/submissions.html",
+      "before_sha256": "f0b952441f5ef58a1b3cf0cf1538a7bd688c1e81ede28b1a0cfca9f49b26a8f0",
+      "after_sha256": "37704d10ccd8593c234451cb8b548d845eaf59392b170b1c6a7cef5d0898c609"
+    },
+    {
+      "path": "css/style.css",
+      "before_sha256": "db7159eeaf27f9a24b536b8b785bf2169aa6c4b4f8f6281d028c9e3abd1e2095",
+      "after_sha256": "4e27fdeee6e36f5b409351369033abfdc69783bd9f4d5559d72ced46b3ecfa43"
+    },
+    {
+      "path": "heritage.html",
+      "before_sha256": "40e5a8ced37da98c96df70167b0c8f50060eb2ee5343513526a45374a8c84c52",
+      "after_sha256": "079fda97abe159c4db50894fdb7273db0ff8af5a9b85488a7025f796065a997c"
+    },
+    {
+      "path": "index.html",
+      "before_sha256": "e37e624f5263b5da9fb43f976a21fa25a7a5b9298e16e696149b5741879e2921",
+      "after_sha256": "931761aabaeab317d21fa1266642adcb3113b871cffeabd12ea892c51c5991fd"
+    },
+    {
+      "path": "js/auth.js",
+      "before_sha256": "4bb2ff3f113a51952cab3fccfa3700f50b4c4b2c51786c374cb450d8f85b17f7",
+      "after_sha256": "34a3190805c4a39dad28032b70ae8f98761e6da189aef7bd007eff443f985822"
+    },
+    {
+      "path": "js/core.js",
+      "before_sha256": "b3342aa09023cae8bb8752f143008adbb1f51445ed8bfe4112e9de65956a192c",
+      "after_sha256": "5b5b1cbb0c438b9a914889069a096ca7384c5221b8606fe76442c6c425165cd5"
+    },
+    {
+      "path": "js/heritage-details.js",
+      "before_sha256": "10e3b7195e8f66ba94c3ffdc8cc8a33cbd088d128b0c92f841720974c30afba6",
+      "after_sha256": "3c9112140d2db3bf3311aa640b019d9a67a95087c37df1119593b964e39fd051"
+    },
+    {
+      "path": "js/heritage-form.js",
+      "before_sha256": "9b31ef1071a0824eff314e337310be7b8b39ff580723194c5c15815c6cdaf220",
+      "after_sha256": "a7183c4742d34918c9fec9cd8924554624caa7a80131a174966cdfe3f987c453"
+    },
+    {
+      "path": "js/heritage-list.js",
+      "before_sha256": "6ca3cb073e5b03f2eb3d568c82d561a1af3f5d9dc453593392d5a02bf3ef623d",
+      "after_sha256": "67b15a39991fb652c92c833392263089a94fe966ca6f83e58b124013caa98394"
+    },
+    {
+      "path": "js/heritage-photos.js",
+      "before_sha256": "b913caa0cce3a3acfb4a3e84ad88804af00205a2b4d0e7fa210ac93bae0c1d64",
+      "after_sha256": "792eb028f42b6cb2b2faf532973c1bab35c91cc00209903850baace58b455b86"
+    },
+    {
+      "path": "js/qr.js",
+      "before_sha256": "1c3e747578a943a3eddbe30e905043996a30496727d5a1f328ceda4d681f3470",
+      "after_sha256": "76753d26f3f371ed5728101c7c5a60926b7d99d4183846d2725df5ed98377691"
+    },
+    {
+      "path": "js/search.js",
+      "before_sha256": "c8a968d3b44d3cf4ee0c533cdd1bafe8d36ba66eb73fde57753625ea14ee14d2",
+      "after_sha256": "3b2c576050071ad42a970a2c76746e159629457003ff38f610304307d661b44b"
+    },
+    {
+      "path": "js/session.js",
+      "before_sha256": "86ec22e8b409195bb5f53eac3911f6d768dbe5f2200ea8a9e023dea03ef96cd0",
+      "after_sha256": "30c22308bc34bb4dab75fe0c26a328664ca3c164c3672dd9dea4d2e12eb1e396"
+    },
+    {
+      "path": "js/storage.js",
+      "before_sha256": "01199c74e101081703b381046e747b71ddccf3cfd16473a010c9abdd6baa9fcd",
+      "after_sha256": "7783b3c396823411891affd160866b69fe835aec76a4b30b3b8185c8c27d33d8"
+    },
+    {
+      "path": "js/story-lists.js",
+      "before_sha256": "1b0780e7267891c0e5d173f9166f9c90c8e64d4a289a24dc59197fb2e9539413",
+      "after_sha256": "e975b7e6a9c9b8d34b1be188d5479b05ee9a543fbec2a9d632ef5cf3426c925f"
+    },
+    {
+      "path": "js/story-review.js",
+      "before_sha256": "2f8176bc97f97b7acd7ca36441fd66bb055ceaa54edc6229475782ecfc8eb1a5",
+      "after_sha256": "e20ee84e83501e66121a6b882c46d4c4454c52a2389801b5bbd7412c77aa40c1"
+    },
+    {
+      "path": "js/story-submit.js",
+      "before_sha256": "665d1b13d8045820e618c6f178237fac1b4a4ee8e04c28d11be95afe9021373c",
+      "after_sha256": "1861cffa600279d2fd562d809081c0f7aff326e64fa7ca7060a294f065c12bdc"
+    },
+    {
+      "path": "js/validation.js",
+      "before_sha256": "4b56b055723fd0fbc6f387d1ed284ea3405d0f5ab2c954f1ac582f5634d0bf67",
+      "after_sha256": "685500f6b314648a950cf03fa798887f1b9b79ecf15d9431092a0b790ead69bd"
+    },
+    {
+      "path": "login.html",
+      "before_sha256": "193239ec7d416acc635be635c0b04f730bac8c825e35b1eb543e2de090bf2a88",
+      "after_sha256": "0345bf55de57fc0e6da92dfd4975ada5366f1559d7508efeacd8ff2416074141"
+    },
+    {
+      "path": "register.html",
+      "before_sha256": "6b5152a4878b3a0696f55ea8478dd4baa23706f88542d2035865d723a79a08f3",
+      "after_sha256": "347f00b0fad71c953d427cc8527586b8b32ea619c65b5510dd7c8a41205fe392"
+    },
+    {
+      "path": "story.html",
+      "before_sha256": "f0281ae308df2b50b55ada098dea5eb44d60f158900b6625398daa2ae5a2fc5d",
+      "after_sha256": "53491bfe988a58492f11902d14522e5d2342d8ecb5d955657707107825f6c2c8"
+    },
+    {
+      "path": "tests/check_ui_contracts.py",
+      "before_sha256": "d310df4c7a6d30738ed0f2f2cefac32d8ca685828bb7ffef2e540a4aef3df85a",
+      "after_sha256": "c5c3746f3e3f91c12cf7dbbaefbf6bb3b4a5d9ca7176f2d65807acc69d1087a6"
+    }
+  ],
+  "created": [
+    "assets/icons/eye-slash.svg",
+    "assets/icons/eye.svg",
+    "docs/HCI_ASSET_RESULTS.txt",
+    "docs/HCI_CONTRACT_RESULTS.txt",
+    "docs/HCI_IMPLEMENTATION_REPORT.md",
+    "docs/HCI_QA_RESULTS.json",
+    "docs/HCI_RESPONSIVE_RESULTS.json",
+    "docs/HCI_UNIT_RESULTS.txt",
+    "docs/PASSWORD_RECOVERY_SETUP.md",
+    "docs/TEST_CASES_UI_HISTORY.md",
+    "forgot-password.html",
+    "js/password-recovery.js",
+    "js/ui.js",
+    "reset-password.html",
+    "tests/browser_hci.py",
+    "tests/check_assets.py",
+    "tests/fixtures/not-an-image.png",
+    "tests/fixtures/qr-test-adapter.js",
+    "tests/fixtures/supabase-double.js",
+    "tests/fixtures/valid-photo.png",
+    "tests/hci-contracts.json",
+    "tests/requirements.txt",
+    "tests/unit.test.cjs",
+    "tests/vendor/bootstrap-5.3.6.bundle.min.js",
+    "tests/vendor/bootstrap-5.3.6.min.css"
+  ],
+  "removed": [],
+  "notes": "test-results contains generated development evidence; historical UI manifests are retained. No secrets are printed here."
+}

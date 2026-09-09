@@ -17,16 +17,30 @@ async function renderStorageImage(imageElement, imagePath, altText) {
     return;
   }
 
-  const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
+  try {
+    const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load heritage image.', error);
+      return;
+    }
+
+    const safeUrl = safeImageUrl(signedUrl);
+
+    if (!safeUrl) {
+      return;
+    }
+
+    imageElement.addEventListener('error', function () {
+      imageElement.classList.add('d-none');
+    }, { once: true });
+
+    imageElement.src = safeUrl;
+    imageElement.alt = altText;
+    imageElement.classList.remove('d-none');
+  } catch (error) {
     logAppError('Could not load heritage image.', error);
-    return;
   }
-
-  imageElement.src = safeImageUrl(signedUrl);
-  imageElement.alt = altText;
-  imageElement.classList.remove('d-none');
 }
 
 // A contributor name is only shown when the contributor allowed it.
@@ -92,9 +106,8 @@ async function renderRelatedMedia(mediaItems) {
 
   setSafeHtml(list, mediaItems.map(createRelatedMediaPanel));
 
-  const images = document.querySelectorAll('[data-media-path]');
-
-  images.forEach(function (image) {
+  // Scoped to the list just rendered, not the whole document.
+  list.querySelectorAll('[data-media-path]').forEach(function (image) {
     renderStorageImage(image, image.dataset.mediaPath, image.alt);
   });
 }
@@ -106,16 +119,22 @@ async function updateContributionAction() {
     return;
   }
 
-  const profile = await getCurrentUserProfile();
+  let profile = null;
+
+  try {
+    profile = await getCurrentUserProfile();
+  } catch (error) {
+    logAppError('Could not read the session for the contribute action.', error);
+  }
 
   if (profile && profile.role === PAMANA_ROLES.contributor) {
     action.textContent = 'Contribute a Story';
-    action.href = 'contribute.html';
+    action.href = toAppUrl('contribute.html');
     return;
   }
 
   action.textContent = 'Login to Contribute';
-  action.href = 'login.html';
+  action.href = toAppUrl('login.html');
 }
 
 function renderHeritageRecord(site) {
@@ -156,6 +175,7 @@ async function loadHeritageStoriesAndMedia(site) {
   } else {
     await renderRelatedMedia(mediaResult.data || []);
   }
+  return !storiesResult.error && !mediaResult.error;
 }
 
 async function loadHeritageDetailsPage() {
@@ -165,37 +185,44 @@ async function loadHeritageDetailsPage() {
 
   if (!slug) {
     showAppMessage('heritageDetailsMessage', 'No heritage site was selected. Please browse heritage sites first.', 'warning');
+    appendAppLink('heritageDetailsMessage', 'browse.html', 'Browse Heritage');
     return;
   }
 
   showAppMessage('heritageDetailsMessage', 'Loading heritage site...', 'info');
 
-  const { data: site, error: siteError } = await HeritageQueries.getActiveBySlug(slug);
+  try {
+    const { data: site, error: siteError } = await HeritageQueries.getActiveBySlug(slug);
 
-  if (siteError) {
-    logAppError('Could not load heritage site.', siteError);
-    showAppMessage('heritageDetailsMessage', getAppErrorMessage(siteError, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+    if (siteError) {
+      logAppError('Could not load heritage site.', siteError);
+      showAppMessage('heritageDetailsMessage', getAppErrorMessage(siteError, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    // An archived or missing site looks the same to a visitor.
+    if (!site) {
+      showAppMessage('heritageDetailsMessage', APP_MESSAGES.heritageNotFound, 'warning');
+      appendAppLink('heritageDetailsMessage', 'browse.html', 'Browse Heritage');
+      return;
+    }
+
+    renderHeritageRecord(site);
+
+    await renderStorageImage(
+      document.getElementById('heritagePhoto'),
+      site.main_photo,
+      site.name
+    );
+
+    const complete = await loadHeritageStoriesAndMedia(site);
+
+    showHeritageDetails();
+    if (complete) showAppMessage('heritageDetailsMessage', 'Heritage site loaded successfully.', 'success');
+  } catch (error) {
+    logAppError('Could not load heritage site.', error);
+    showAppMessage('heritageDetailsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
   }
-
-  // An archived or missing site looks the same to a visitor.
-  if (!site) {
-    showAppMessage('heritageDetailsMessage', APP_MESSAGES.heritageNotFound, 'warning');
-    return;
-  }
-
-  renderHeritageRecord(site);
-
-  await renderStorageImage(
-    document.getElementById('heritagePhoto'),
-    site.main_photo,
-    site.name
-  );
-
-  await loadHeritageStoriesAndMedia(site);
-
-  showHeritageDetails();
-  showAppMessage('heritageDetailsMessage', 'Heritage site loaded successfully.', 'success');
 }
 
 if (document.body.dataset.page === 'heritage-details') {

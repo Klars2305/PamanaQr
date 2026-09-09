@@ -10,6 +10,9 @@
  * ------------------------------------------------------------------------ */
 
 function createMySubmissionAction(story) {
+  if (story.status === STORY_STATUSES.rejected) {
+    return trustedHtml('<span class="text-muted small">Not published</span>');
+  }
   if (story.status !== STORY_STATUSES.published) {
     return trustedHtml('<button class="btn btn-sm btn-outline-secondary" type="button" disabled>Pending Review</button>');
   }
@@ -26,7 +29,7 @@ function createMySubmissionRow(story) {
 
   return html`
     <tr>
-      <td>${story.title}</td>
+      <td><span>${story.title}</span>${createMySubmissionPhotos(story)}</td>
       <td>${heritageName}</td>
       <td>${formatDate(story.created_at)}</td>
       <td>${createStatusBadge(story.status)}</td>
@@ -34,6 +37,33 @@ function createMySubmissionRow(story) {
       <td>${createMySubmissionAction(story)}</td>
     </tr>
   `;
+}
+
+function createMySubmissionPhotos(story) {
+  if (!story.media || !story.media.length) return '';
+  return story.media.filter(item => item.image_url).map(item => html`
+    <figure class="submission-photo mt-2 mb-0">
+      <img class="d-none" data-submission-photo="${item.image_url}" alt="${item.caption || `Supporting photograph for ${story.title}`}" width="180" height="120" loading="lazy">
+      <figcaption class="small text-muted" role="status">Loading photograph...</figcaption>
+    </figure>
+  `);
+}
+
+async function loadMySubmissionPhoto(image) {
+  const status = image.parentElement.querySelector('figcaption');
+  const failed = function () {
+    image.classList.add('d-none');
+    status.textContent = 'Photograph unavailable. Refresh to try again.';
+  };
+  try {
+    const { signedUrl, error } = await createSignedImageUrl(image.dataset.submissionPhoto, 3600);
+    const url = safeImageUrl(signedUrl);
+    if (error || !url) { failed(); return; }
+    image.addEventListener('error', failed, { once: true });
+    image.addEventListener('load', function () { status.textContent = 'Supporting photograph'; }, { once: true });
+    image.src = url;
+    image.classList.remove('d-none');
+  } catch (_) { failed(); }
 }
 
 function renderMySubmissionsTable(stories) {
@@ -44,32 +74,38 @@ function renderMySubmissionsTable(stories) {
   }
 
   if (!stories.length) {
-    setSafeHtml(tableBody, trustedHtml('<tr><td colspan="6" class="text-muted">You have not submitted any stories yet.</td></tr>'));
+    setSafeHtml(tableBody, trustedHtml('<tr><td colspan="6"><p>You have not submitted a story yet.</p><a class="btn btn-outline-success" href="../contribute.html">Submit Your First Story</a></td></tr>'));
     return;
   }
 
   setSafeHtml(tableBody, stories.map(createMySubmissionRow));
+  tableBody.querySelectorAll('[data-submission-photo]').forEach(loadMySubmissionPhoto);
 }
 
 async function loadMySubmissionsPage() {
   showAppMessage('mySubmissionsMessage', 'Loading your submissions...', 'info');
 
-  const profile = await requireContributor();
+  try {
+    const profile = await requireContributor();
 
-  if (!profile) {
-    return;
-  }
+    if (!profile) {
+      return;
+    }
 
-  const { data, error } = await StoryQueries.listByContributor(profile.id);
+    const { data, error } = await StoryQueries.listByContributor(profile.id);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load contributor submissions.', error);
+      showAppMessage('mySubmissionsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    renderMySubmissionsTable(data || []);
+    showAppMessage('mySubmissionsMessage', 'Your submissions loaded successfully.', 'success');
+  } catch (error) {
     logAppError('Could not load contributor submissions.', error);
     showAppMessage('mySubmissionsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
   }
-
-  renderMySubmissionsTable(data || []);
-  showAppMessage('mySubmissionsMessage', 'Your submissions loaded successfully.', 'success');
 }
 
 /* ---------------------------------------------------------------------------
@@ -80,7 +116,7 @@ const ADMIN_STORY_VIEWS = {
   submitted: {
     heading: 'Pending Stories',
     description: 'Review contributor stories before publication.',
-    empty: 'No pending submissions right now.'
+    empty: 'There are currently no stories waiting for review.'
   },
   published: {
     heading: 'Published Stories',
@@ -171,22 +207,27 @@ async function loadAdminSubmissionsPage() {
   updateAdminStoryStatusView(status);
   showAppMessage('adminSubmissionsMessage', 'Loading administrator story records...', 'info');
 
-  const adminProfile = await requireAdmin();
+  try {
+    const adminProfile = await requireAdmin();
 
-  if (!adminProfile) {
-    return;
-  }
+    if (!adminProfile) {
+      return;
+    }
 
-  const { data, error } = await StoryQueries.listByStatus(status);
+    const { data, error } = await StoryQueries.listByStatus(status);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load administrator story records.', error);
+      showAppMessage('adminSubmissionsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    renderAdminSubmissionsTable(data || [], status);
+    showAppMessage('adminSubmissionsMessage', 'Administrator story records loaded successfully.', 'success');
+  } catch (error) {
     logAppError('Could not load administrator story records.', error);
     showAppMessage('adminSubmissionsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
   }
-
-  renderAdminSubmissionsTable(data || [], status);
-  showAppMessage('adminSubmissionsMessage', 'Administrator story records loaded successfully.', 'success');
 }
 
 /* ---------------------------------------------------------------------------

@@ -19,6 +19,22 @@ let cachedUserRequest = null;
 let cachedProfileRequest = null;
 let isWatchingAuthState = false;
 
+// A page can ask for protection twice: once from data-require-role on <body>,
+// and once from its own requireAdmin/requireContributor call. Both used to
+// assign window.location.href, so two navigations raced and the second could
+// overwrite the first destination. The first navigation now wins.
+let navigationStarted = false;
+
+function goToAppPage(path) {
+  if (navigationStarted) {
+    return false;
+  }
+
+  navigationStarted = true;
+  window.location.href = toAppUrl(path);
+  return true;
+}
+
 function clearSessionCache() {
   cachedUserRequest = null;
   cachedProfileRequest = null;
@@ -40,8 +56,12 @@ function watchAuthStateChanges() {
   // Sign-in, sign-out and an expired session all invalidate the cache, so the
   // next guard re-checks with Supabase instead of trusting a stale answer.
   supabaseClient.auth.onAuthStateChange(function (event) {
-    if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+    if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'USER_UPDATED' || event === 'PASSWORD_RECOVERY' || event === 'TOKEN_REFRESHED') {
       clearSessionCache();
+      // Refresh navigation after the SDK callback returns, including other-tab sign-outs.
+      setTimeout(function () {
+        if (typeof updateRoleNavigation === 'function') updateRoleNavigation();
+      }, 0);
     }
   });
 }
@@ -66,7 +86,7 @@ async function requestCurrentUser() {
   }
 
   if (error) {
-    logAppError('Could not get authenticated user.', error);
+    if (error.name !== 'AuthSessionMissingError') logAppError('Could not get authenticated user.', error);
     return null;
   }
 
@@ -131,24 +151,51 @@ async function loginUser(email, password) {
   return result;
 }
 
-async function logoutUser() {
-  const supabaseClient = getSupabaseClient();
-
-  if (!supabaseClient) {
-    return;
+let logoutInProgress = false;
+async function logoutUser(event) {
+  if (logoutInProgress) return;
+  logoutInProgress = true;
+  const button = event && event.currentTarget && event.currentTarget.tagName === 'BUTTON' ? event.currentTarget : null;
+  let leaving = false;
+  try {
+    await showConfirmationModal({
+      title: 'Sign out?',
+      message: 'Are you sure you want to sign out? Unsaved form entries will not be saved.',
+      confirmText: 'Sign out',
+      cancelText: 'Stay Signed In',
+      variant: 'warning',
+      trigger: button || document.activeElement,
+      onConfirm: async function () {
+        const client = getSupabaseClient();
+        if (!client) { showGlobalFeedback(APP_MESSAGES.notConfigured, 'danger'); return; }
+        setSubmitLoading(button, true, 'Signing out...', 'Logout');
+        const { error } = await client.auth.signOut();
+        if (error) {
+          logAppError('Logout failed.', error);
+          showGlobalFeedback(getAppErrorMessage(error, 'We could not sign you out. Please try again.'), 'danger');
+          return;
+        }
+        clearSessionCache();
+        rememberAppFeedback('You have been signed out.', 'success');
+        leaving = true;
+        goToAppPage('login.html');
+      }
+    });
+  } catch (error) {
+    logAppError('Logout request failed.', error);
+    showGlobalFeedback(getAppErrorMessage(error, 'We could not sign you out. Please try again.'), 'danger');
+  } finally {
+    logoutInProgress = false;
+    setSubmitLoading(button, false, '', 'Logout');
+    if (button && leaving) button.disabled = true;
   }
-
-  const { error } = await supabaseClient.auth.signOut();
-
-  if (error) {
-    logAppError('Logout failed.', error);
-  }
-
-  clearSessionCache();
-  window.location.href = toAppUrl('login.html');
 }
 
 async function registerContributor(displayName, email, password) {
+  const invalid = validateRequired(displayName, 'your display name') || validateEmail(email) || validatePassword(password);
+  if (invalid) return createErrorResult(invalid);
+  displayName = displayName.trim();
+  email = email.trim();
   return runSupabaseQuery('Registration request failed.', APP_MESSAGES.registrationFailed, function (supabaseClient) {
     return supabaseClient.auth.signUp({
       email: email,
@@ -166,13 +213,13 @@ function hasRole(profile, role) {
   return Boolean(profile && profile.role === role);
 }
 
-async function redirectByRole(profile) {
+function redirectByRole(profile) {
   if (!profile || !ROLE_ROUTES[profile.role]) {
-    window.location.href = toAppUrl('login.html');
+    goToAppPage('login.html');
     return;
   }
 
-  window.location.href = toAppUrl(ROLE_ROUTES[profile.role]);
+  goToAppPage(ROLE_ROUTES[profile.role]);
 }
 
 // The role a page demands, taken from data-require-role on <body>.
@@ -189,8 +236,13 @@ async function requireAuthentication() {
       ? APP_MESSAGES.contributorLoginRequired
       : APP_MESSAGES.loginRequired;
 
-    sessionStorage.setItem('pamanaAuthMessage', message);
-    window.location.href = toAppUrl('login.html');
+    try {
+      sessionStorage.setItem('pamanaAuthMessage', message);
+    } catch (_) {
+      // Private-mode storage failures must not block the redirect.
+    }
+
+    goToAppPage('login.html');
     return null;
   }
 
@@ -205,8 +257,13 @@ async function requireRole(role) {
   }
 
   if (!hasRole(profile, role)) {
-    sessionStorage.setItem('pamanaAuthMessage', APP_MESSAGES.unauthorized);
-    await redirectByRole(profile);
+    try {
+      sessionStorage.setItem('pamanaAuthMessage', APP_MESSAGES.unauthorized);
+    } catch (_) {
+      // Private-mode storage failures must not block the redirect.
+    }
+
+    redirectByRole(profile);
     return null;
   }
 

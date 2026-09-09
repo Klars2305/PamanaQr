@@ -1,0 +1,4 @@
+# Development/testing only. None of these packages is used by the website.
+playwright==1.57.0
+opencv-python-headless==4.13.0.92
+tinycss2==1.4.0

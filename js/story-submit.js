@@ -26,8 +26,10 @@ function renderContributionHeritageOptions(selectElement, sites) {
 }
 
 function resetSubmissionForm(form, profile) {
-  form.reset();
-  document.getElementById('contributorDisplayName').value = profile.display_name;
+  if (form) form.reset();
+
+  const name = document.getElementById('contributorDisplayName');
+  if (name && profile) name.value = profile.display_name;
 }
 
 /* ---------------------------------------------------------------------------
@@ -49,13 +51,13 @@ function collectStorySubmissionData() {
 function validateStorySubmission(formData) {
   return {
     heritageSiteId: validateRequired(formData.heritageSiteId, 'a heritage site'),
-    storyTitle: validateRequired(formData.title, 'a story title'),
-    storyContent: validateRequired(formData.content, 'your story'),
+    storyTitle: validateTextLength(formData.title, 'Story title', FORM_LIMITS.storyTitle),
+    storyContent: validateStoryContent(formData.content),
     suggestedClassification: formData.suggestedClassification
       ? validateAllowedValue(formData.suggestedClassification, STORY_CLASSIFICATIONS, 'suggested classification')
       : '',
     storySourceReference: validateOptionalUrlOrText(formData.sourceReference, 'source/reference'),
-    supportingPhoto: validateImageInput(document.getElementById('supportingPhoto'), false)
+    supportingPhoto: formData.supportingPhoto ? validateImageFile(formData.supportingPhoto) : ''
   };
 }
 
@@ -65,21 +67,25 @@ function validateStorySubmission(formData) {
 
 async function loadContributionHeritageSites() {
   const selectElement = document.getElementById('heritageSiteId');
-
   if (!selectElement || !getSupabaseClient()) {
-    return;
+    showAppMessage('submissionMessage', APP_MESSAGES.notConfigured, 'danger');
+    return false;
   }
-
   const { data, error } = await HeritageQueries.listActiveForPicker();
-
   if (error) {
     logAppError('Could not load heritage sites for submission.', error);
     selectElement.innerHTML = '<option value="">Could not load heritage sites</option>';
     showAppMessage('submissionMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+    return false;
   }
-
   renderContributionHeritageOptions(selectElement, data || []);
+  if (!data || !data.length) {
+    showAppMessage('submissionMessage', 'No active heritage sites are available yet. Please return later or contact an administrator.', 'warning');
+    // Nothing can be submitted without a site to attach the story to.
+    await showSystemInfo('No records available', 'There are no active heritage sites to contribute to yet. Please return later or contact an administrator.', 'OK');
+    return false;
+  }
+  return true;
 }
 
 function buildNewStoryRecord(formData, authenticatedUser, contributorProfile) {
@@ -106,7 +112,8 @@ function buildNewStoryRecord(formData, authenticatedUser, contributorProfile) {
 async function attachStorySupportingPhoto(story, contributorProfile, supportingPhoto, storyTitle) {
   const uploadResult = await uploadStoryImage(story.id, contributorProfile.id, supportingPhoto);
 
-  if (uploadResult.error) {
+  // An upload that reports no error but returns no path is still a failure.
+  if (uploadResult.error || !uploadResult.data || !uploadResult.data.path) {
     return {
       data: story,
       error: createAppError(APP_MESSAGES.storageFailed)
@@ -136,7 +143,11 @@ async function attachStorySupportingPhoto(story, contributorProfile, supportingP
   };
 }
 
-async function createStorySubmission(formData) {
+async function createStorySubmission(formData, onProgress) {
+  const invalid = Object.values(validateStorySubmission(formData)).find(Boolean);
+  if (invalid) return createErrorResult(invalid);
+  const imageError = await validateImageContents(formData.supportingPhoto);
+  if (imageError) return createErrorResult(imageError);
   if (!getSupabaseClient()) {
     return createErrorResult(APP_MESSAGES.notConfigured);
   }
@@ -157,7 +168,7 @@ async function createStorySubmission(formData) {
     buildNewStoryRecord(formData, authenticatedUser, contributorProfile)
   );
 
-  if (storyError) {
+  if (storyError || !story) {
     logAppError('Could not submit story.', storyError);
     return createErrorResult(getAppErrorMessage(storyError, APP_MESSAGES.unauthorizedSubmission));
   }
@@ -169,73 +180,97 @@ async function createStorySubmission(formData) {
     };
   }
 
-  return attachStorySupportingPhoto(story, contributorProfile, formData.supportingPhoto, formData.title);
+  if (onProgress) onProgress('Uploading your supporting photo...');
+  try {
+    return await attachStorySupportingPhoto(story, contributorProfile, formData.supportingPhoto, formData.title);
+  } catch (error) {
+    // Keep the successfully inserted story visible to the caller even when a
+    // browser/file API or a later media operation fails unexpectedly.
+    logAppError('Could not attach the submitted story photo.', error);
+    return { data: story, error: createAppError(APP_MESSAGES.storageFailed) };
+  }
 }
 
 async function prepareSubmissionPage() {
+  const button = document.getElementById('submissionButton');
+  const picker = document.getElementById('heritageSiteId');
+  if (button) button.disabled = true;
+  if (picker) picker.disabled = true;
   showAppMessage('submissionMessage', 'Checking contributor account...', 'info');
-
-  const profile = await requireContributor();
-
-  if (!profile) {
+  try {
+    const profile = await requireContributor();
+    if (!profile) return null;
+    const name = document.getElementById('contributorDisplayName');
+    if (name) name.value = profile.display_name;
+    if (!await loadContributionHeritageSites()) return null;
+    if (picker) picker.disabled = false;
+    if (button) button.disabled = false;
+    showAppMessage('submissionMessage', 'Ready for your story. It will be reviewed before appearing publicly.', 'info');
+    return profile;
+  } catch (error) {
+    showAppMessage('submissionMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
     return null;
   }
-
-  const contributorDisplayName = document.getElementById('contributorDisplayName');
-
-  if (contributorDisplayName) {
-    contributorDisplayName.value = profile.display_name;
-  }
-
-  await loadContributionHeritageSites();
-  showAppMessage('submissionMessage', 'Ready for your story submission.', 'success');
-  return profile;
 }
-
-/* ---------------------------------------------------------------------------
- * Event handling
- * ------------------------------------------------------------------------ */
 
 async function handleSubmissionFormSubmit(event) {
   event.preventDefault();
-
+  const form = event.currentTarget;
   const button = document.getElementById('submissionButton');
-
-  // Claimed before the first await, so a second click cannot start a second
-  // insert while this one is still in flight.
-  if (!claimButtonAction(button)) {
-    return;
-  }
-
-  clearFormValidation(event.target);
-
-  const profile = await requireContributor();
-
-  if (!profile) {
-    return;
-  }
-
-  const formData = collectStorySubmissionData();
-
-  if (!reportValidationResult(validateStorySubmission(formData), 'submissionMessage')) {
-    releaseButtonAction(button);
-    return;
-  }
-
-  setSubmitLoading(button, true, 'Submitting...', 'Submit for Review');
-  showAppMessage('submissionMessage', 'Submitting your story for review...', 'info');
-
-  const { data, error } = await createStorySubmission(formData);
-
-  if (error) {
+  if (!claimButtonAction(button)) return;
+  // Set only when the story row exists. The button then stays disabled, because
+  // pressing Submit again would create a second copy of the same story.
+  let storyCreated = false;
+  try {
+    clearFormValidation(form);
+    const formData = collectStorySubmissionData();
+    if (!reportValidationResult(validateStorySubmission(formData), 'submissionMessage')) return;
+    setFormBusy(form, true);
+    setSubmitLoading(button, true, 'Submitting story...', 'Submit for Review');
+    showAppMessage('submissionMessage', 'Checking your story and photo...', 'info');
+    const imageError = await validateImageContents(formData.supportingPhoto);
+    if (imageError) {
+      setFormBusy(form, false);
+      reportValidationResult({ supportingPhoto: imageError }, 'submissionMessage');
+      return;
+    }
+    const profile = await requireContributor();
+    if (!profile) return;
+    showAppMessage('submissionMessage', 'Submitting your story for review...', 'info');
+    const { data, error } = await createStorySubmission(formData, message => showAppMessage('submissionMessage', message, 'info'));
+    if (error && data) {
+      // The story insert succeeded; retrying the entire form would duplicate it.
+      storyCreated = true;
+      resetSubmissionForm(form, profile);
+      showAppMessage('submissionMessage', 'Your story was submitted for review, but the photo could not be attached. Do not submit the story again. Contact an administrator for help with the photo.', 'warning');
+      appendAppLink('submissionMessage', 'contributor/submissions.html', 'View My Submissions');
+      await showSystemWarning('Upload failed', 'Your story was submitted for review, but the photo could not be attached. Do not submit the story again. Contact an administrator for help with the photo.');
+      return;
+    }
+    if (error) {
+      const message = getAppErrorMessage(error, APP_MESSAGES.saveFailed);
+      showAppMessage('submissionMessage', message + (message === APP_MESSAGES.networkFailed ? ' Check My Submissions before retrying, in case the story was saved.' : ''), 'danger');
+      appendAppLink('submissionMessage', 'contributor/submissions.html', 'Check My Submissions');
+      await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+      return;
+    }
+    storyCreated = true;
+    resetSubmissionForm(form, profile);
+    showAppMessage('submissionMessage', 'Story submitted successfully. Status: Submitted. An administrator will review it before publication.', 'success');
+    appendAppLink('submissionMessage', 'contributor/submissions.html', 'View My Submissions');
+    await showSystemSuccess('Story submitted', 'Your story was submitted with the status Submitted. An administrator will review it before it appears publicly.');
+  } catch (error) {
+    logAppError('Story submission failed.', error);
     showAppMessage('submissionMessage', getAppErrorMessage(error, APP_MESSAGES.saveFailed), 'danger');
-    setSubmitLoading(button, false, 'Submitting...', 'Submit for Review');
-    return;
+    await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+  } finally {
+    setFormBusy(form, false);
+    setSubmitLoading(button, false, '', 'Submit for Review');
+    if (storyCreated && button) {
+      button.disabled = true;
+      button.textContent = 'Story submitted';
+    }
   }
-
-  resetSubmissionForm(event.target, profile);
-  showAppMessage('submissionMessage', `Story submitted successfully. Current status: ${data.status}.`, 'success');
-  setSubmitLoading(button, false, 'Submitting...', 'Submit for Review');
 }
 
 const submissionForm = document.getElementById('submissionForm');

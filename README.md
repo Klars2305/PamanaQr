@@ -9,7 +9,7 @@ Visitors can browse active heritage sites, search public heritage information, s
 - HTML
 - CSS
 - JavaScript
-- Bootstrap
+- Bootstrap 5.3.3
 - Supabase PostgreSQL
 - Supabase Authentication
 - Supabase Storage
@@ -77,18 +77,20 @@ Every page loads the same base in this order, then its own page scripts:
 
 ```text
 config.js → core.js → supabase.js → queries.js → session.js
-          → storage.js → validation.js → search-matching.js → auth.js
+          → storage.js → validation.js → ui.js → search-matching.js → auth.js
 ```
 
 `core.js` must come before `supabase.js`, which reads a shared message constant
 while starting up. Everything else is resolved when it is called, not when it
 loads.
 
+On the two new recovery pages, `password-recovery.js` is loaded after `core.js` and before `supabase.js`. It registers the recovery form handlers and captures incoming recovery context; it does not replace the existing client.
+
 Two rules are worth knowing before changing this code:
 
 - All database access goes through `js/queries.js`. Nothing else calls Supabase
   tables directly.
-- All generated markup is built with the `` html`` `` tag in `js/core.js`, which
+- Generated HTML templates use the `` html`` `` tag in `js/core.js`, which
   escapes interpolated values. `trustedHtml` is the only way to opt out.
 
 ## Safe Configuration
@@ -264,7 +266,7 @@ Security:
 
 ## UI polish package
 
-The shared presentation system, HTML, logo, icons, and decorative assets have been polished. Existing JavaScript and SQL are unchanged. Bootstrap remains pinned to 5.3.3 in the HTML. See [the implementation report](docs/UI_POLISH_REPORT.md), [design-system guide](docs/DESIGN_SYSTEM.md), and [asset notes](docs/ASSET_PROVENANCE.md).
+The earlier UI-only stage polished the shared presentation system, HTML, logo, icons, and decorative assets. Its JavaScript-unchanged claim applies to that historical stage only. The current HCI update intentionally edits JavaScript for validation, recovery, confirmations, and feedback; SQL remains unchanged. Bootstrap remains pinned to 5.3.3 in the HTML. See [the implementation report](docs/UI_POLISH_REPORT.md), [design-system guide](docs/DESIGN_SYSTEM.md), and [asset notes](docs/ASSET_PROVENANCE.md).
 
 Run the optional read-only preservation check from the project root:
 
@@ -272,4 +274,30 @@ Run the optional read-only preservation check from the project root:
 python tests/check_ui_contracts.py
 ```
 
-This Python-standard-library utility checks the original JS/SQL hashes, DOM contracts, form defaults, and local asset references. It is not loaded by the website. It does not test live Supabase behavior. Read the verification limitations and complete the live checklist in `TEST_CASES.md` before deployment. Do not reinitialize the database just to install this visual update.
+This Python-standard-library utility now uses `tests/hci-contracts.json`: it preserves the uploaded DOM/form/link/script-order contracts and hashes of protected queries, SQL, configuration, and unchanged scripts. The original `ui-contracts.json` is retained as historical evidence; authorized HCI JavaScript edits are explicitly listed in the new manifest. It is not loaded by the website. It does not test live Supabase behavior. Read the verification limitations and complete the live checklist in `TEST_CASES.md` before deployment. Do not reinitialize the database just to install this visual update.
+
+
+## HCI, validation, recovery, and tests
+
+The current update adds `forgot-password.html`, `reset-password.html`, `js/ui.js`, and `js/password-recovery.js`. Registration/reset use the requested 8-64/uppercase/lowercase/number password rule and matching confirmation. Existing-password login is not subjected to the new rule. Story title is 5-100 characters; story body is 50-3000; heritage name is 3-150; short description is 1-500. Existing required fields and classification/status values remain intact. Contributor suggested classification remains optional; final classification is required for publication. Rejection now requires an explanatory review note.
+
+Password toggles, counters, photo previews, pending states, duplicate-submit guards, friendly errors, and reusable Bootstrap confirmations are shared rather than implemented separately on every page. Partial photo failures explicitly distinguish a saved record from a failed attachment. No new password table, SQL migration, framework, or live test record is created.
+
+**Before password recovery goes live:** follow [PASSWORD_RECOVERY_SETUP.md](docs/PASSWORD_RECOVERY_SETUP.md), including the exact Supabase redirect allowlist and a check of the hosted password/email settings. The admin access page still leads to the existing shared login; its account model was not replaced.
+
+### Run checks
+
+From the project folder:
+
+```bash
+python tests/check_ui_contracts.py
+node --test tests/unit.test.cjs
+python -m pip install -r tests/requirements.txt
+python tests/check_assets.py
+python -m playwright install chromium
+python tests/browser_hci.py
+```
+
+Set `--chromium /path/to/chromium` when using a system browser. Browser tests use in-memory navigation/storage adapters, a local Supabase double, offline Bootstrap 5.3.6, and a test-only QR encoder. They do **not** connect to the hosted project. Production still imports Bootstrap 5.3.3 and the original Supabase/QR libraries. These adapters exist only in `tests/`, are never imported by application HTML, and should be excluded from the deployed public folder along with `test-results/`.
+
+Read [the current HCI report](docs/HCI_IMPLEMENTATION_REPORT.md) and [TEST_CASES.md](TEST_CASES.md) for actual results and remaining live acceptance tests. The earlier UI report and QA files remain historical, not replacement evidence for this update.

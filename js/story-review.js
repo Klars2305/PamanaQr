@@ -24,16 +24,34 @@ function setReviewActionButtonsDisabled(isDisabled) {
 }
 
 async function renderStorageReviewImage(imageElement, imagePath, altText) {
-  const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
-
-  if (error) {
-    logAppError('Could not load review photograph.', error);
+  if (!imageElement || !imagePath) {
     return;
   }
 
-  imageElement.src = safeImageUrl(signedUrl);
-  imageElement.alt = altText;
-  imageElement.classList.remove('d-none');
+  try {
+    const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
+
+    if (error) {
+      logAppError('Could not load review photograph.', error);
+      return;
+    }
+
+    const safeUrl = safeImageUrl(signedUrl);
+
+    if (!safeUrl) {
+      return;
+    }
+
+    imageElement.addEventListener('error', function () {
+      imageElement.classList.add('d-none');
+    }, { once: true });
+
+    imageElement.src = safeUrl;
+    imageElement.alt = altText;
+    imageElement.classList.remove('d-none');
+  } catch (error) {
+    logAppError('Could not load review photograph.', error);
+  }
 }
 
 function createReviewPhotoPanel(item) {
@@ -63,53 +81,73 @@ function renderReviewPhotographs(mediaItems) {
 
   setSafeHtml(photoBox, mediaItems.map(createReviewPhotoPanel));
 
-  document.querySelectorAll('[data-review-photo]').forEach(function (image) {
+  // Scoped to the panel just filled, so listeners and image loads cannot attach
+  // to matching elements elsewhere on the page.
+  photoBox.querySelectorAll('[data-review-photo]').forEach(function (image) {
     renderStorageReviewImage(image, image.dataset.reviewPhoto, image.alt);
   });
+}
+
+// A missing element used to throw and abandon the rest of the render, leaving
+// the page half-filled with its action buttons in an unknown state.
+function setReviewFieldValue(elementId, value) {
+  const field = document.getElementById(elementId);
+
+  if (field) {
+    field.value = value;
+  }
+}
+
+function setReviewFieldDisabled(elementId, isDisabled) {
+  const field = document.getElementById(elementId);
+
+  if (field) {
+    field.disabled = isDisabled;
+  }
 }
 
 function renderReviewStorySummary(story) {
   const heritage = story.heritage_sites || {};
 
-  document.getElementById('reviewStoryTitle').textContent = story.title || '';
+  setText('reviewStoryTitle', story.title, '');
   setSafeHtml(document.getElementById('reviewStoryStatus'), createStatusBadge(story.status));
-  document.getElementById('reviewStoryBody').textContent = story.content || '';
-  document.getElementById('reviewHeritageName').textContent = heritage.name || 'Heritage site unavailable';
-  document.getElementById('reviewHeritageLocation').textContent = [
+  setText('reviewStoryBody', story.content, '');
+  setText('reviewHeritageName', heritage.name, 'Heritage site unavailable');
+  setText('reviewHeritageLocation', [
     heritage.location,
     heritage.historical_period,
     heritage.short_description
-  ].filter(Boolean).join(' | ');
-  document.getElementById('reviewContributorName').textContent = story.contributor_display_name || 'Community Contributor';
-  document.getElementById('reviewSourceReference').textContent = story.source_reference || 'No source/reference provided.';
-  document.getElementById('reviewSuggestedClassification').textContent = story.suggested_classification || 'No classification suggested.';
+  ].filter(Boolean).join(' | '), '');
+  setText('reviewContributorName', story.contributor_display_name, 'Community Contributor');
+  setText('reviewSourceReference', story.source_reference, 'No source/reference provided.');
+  setText('reviewSuggestedClassification', story.suggested_classification, 'No classification suggested.');
 }
 
 function renderReviewDecision(story) {
-  document.getElementById('reviewFinalClassification').textContent = story.classification || 'Not classified';
-  document.getElementById('reviewedAt').textContent = story.reviewed_at ? new Date(story.reviewed_at).toLocaleString() : 'Not reviewed';
-  document.getElementById('reviewNotesDisplay').textContent = story.review_notes || 'No review notes.';
+  setText('reviewFinalClassification', story.classification, 'Not classified');
+  setText('reviewedAt', story.reviewed_at ? new Date(story.reviewed_at).toLocaleString() : '', 'Not reviewed');
+  setText('reviewNotesDisplay', story.review_notes, 'No review notes.');
 }
 
 function renderReviewPageHeading(story) {
   const canReview = story.status === STORY_STATUSES.submitted;
 
-  document.getElementById('reviewStoryHeading').textContent = canReview
+  setText('reviewStoryHeading', canReview
     ? 'Review Story'
-    : `${story.status === STORY_STATUSES.published ? 'Published' : 'Rejected'} Story Details`;
-  document.getElementById('reviewStoryDescription').textContent = canReview
+    : `${story.status === STORY_STATUSES.published ? 'Published' : 'Rejected'} Story Details`, '');
+  setText('reviewStoryDescription', canReview
     ? 'Classify, publish, or reject a community story submission.'
-    : 'View the story submission and its review information.';
+    : 'View the story submission and its review information.', '');
 }
 
 // Only a still-submitted story can be acted on. Everything else is read-only.
 function applyReviewFormState(story) {
   const canReview = story.status === STORY_STATUSES.submitted;
 
-  document.getElementById('finalClassification').value = story.classification || story.suggested_classification || '';
-  document.getElementById('reviewNotes').value = story.review_notes || '';
-  document.getElementById('finalClassification').disabled = !canReview;
-  document.getElementById('reviewNotes').disabled = !canReview;
+  setReviewFieldValue('finalClassification', story.classification || story.suggested_classification || '');
+  setReviewFieldValue('reviewNotes', story.review_notes || '');
+  setReviewFieldDisabled('finalClassification', !canReview);
+  setReviewFieldDisabled('reviewNotes', !canReview);
   setReviewActionButtonsDisabled(!canReview);
 
   if (!canReview) {
@@ -151,7 +189,9 @@ function collectReviewDecision(action) {
 // Publishing requires a classification from the shared list; rejecting does not.
 function validateReviewDecision(decision) {
   const errors = {
-    reviewNotes: validateOptionalUrlOrText(decision.reviewNotes, 'review notes')
+    reviewNotes: decision.action === 'reject' && !decision.reviewNotes
+      ? 'Please add review notes explaining why this story is being rejected.'
+      : validateOptionalUrlOrText(decision.reviewNotes, 'review notes')
   };
 
   if (decision.action === 'publish') {
@@ -183,43 +223,63 @@ function buildStoryReviewUpdates(decision, adminProfile) {
  * ------------------------------------------------------------------------ */
 
 async function loadAdminReviewStoryPage() {
+  setReviewActionButtonsDisabled(true);
   showAppMessage('reviewStoryMessage', 'Loading story submission...', 'info');
 
-  const adminProfile = await requireAdmin();
+  let rendered = false;
 
-  if (!adminProfile) {
-    return;
-  }
+  try {
+    const adminProfile = await requireAdmin();
 
-  const authenticatedAdmin = await getCurrentUser();
+    if (!adminProfile) {
+      return;
+    }
 
-  if (!authenticatedAdmin || authenticatedAdmin.id !== adminProfile.id) {
-    showAppMessage('reviewStoryMessage', APP_MESSAGES.unauthorizedAdminAction, 'danger');
-    return;
-  }
+    const authenticatedAdmin = await getCurrentUser();
 
-  const storyId = getReviewStoryId();
+    if (!authenticatedAdmin || authenticatedAdmin.id !== adminProfile.id) {
+      showAppMessage('reviewStoryMessage', APP_MESSAGES.unauthorizedAdminAction, 'danger');
+      await showSystemWarning('Unauthorized action', APP_MESSAGES.unauthorizedAdminAction);
+      return;
+    }
 
-  if (!storyId) {
-    showAppMessage('reviewStoryMessage', 'No story submission was selected.', 'warning');
-    return;
-  }
+    const storyId = getReviewStoryId();
 
-  const { data, error } = await StoryQueries.getForReview(storyId);
+    if (!storyId) {
+      showAppMessage('reviewStoryMessage', 'No story submission was selected.', 'warning');
+      appendAppLink('reviewStoryMessage', 'admin/submissions.html', 'Return to Submissions');
+      return;
+    }
 
-  if (error) {
+    const { data, error } = await StoryQueries.getForReview(storyId);
+
+    if (error) {
+      logAppError('Could not load story for review.', error);
+      showAppMessage('reviewStoryMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    if (!data) {
+      showAppMessage('reviewStoryMessage', 'This story record could not be found.', 'warning');
+      appendAppLink('reviewStoryMessage', 'admin/submissions.html', 'Return to Submissions');
+      return;
+    }
+
+    fillReviewPage(data);
+    rendered = true;
+
+    if (data.status === STORY_STATUSES.submitted) {
+      showAppMessage('reviewStoryMessage', 'Story loaded. Review the content and references before making a decision.', 'info');
+    }
+  } catch (error) {
     logAppError('Could not load story for review.', error);
     showAppMessage('reviewStoryMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+  } finally {
+    // A story that never rendered must not leave Publish or Reject usable.
+    if (!rendered) {
+      setReviewActionButtonsDisabled(true);
+    }
   }
-
-  if (!data) {
-    showAppMessage('reviewStoryMessage', 'This story record could not be found.', 'warning');
-    return;
-  }
-
-  fillReviewPage(data);
-  showAppMessage('reviewStoryMessage', 'Story submission loaded.', 'success');
 }
 
 async function saveStoryReview(decision, adminProfile) {
@@ -229,7 +289,7 @@ async function saveStoryReview(decision, adminProfile) {
   // No row back means the story was no longer submitted, or the administrator
   // policy refused the write. Both are reported the same way.
   if (error || !data) {
-    return error || createAppError(APP_MESSAGES.unauthorizedAdminAction);
+    return error || createAppError('This story may already have been reviewed. Return to Submissions and refresh before trying again.');
   }
 
   return null;
@@ -240,45 +300,58 @@ async function saveStoryReview(decision, adminProfile) {
  * ------------------------------------------------------------------------ */
 
 async function updateStoryReviewStatus(action) {
-  const actionButtons = getReviewActionButtons();
-
-  // Claimed before the first await, so a double click cannot send two review
-  // decisions for the same story.
-  if (!claimButtonActions(actionButtons)) {
-    return;
+  if (!['publish', 'reject'].includes(action)) return;
+  const buttons = getReviewActionButtons();
+  if (!claimButtonActions(buttons)) return;
+  const form = document.getElementById('reviewStoryForm');
+  const activeButton = action === 'publish' ? buttons[0] : buttons[1];
+  let completed = false;
+  try {
+    clearFormValidation(form);
+    const decision = collectReviewDecision(action);
+    if (!reportValidationResult(validateReviewDecision(decision), 'reviewStoryMessage')) return;
+    await showConfirmationModal({
+      title: action === 'publish' ? 'Publish Story?' : 'Reject Story?',
+      message: action === 'publish'
+        ? 'This story will become visible to public visitors. Please confirm that you have checked its content, source, and classification.'
+        : 'The contributor will see that this submission was rejected. The story will not appear publicly.',
+      confirmText: action === 'publish' ? 'Publish Story' : 'Reject Story',
+      cancelText: 'Keep Reviewing',
+      variant: action === 'publish' ? 'success' : 'danger',
+      trigger: activeButton,
+      onConfirm: async function () {
+        setFormBusy(form, true);
+        setSubmitLoading(activeButton, true, action === 'publish' ? 'Publishing story...' : 'Rejecting story...', '');
+        const profile = await requireAdmin();
+        if (!profile) return;
+        showAppMessage('reviewStoryMessage', action === 'publish' ? 'Publishing story...' : 'Rejecting story...', 'info');
+        const failure = await saveStoryReview(decision, profile);
+        if (failure) throw failure;
+        completed = true;
+        const message = action === 'publish' ? 'Story published successfully.' : 'Story rejected.';
+        showAppMessage('reviewStoryMessage', message, 'success');
+        rememberAppFeedback(message, 'success');
+        // Same destination as before; opened once the administrator acknowledges.
+        await showSystemSuccess(
+          action === 'publish' ? 'Story published' : 'Story rejected',
+          action === 'publish'
+            ? 'The story is now visible to public visitors. Returning to Submissions.'
+            : 'The contributor will see that this submission was rejected. Returning to Submissions.',
+          'Back to Submissions'
+        );
+        window.location.href = `submissions.html?status=${STORY_STATUSES.submitted}`;
+      }
+    });
+  } catch (error) {
+    logAppError('Could not update story review status.', error);
+    showAppMessage('reviewStoryMessage', getAppErrorMessage(error, APP_MESSAGES.saveFailed), 'danger');
+    await showSystemErrorFor(error, 'Failed to save', APP_MESSAGES.saveFailed);
+  } finally {
+    setFormBusy(form, false);
+    setSubmitLoading(activeButton, false, '', action === 'publish' ? 'Publish Story' : 'Reject Story');
+    if (completed) setReviewActionButtonsDisabled(true);
+    else releaseButtonActions(buttons);
   }
-
-  clearFormValidation(document.getElementById('reviewStoryForm'));
-
-  const decision = collectReviewDecision(action);
-
-  if (!reportValidationResult(validateReviewDecision(decision), 'reviewStoryMessage')) {
-    releaseButtonActions(actionButtons);
-    return;
-  }
-
-  const adminProfile = await requireAdmin();
-
-  if (!adminProfile) {
-    return;
-  }
-
-  showAppMessage('reviewStoryMessage', action === 'publish' ? 'Publishing story...' : 'Rejecting story...', 'info');
-
-  const failure = await saveStoryReview(decision, adminProfile);
-
-  if (failure) {
-    logAppError('Could not update story review status.', failure);
-    showAppMessage('reviewStoryMessage', getAppErrorMessage(failure, APP_MESSAGES.unauthorizedAdminAction), 'danger');
-    releaseButtonActions(actionButtons);
-    return;
-  }
-
-  showAppMessage('reviewStoryMessage', action === 'publish' ? 'Story published successfully.' : 'Story rejected successfully.', 'success');
-
-  setTimeout(function () {
-    window.location.href = `submissions.html?status=${STORY_STATUSES.submitted}`;
-  }, 1200);
 }
 
 const publishStoryButton = document.getElementById('publishStoryButton');
@@ -299,3 +372,6 @@ if (rejectStoryButton) {
 if (document.body.dataset.page === 'admin-review-story') {
   loadAdminReviewStoryPage();
 }
+
+const reviewDecisionForm = document.getElementById('reviewStoryForm');
+if (reviewDecisionForm) reviewDecisionForm.addEventListener('submit', event => event.preventDefault());

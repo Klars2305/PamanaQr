@@ -1,0 +1,5 @@
+PASS: 15 pages preserve their original contracts.
+PASS: 10 protected files match the uploaded original.
+PASS: local assets, ARIA targets, form defaults, IDs, original script order, role/status constants.
+Authorized HCI JavaScript edits: 14; no blanket JavaScript-unchanged claim.
+This is a static preservation check, not live authentication, RLS, storage, or QR acceptance testing.

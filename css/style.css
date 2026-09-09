@@ -720,7 +720,7 @@ textarea.form-control {
   --bs-alert-bg: var(--pamana-danger-bg);
 }
 
-[id$="Message"].alert-info::before {
+[id$="Message"].alert-info:not([data-loading])::before {
   content: "";
   display: inline-block;
   width: .85rem;
@@ -2615,9 +2615,6 @@ textarea.form-control {
   .admin-stats .pamana-stat-card {
     padding: 1.15rem;
   }
-  .admin-topbar .navbar-nav > .nav-link {
-    font-size: .73rem;
-  }
   .review-layout {
     grid-template-columns: minmax(0,1fr);
   }
@@ -2848,4 +2845,242 @@ main[tabindex="-1"]:focus {
   .story-photo-frame {
     break-inside: avoid;
   }
+}
+
+/* 16 / HCI: clear feedback, recoverable forms and deliberate decisions ----- */
+.pamana-password-field { position: relative; min-width: 0; }
+.submission-photo { width: 180px; max-width: 100%; white-space: normal; }
+.submission-photo img { display: block; width: 180px; max-width: 100%; height: 120px; object-fit: contain; border: 1px solid var(--pamana-border); border-radius: 10px; background: var(--pamana-sage-light); }
+.submission-photo figcaption { margin-top: .35rem; }
+.pamana-password-field .form-control { padding-right: 3.65rem; background-image: none; }
+.pamana-password-toggle {
+  position: absolute; right: .3rem; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 0; border-radius: 10px; background: transparent; color: var(--pamana-forest);
+}
+.pamana-password-toggle:hover { background: var(--pamana-sage-light); }
+.pamana-password-toggle:focus-visible { outline: 3px solid var(--pamana-forest); outline-offset: 2px; }
+.pamana-password-toggle:disabled { opacity: .5; cursor: not-allowed; }
+.pamana-password-rules { padding: 1rem; background: var(--pamana-sage-light); border-radius: var(--radius-sm); }
+.pamana-password-rules li { display: flex; align-items: baseline; justify-content: space-between; gap: .65rem; padding: .25rem 0; font-size: .875rem; }
+.requirement-status { flex: 0 0 auto; color: var(--pamana-muted); font-size: .75rem; }
+.requirement-met .requirement-status { color: var(--pamana-success); font-weight: 700; }
+.requirement-met .requirement-status::before { content: "\2713 "; }
+.pamana-character-counter { margin: .4rem 0; font-variant-numeric: tabular-nums; }
+.pamana-file-preview { padding: .9rem; margin: .75rem 0; background: var(--pamana-blue-light); border-radius: var(--radius-sm); }
+.pamana-file-preview img { display: block; max-width: 100%; width: auto; max-height: 240px; margin: 0 auto; border-radius: 8px; object-fit: contain; }
+.pamana-file-preview figcaption { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-top: .75rem; font-size: .875rem; }
+.pamana-file-preview figcaption span { overflow-wrap: anywhere; }
+.pamana-touch-link, .pamana-feedback-link { display: inline-flex; align-items: center; min-height: 44px; }
+.pamana-feedback-link { display: flex; width: fit-content; font-weight: 600; text-decoration: underline; margin-top: .25rem; }
+#pamanaGlobalFeedback { grid-column: 1 / -1; }
+#pamanaConfirmModal .modal-header { background: var(--pamana-sage-light); border-bottom: 0; padding: 1.1rem 1.25rem; }
+#pamanaConfirmModal .modal-body { padding: 1.25rem; line-height: 1.65; }
+#pamanaConfirmModal .modal-footer { padding: 1rem 1.25rem; gap: .75rem; }
+#pamanaConfirmModal .btn-close { box-sizing: border-box; min-width: 44px; min-height: 44px; padding: .75rem; }
+.pamana-confirm-actions .btn { min-width: 116px; margin: 0; }
+#pamanaConfirmAccept.btn-danger { margin-left: auto; }
+#pamanaConfirmDescription { overflow-wrap: anywhere; }
+#resetPasswordFields { min-width: 0; }
+#siteSlugPreview { overflow-wrap: anywhere; font-family: var(--pamana-sans); }
+form[data-busy="true"] { cursor: progress; }
+form .invalid-feedback { line-height: 1.5; overflow-wrap: anywhere; }
+#qrMessage { text-align: left; font-size: .9rem; }
+@media (max-width: 575.98px) {
+  .pamana-password-rules { padding: .875rem; }
+  .pamana-confirm-actions .btn { flex: 1 1 100%; }
+  #pamanaConfirmAccept.btn-danger { margin-left: 0; }
+  .pamana-file-preview .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner-border { animation: none; border-right-color: currentColor; }
+  .modal.fade .modal-dialog { transition: none; }
+}
+
+/* Shared notification dialog (#systemFeedbackModal).
+   Status is carried by an icon shape and a written label as well as colour. */
+.system-modal .modal-content { border-top: 6px solid var(--pamana-neutral); }
+.system-modal .system-modal-body { padding: 1.75rem 1.5rem 1.25rem; text-align: left; }
+.system-modal-status {
+  display: flex;
+  gap: .625rem;
+  align-items: center;
+  margin: 0 0 .875rem;
+}
+.system-modal-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--pamana-neutral-bg);
+  color: var(--pamana-neutral);
+}
+.system-modal-glyph {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.system-modal-status-label {
+  font-family: var(--pamana-sans);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pamana-neutral);
+}
+.system-modal-title {
+  margin: 0 0 .5rem;
+  font-family: var(--pamana-serif);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  color: var(--pamana-text);
+  text-wrap: balance;
+}
+.system-modal-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--pamana-muted);
+  overflow-wrap: anywhere;
+}
+.system-modal .system-modal-actions {
+  gap: .5rem;
+  padding: 0 1.5rem 1.5rem;
+  border-top: 0;
+}
+.system-modal .system-modal-actions .btn { min-width: 128px; min-height: 44px; margin: 0; }
+
+.system-modal[data-system-modal-type="success"] .modal-content { border-top-color: var(--pamana-success); }
+.system-modal[data-system-modal-type="success"] .system-modal-icon { background: var(--pamana-success-bg); color: var(--pamana-success); }
+.system-modal[data-system-modal-type="success"] .system-modal-status-label { color: var(--pamana-success); }
+
+.system-modal[data-system-modal-type="error"] .modal-content { border-top-color: var(--pamana-danger); }
+.system-modal[data-system-modal-type="error"] .system-modal-icon { background: var(--pamana-danger-bg); color: var(--pamana-danger); }
+.system-modal[data-system-modal-type="error"] .system-modal-status-label { color: var(--pamana-danger); }
+
+.system-modal[data-system-modal-type="warning"] .modal-content { border-top-color: var(--pamana-warning); }
+.system-modal[data-system-modal-type="warning"] .system-modal-icon { background: var(--pamana-warning-bg); color: var(--pamana-warning); }
+.system-modal[data-system-modal-type="warning"] .system-modal-status-label { color: var(--pamana-warning); }
+
+.system-modal[data-system-modal-type="info"] .modal-content { border-top-color: var(--pamana-info); }
+.system-modal[data-system-modal-type="info"] .system-modal-icon { background: var(--pamana-info-bg); color: var(--pamana-info); }
+.system-modal[data-system-modal-type="info"] .system-modal-status-label { color: var(--pamana-info); }
+
+@media (max-width: 575.98px) {
+  .system-modal .system-modal-body { padding: 1.5rem 1.25rem 1rem; }
+  .system-modal .system-modal-actions { padding: 0 1.25rem 1.25rem; }
+  .system-modal .system-modal-actions .btn { flex: 1 1 100%; }
+  .system-modal-title { font-size: 1.2rem; }
+}
+@media (forced-colors: active) {
+  .system-modal .modal-content { border: 1px solid canvastext; }
+  .system-modal-icon { border: 1px solid canvastext; }
+}
+
+/* 18 / Heritage authentication. Scoped to the public account pages. */
+.pamana-auth-page { background: var(--pamana-cream); }
+/* Navbar inherits the site's shared sizing, gutters and sticky behavior. */
+.pamana-auth-page .auth-shell.pamana-auth-shell { position: relative; display: block; max-width: none; padding: 0; isolation: isolate; overflow: clip; }
+.pamana-auth-visual { position: relative; height: 190px; background: var(--pamana-blue); }
+.pamana-auth-visual-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 38% 42%; }
+.auth-register-page .pamana-auth-visual-image { object-position: 65% 50%; }
+.pamana-auth-wave { position: absolute; inset: auto 0 -1px; width: 100%; height: 35px; color: var(--pamana-cream); }
+.pamana-auth-motto { display: none; }
+.pamana-auth-content { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; max-width: var(--content-width); padding: .5rem calc(var(--bs-gutter-x) * .5) 1.5rem; }
+.pamana-auth-story { min-width: 0; }
+.pamana-auth-story .home-eyebrow { margin-bottom: .6rem; font-size: .66rem; letter-spacing: .16em; }
+.pamana-auth-story h2 { margin: 0; font-family: var(--pamana-serif); font-size: clamp(1.5rem, 5vw, 2.3rem); font-weight: 500; line-height: 1.12; letter-spacing: -.045em; }
+.pamana-auth-description { max-width: 43ch; margin: .85rem 0 0; color: var(--pamana-muted); font-size: .875rem; line-height: 1.75; }
+.pamana-auth-feature-list { display: none; }
+.pamana-auth-page .pamana-auth-card { min-width: 0; padding: 1.5rem 1.25rem; border: 1px solid rgb(23 76 58 / 8%); border-radius: 22px; background: var(--pamana-surface); box-shadow: 0 16px 48px rgb(23 76 58 / 7%); }
+.pamana-auth-page .pamana-auth-title { max-width: none; margin: 0; font-family: var(--pamana-serif); font-size: clamp(1.75rem, 3vw, 2.2rem); line-height: 1.18; letter-spacing: -.04em; font-weight: 500; }
+.pamana-auth-page .pamana-auth-subtitle { margin: .5rem 0 1rem; font-size: .9rem; }
+.pamana-auth-form, .pamana-auth-password-fields { display: grid; gap: .875rem; }
+/* One spacing rhythm replaces accumulated Bootstrap paragraph/field margins. */
+.pamana-auth-form > * { margin: 0 !important; }
+.pamana-auth-form .form-notice { margin-bottom: 1rem; font-size: .75rem; color: var(--pamana-muted); }
+.pamana-auth-form .form-label { margin-bottom: .4rem; font-size: .8rem; font-weight: 600; }
+.pamana-auth-field { position: relative; }
+.pamana-auth-field > .pamana-icon { position: absolute; z-index: 2; top: 16px; left: 14px; width: 19px; height: 19px; color: var(--pamana-muted); pointer-events: none; }
+.pamana-auth-form .form-control { min-height: 52px; padding-left: 2.7rem; border-radius: 10px; background-color: #fffefa; font-size: 1rem; box-shadow: inset 0 1px 2px rgb(23 76 58 / 2%); transition: border-color 180ms ease, box-shadow 180ms ease; }
+.pamana-auth-form .form-control::placeholder { color: #6b756f; font-size: .875rem; }
+.pamana-auth-form .form-control:focus { border-color: var(--pamana-forest); box-shadow: 0 0 0 3px rgb(23 76 58 / 16%); }
+.pamana-auth-form .form-control.is-invalid { border-color: var(--pamana-danger); }
+.pamana-auth-form .form-control.is-valid { border-color: var(--pamana-success); }
+.pamana-auth-form .form-control:disabled { background-color: var(--pamana-sage-light); opacity: .75; cursor: wait; }
+.pamana-auth-form .btn-success { min-height: 52px; display: flex; align-items: center; justify-content: center; gap: .7rem; border-radius: 11px; background: var(--pamana-forest); border-color: var(--pamana-forest); box-shadow: 0 4px 10px rgb(23 76 58 / 8%); font-size: .9rem; transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
+.pamana-auth-form .btn-success:hover { background: var(--pamana-forest-dark); box-shadow: 0 6px 14px rgb(23 76 58 / 15%); }
+.pamana-auth-form .btn-success:active { transform: translateY(1px); background: var(--pamana-forest-dark); }
+.pamana-auth-form .btn-success:disabled { opacity: .65; cursor: wait; transform: none; }
+.pamana-auth-page :is(a, button):focus-visible { outline: 3px solid var(--pamana-forest); outline-offset: 4px; }
+.pamana-auth-form .btn-success:focus-visible { outline: 3px solid var(--pamana-forest); outline-offset: 4px; box-shadow: none; }
+.pamana-auth-form .pamana-password-toggle { transition: background-color 180ms ease; }
+.pamana-auth-form .pamana-password-toggle:active { background: var(--pamana-sage); }
+.pamana-auth-form .auth-switch { font-size: .8rem; line-height: 1.7; }
+.pamana-auth-form :is(.auth-switch a, .pamana-touch-link) { text-decoration: underline; text-underline-offset: 3px; }
+.pamana-auth-form .pamana-touch-link { font-size: .8rem; }
+.pamana-auth-form .pamana-password-rules { padding: .85rem; border: 1px solid var(--pamana-border); background: #f0f4ed; }
+.pamana-auth-form .pamana-password-rules h2 { font-family: var(--pamana-sans); font-size: .8rem; font-weight: 600; }
+.pamana-auth-form .pamana-password-rules li { gap: .4rem; padding-block: .15rem; font-size: .75rem; }
+.pamana-auth-form .requirement-status { font-size: .65rem; }
+.pamana-auth-form .form-text { font-size: .75rem; line-height: 1.6; }
+.pamana-auth-form .pamana-password-rules .form-text { margin-top: .5rem; }
+.pamana-auth-form .alert { font-size: .875rem; overflow-wrap: anywhere; }
+.pamana-auth-content > .pamana-helper-links { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .25rem .8rem; margin: 0; font-size: .75rem; }
+.pamana-auth-content > .pamana-helper-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.pamana-auth-landscape { position: absolute; z-index: 0; inset: auto 0 0; height: 180px; pointer-events: none; background: radial-gradient(ellipse at 12% 180%, #dce5d7 0 55%, transparent 55.3%), radial-gradient(ellipse at 90% 210%, #e7ecdf 0 63%, transparent 63.3%); }
+.pamana-auth-decoration { position: absolute; bottom: 22px; width: 145px; height: auto; opacity: .45; }
+.pamana-auth-decoration:first-child { left: -75px; }
+.pamana-auth-decoration:last-child { right: -75px; transform: scaleX(-1); }
+.pamana-auth-page .site-footer { position: relative; margin-top: 0; background: var(--pamana-cream); font-size: .75rem; }
+@media (min-width: 576px) {
+  .pamana-auth-visual { height: 270px; }
+  .pamana-auth-content { max-width: 640px; }
+  .pamana-auth-page .pamana-auth-card { padding: 1.75rem; }
+}
+@media (min-width: 768px) {
+  .pamana-auth-visual { height: 340px; }
+  .pamana-auth-visual-image { object-position: center 42%; }
+  .pamana-auth-content { max-width: 700px; }
+  .pamana-auth-story h2 { font-size: 2.5rem; }
+}
+@media (min-width: 992px) {
+  .pamana-auth-visual { height: clamp(370px, 34vw, 480px); }
+  .pamana-auth-visual-image { object-position: 38% 28%; }
+  .pamana-auth-wave { height: 90px; }
+  .pamana-auth-motto { position: absolute; display: block; right: 20%; top: 9%; margin: 0; color: var(--pamana-forest-dark); font-family: var(--pamana-serif); font-style: italic; font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.2; text-align: center; transform: rotate(-5deg); text-shadow: 0 1px 10px #fff; }
+  .pamana-auth-motto em { display: inline-block; padding-bottom: .4rem; border-bottom: 2px solid var(--pamana-terracotta); }
+  .auth-register-page .pamana-auth-motto { right: auto; left: 37%; top: 7%; }
+  .auth-register-page .pamana-auth-visual-image { object-position: 65% 48%; }
+  .pamana-auth-content { max-width: var(--content-width); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 1.25rem clamp(2rem, 5vw, 5rem); margin-top: -80px; padding: 0 calc(var(--bs-gutter-x) * .5) 2rem; }
+  .pamana-auth-story { grid-column: 1; grid-row: 1; padding: 100px 1.5rem 0; }
+  .pamana-auth-page .pamana-auth-card { grid-column: 2; grid-row: 1; padding: 2rem; width: 100%; max-width: 520px; justify-self: end; }
+  .auth-register-page .pamana-auth-card { grid-column: 1; justify-self: start; }
+  .auth-register-page .pamana-auth-story { grid-column: 2; }
+  .pamana-auth-story h2 { font-size: clamp(2.3rem, 3.2vw, 3rem); }
+  .pamana-auth-description { margin-top: 1.2rem; font-size: .9rem; }
+  .pamana-auth-feature-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; padding: 0; margin: 2rem 0 0; list-style: none; }
+  .pamana-auth-feature { display: flex; align-items: flex-start; flex-direction: column; gap: .35rem; }
+  .pamana-auth-feature .pamana-icon { width: 28px; height: 28px; margin-bottom: .5rem; color: #47795c; }
+  .pamana-auth-feature strong { font-size: .63rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .1em; }
+  .pamana-auth-feature span { font-size: .72rem; color: var(--pamana-muted); }
+  .pamana-auth-decoration { width: 240px; opacity: .55; }
+  .pamana-auth-decoration:first-child { left: -70px; }
+  .pamana-auth-decoration:last-child { right: -60px; }
+  .pamana-auth-landscape { height: 240px; }
+}
+@media (max-width: 359.98px) {
+  .pamana-auth-content { padding-inline: .75rem; }
+  .pamana-auth-page .pamana-auth-card { padding: 1.25rem 1rem; }
+  .pamana-auth-form .pamana-password-rules li { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pamana-auth-page *, .pamana-auth-page *::before, .pamana-auth-page *::after { transition: none !important; animation: none !important; }
 }

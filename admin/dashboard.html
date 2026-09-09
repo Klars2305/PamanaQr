@@ -1,343 +1,344 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>
    Pamana Admin | Dashboard
   </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="../css/style.css" rel="stylesheet"/>
-  <meta content="#174C3A" name="theme-color"/>
-  <link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
-  <meta content="Pamana heritage archive workspace." name="description"/>
- </head>
- <body class="admin-page pamana-polished" data-page="admin-dashboard" data-require-role="admin">
-  <a class="skip-link" href="#mainContent">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet"/>
+<meta content="#174C3A" name="theme-color"/>
+<link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Pamana heritage archive workspace." name="description"/>
+</head>
+<body class="admin-page pamana-polished" data-page="admin-dashboard" data-require-role="admin">
+<a class="skip-link" href="#mainContent">
    Skip to main content
   </a>
-  <nav aria-label="Primary navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar admin-topbar">
-   <div class="container">
-    <a aria-current="page" class="navbar-brand pamana-brand" href="dashboard.html">
-     <img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
-     <span>
-      <span class="brand-title">
+<nav aria-label="Primary navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar admin-topbar">
+<div class="container">
+<a aria-current="page" class="navbar-brand pamana-brand" href="dashboard.html">
+<img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
+<span>
+<span class="brand-title">
        Pamana
       </span>
-      <span class="brand-subtitle">
+<span class="brand-subtitle">
        Administration
       </span>
-     </span>
-    </a>
-    <button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
-     <span class="navbar-toggler-icon">
-     </span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-     <div class="navbar-nav ms-auto align-items-lg-center">
-      <a class="nav-link" href="heritage-sites.html">
+</span>
+</a>
+<button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon">
+</span>
+</button>
+<div class="collapse navbar-collapse" id="mainNav">
+<div class="navbar-nav ms-auto align-items-lg-center">
+<a class="nav-link" href="heritage-sites.html">
        Heritage Sites
       </a>
-      <a class="nav-link" href="submissions.html">
+<a class="nav-link" href="submissions.html">
        Submissions
       </a>
-      <button class="btn btn-outline-success btn-sm ms-lg-3" data-logout="" type="button">
+<button class="btn btn-outline-success btn-sm ms-lg-3" data-logout="" type="button">
        Logout
       </button>
-     </div>
-    </div>
-   </div>
-  </nav>
-  <div class="container admin-shell">
-   <aside aria-label="Admin workspace navigation" class="admin-sidebar">
-    <div class="admin-sidebar-heading">
+</div>
+</div>
+</div>
+</nav>
+<div class="container admin-shell">
+<aside aria-label="Admin workspace navigation" class="admin-sidebar">
+<div class="admin-sidebar-heading">
      Workspace
     </div>
-    <a aria-current="page" class="active" href="dashboard.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#home">
-      </use>
-     </svg>
+<a aria-current="page" class="active" href="dashboard.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#home">
+</use>
+</svg>
      Dashboard
     </a>
-    <a href="heritage-sites.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#heritage-site">
-      </use>
-     </svg>
+<a href="heritage-sites.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#heritage-site">
+</use>
+</svg>
      Heritage Sites
     </a>
-    <a href="submissions.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#stories">
-      </use>
-     </svg>
+<a href="submissions.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#stories">
+</use>
+</svg>
      Story Review
     </a>
-    <a href="heritage-form.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#add">
-      </use>
-     </svg>
+<a href="heritage-form.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#add">
+</use>
+</svg>
      Add Heritage Site
     </a>
-    <div class="admin-sidebar-spacer">
-    </div>
-    <a href="../index.html">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#external-link">
-      </use>
-     </svg>
+<div class="admin-sidebar-spacer">
+</div>
+<a href="../index.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#external-link">
+</use>
+</svg>
      Public Site
     </a>
-    <button data-logout="" type="button">
-     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-      <use href="../assets/icons/sprite.svg#logout">
-      </use>
-     </svg>
+<button data-logout="" type="button">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#logout">
+</use>
+</svg>
      Logout
     </button>
-   </aside>
-   <main class="admin-main py-4 py-lg-5" id="mainContent" tabindex="-1">
-    <header class="admin-page-header">
-     <div>
-      <p class="portal-session mb-2" id="sessionStatus">
+</aside>
+<main class="admin-main py-4 py-lg-5" id="mainContent" tabindex="-1">
+<header class="admin-page-header">
+<div>
+<p class="portal-session mb-2" id="sessionStatus">
        Checking session...
       </p>
-      <p class="home-eyebrow">
+<p class="home-eyebrow">
        Archive Overview
       </p>
-      <h1>
+<h1>
        Admin Dashboard
       </h1>
-      <p class="text-muted mb-0">
+<p class="text-muted mb-0">
        Monitor heritage records and community story review status.
       </p>
-     </div>
-     <div class="d-flex flex-wrap gap-2">
-      <a class="btn btn-success" href="heritage-form.html">
+</div>
+<div class="d-flex flex-wrap gap-2">
+<a class="btn btn-success" href="heritage-form.html">
        Add Heritage Site
       </a>
-      <a class="btn btn-outline-success" href="submissions.html">
+<a class="btn btn-outline-success" href="submissions.html">
        Review Stories
       </a>
-     </div>
-    </header>
-    <div aria-atomic="true" aria-live="polite" class="alert d-none" id="adminDashboardMessage" role="status">
-    </div>
-    <section aria-label="Heritage site statistics" class="row g-3 mb-4 admin-stats">
-     <div class="col-sm-6 col-xl-3">
-      <article class="pamana-stat-card starter-card h-100 admin-stat-priority">
-       <span class="stat-icon stat-pending">
-        <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-         <use href="../assets/icons/sprite.svg#pending">
-         </use>
-        </svg>
-       </span>
-       <div>
-        <p class="text-muted mb-1">
+</div>
+</header>
+<div aria-atomic="true" aria-live="polite" class="alert d-none" id="adminDashboardMessage" role="status">
+</div>
+<section aria-label="Heritage site statistics" class="row g-3 mb-4 admin-stats">
+<div class="col-sm-6 col-xl-3">
+<article class="pamana-stat-card starter-card h-100 admin-stat-priority">
+<span class="stat-icon stat-pending">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#pending">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
          Pending Stories
         </p>
-        <strong class="dashboard-count" id="submittedStoriesCount">
+<strong class="dashboard-count" id="submittedStoriesCount">
          0
         </strong>
-        <small>
+<small>
          Need review
         </small>
-       </div>
-      </article>
-     </div>
-     <div class="col-sm-6 col-xl-3">
-      <article class="pamana-stat-card starter-card h-100">
-       <span class="stat-icon stat-published">
-        <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-         <use href="../assets/icons/sprite.svg#active">
-         </use>
-        </svg>
-       </span>
-       <div>
-        <p class="text-muted mb-1">
+</div>
+</article>
+</div>
+<div class="col-sm-6 col-xl-3">
+<article class="pamana-stat-card starter-card h-100">
+<span class="stat-icon stat-published">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#active">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
          Active Sites
         </p>
-        <strong class="dashboard-count" id="activeSitesCount">
+<strong class="dashboard-count" id="activeSitesCount">
          0
         </strong>
-        <small>
+<small>
          Public records
         </small>
-       </div>
-      </article>
-     </div>
-     <div class="col-sm-6 col-xl-3">
-      <article class="pamana-stat-card starter-card h-100">
-       <span class="stat-icon">
-        <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-         <use href="../assets/icons/sprite.svg#community">
-         </use>
-        </svg>
-       </span>
-       <div>
-        <p class="text-muted mb-1">
+</div>
+</article>
+</div>
+<div class="col-sm-6 col-xl-3">
+<article class="pamana-stat-card starter-card h-100">
+<span class="stat-icon">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#community">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
          Contributors
         </p>
-        <strong class="dashboard-count" id="contributorsCount">
+<strong class="dashboard-count" id="contributorsCount">
          0
         </strong>
-        <small>
+<small>
          Community accounts
         </small>
-       </div>
-      </article>
-     </div>
-     <div class="col-sm-6 col-xl-3">
-      <article class="pamana-stat-card starter-card h-100">
-       <span class="stat-icon">
-        <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-         <use href="../assets/icons/sprite.svg#archived">
-         </use>
-        </svg>
-       </span>
-       <div>
-        <p class="text-muted mb-1">
+</div>
+</article>
+</div>
+<div class="col-sm-6 col-xl-3">
+<article class="pamana-stat-card starter-card h-100">
+<span class="stat-icon">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#archived">
+</use>
+</svg>
+</span>
+<div>
+<p class="text-muted mb-1">
          Archived Sites
         </p>
-        <strong class="dashboard-count" id="archivedSitesCount">
+<strong class="dashboard-count" id="archivedSitesCount">
          0
         </strong>
-        <small>
+<small>
          Hidden records
         </small>
-       </div>
-      </article>
-     </div>
-    </section>
-    <section aria-label="Story review statistics" class="row g-3 mb-4">
-     <div class="col-md-6">
-      <article class="admin-metric-card">
-       <div>
-        <p class="home-eyebrow">
+</div>
+</article>
+</div>
+</section>
+<section aria-label="Story review statistics" class="row g-3 mb-4">
+<div class="col-md-6">
+<article class="admin-metric-card">
+<div>
+<p class="home-eyebrow">
          Published Archive
         </p>
-        <h2 class="h4">
+<h2 class="h4">
          Published Stories
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Community stories currently visible to public visitors.
         </p>
-       </div>
-       <strong class="dashboard-count" id="publishedStoriesCount">
+</div>
+<strong class="dashboard-count" id="publishedStoriesCount">
         0
        </strong>
-      </article>
-     </div>
-     <div class="col-md-6">
-      <article class="admin-metric-card">
-       <div>
-        <p class="home-eyebrow">
+</article>
+</div>
+<div class="col-md-6">
+<article class="admin-metric-card">
+<div>
+<p class="home-eyebrow">
          Review History
         </p>
-        <h2 class="h4">
+<h2 class="h4">
          Rejected Stories
         </h2>
-        <p class="text-muted mb-0">
+<p class="text-muted mb-0">
          Submissions closed after administrator review.
         </p>
-       </div>
-       <strong class="dashboard-count" id="rejectedStoriesCount">
+</div>
+<strong class="dashboard-count" id="rejectedStoriesCount">
         0
        </strong>
-      </article>
-     </div>
-    </section>
-    <section class="starter-panel pamana-info-card portal-actions-card">
-     <div>
-      <p class="home-eyebrow">
+</article>
+</div>
+</section>
+<section class="starter-panel pamana-info-card portal-actions-card">
+<div>
+<p class="home-eyebrow">
        Quick Actions
       </p>
-      <h2 class="h3 mb-2">
+<h2 class="h3 mb-2">
        Manage Pamana
       </h2>
-      <p class="text-muted mb-0">
+<p class="text-muted mb-0">
        Go directly to the most common archive tasks.
       </p>
-     </div>
-     <div class="d-flex flex-wrap gap-2">
-      <a class="btn btn-success" href="heritage-sites.html">
+</div>
+<div class="d-flex flex-wrap gap-2">
+<a class="btn btn-success" href="heritage-sites.html">
        Manage Heritage Sites
       </a>
-      <a class="btn btn-outline-success" href="heritage-form.html">
+<a class="btn btn-outline-success" href="heritage-form.html">
        Add Heritage Site
       </a>
-      <a class="btn btn-outline-success" href="submissions.html">
+<a class="btn btn-outline-success" href="submissions.html">
        Review Submissions
       </a>
-      <a class="btn btn-outline-secondary" href="submissions.html?status=published">
+<a class="btn btn-outline-secondary" href="submissions.html?status=published">
        Published Stories
       </a>
-     </div>
-    </section>
-   </main>
-  </div>
-  <nav aria-label="Admin mobile navigation" class="pamana-mobile-nav admin-mobile-nav">
-   <a aria-current="page" class="active" href="dashboard.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#home">
-     </use>
-    </svg>
+</div>
+</section>
+</main>
+</div>
+<nav aria-label="Admin mobile navigation" class="pamana-mobile-nav admin-mobile-nav">
+<a aria-current="page" class="active" href="dashboard.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#home">
+</use>
+</svg>
     Dashboard
    </a>
-   <a href="heritage-sites.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#heritage-site">
-     </use>
-    </svg>
+<a href="heritage-sites.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#heritage-site">
+</use>
+</svg>
     Sites
    </a>
-   <a href="submissions.html">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#stories">
-     </use>
-    </svg>
+<a href="submissions.html">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#stories">
+</use>
+</svg>
     Stories
    </a>
-   <button data-logout="" type="button">
-    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
-     <use href="../assets/icons/sprite.svg#logout">
-     </use>
-    </svg>
+<button data-logout="" type="button">
+<svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+<use href="../assets/icons/sprite.svg#logout">
+</use>
+</svg>
     Logout
    </button>
-  </nav>
-  <footer class="site-footer">
-   <div class="container footer-inner">
-    <p class="mb-0">
+</nav>
+<footer class="site-footer">
+<div class="container footer-inner">
+<p class="mb-0">
      Pamana
      <span aria-hidden="true">
       ·
      </span>
      Our Heritage Lives On
     </p>
-    <nav aria-label="Footer navigation" class="footer-links">
-     <a href="../index.html">
+<nav aria-label="Footer navigation" class="footer-links">
+<a href="../index.html">
       Home
      </a>
-     <a href="../browse.html">
+<a href="../browse.html">
       Browse heritage
      </a>
-    </nav>
-   </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/core.js"></script>
-  <script src="../js/supabase.js"></script>
-  <script src="../js/queries.js"></script>
-  <script src="../js/session.js"></script>
-  <script src="../js/storage.js"></script>
-  <script src="../js/validation.js"></script>
-  <script src="../js/search-matching.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/admin-dashboard.js"></script>
- </body>
+</nav>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/core.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/queries.js"></script>
+<script src="../js/session.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/validation.js"></script><script src="../js/ui.js"></script><script src="../js/system-modal.js"></script>
+<script src="../js/search-matching.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/admin-dashboard.js"></script>
+</body>
 </html>

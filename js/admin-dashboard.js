@@ -1,6 +1,15 @@
 async function loadAdminDashboard() {
   showAppMessage('adminDashboardMessage', 'Loading administrator dashboard...', 'info');
 
+  try {
+    await loadAdminDashboardCounts();
+  } catch (error) {
+    logAppError('Could not load administrator dashboard.', error);
+    showAppMessage('adminDashboardMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+  }
+}
+
+async function loadAdminDashboardCounts() {
   const profile = await requireAdmin();
 
   if (!profile) {

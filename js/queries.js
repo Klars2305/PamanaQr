@@ -148,7 +148,7 @@ const StoryQueries = {
     return runSupabaseQuery('Could not load contributor submissions.', APP_MESSAGES.databaseFailed, function (supabaseClient) {
       return supabaseClient
         .from('stories')
-        .select('id, title, status, classification, created_at, heritage_sites(name)')
+        .select('id, title, status, classification, created_at, heritage_sites(name), media(id, image_url, caption)')
         .eq('contributor_id', contributorId)
         .order('created_at', { ascending: false });
     });

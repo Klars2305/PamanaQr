@@ -12,16 +12,35 @@ async function showStoryPhoto(mediaItems, storyTitle) {
   }
 
   const firstPhoto = mediaItems[0];
-  const { signedUrl, error } = await createSignedImageUrl(firstPhoto.image_url, 3600);
 
-  if (error) {
-    logAppError('Could not load story photograph.', error);
+  if (!firstPhoto || !firstPhoto.image_url) {
     return;
   }
 
-  storyPhoto.src = safeImageUrl(signedUrl);
-  storyPhoto.alt = firstPhoto.caption || storyTitle;
-  storyPhoto.classList.remove('d-none');
+  try {
+    const { signedUrl, error } = await createSignedImageUrl(firstPhoto.image_url, 3600);
+
+    if (error) {
+      logAppError('Could not load story photograph.', error);
+      return;
+    }
+
+    const safeUrl = safeImageUrl(signedUrl);
+
+    if (!safeUrl) {
+      return;
+    }
+
+    storyPhoto.addEventListener('error', function () {
+      storyPhoto.classList.add('d-none');
+    }, { once: true });
+
+    storyPhoto.src = safeUrl;
+    storyPhoto.alt = firstPhoto.caption || storyTitle;
+    storyPhoto.classList.remove('d-none');
+  } catch (error) {
+    logAppError('Could not load story photograph.', error);
+  }
 }
 
 function fillStoryDetails(story) {
@@ -43,7 +62,9 @@ function fillStoryDetails(story) {
   }
 
   showStoryPhoto(story.media || [], story.title || 'Community story photograph');
-  document.getElementById('storyDetails').classList.remove('d-none');
+
+  const details = document.getElementById('storyDetails');
+  if (details) details.classList.remove('d-none');
 }
 
 async function loadStoryDetailsPage() {
@@ -51,26 +72,33 @@ async function loadStoryDetailsPage() {
 
   if (!storyId) {
     showAppMessage('storyDetailsMessage', 'No story was selected. Please browse heritage sites first.', 'warning');
+    appendAppLink('storyDetailsMessage', 'browse.html', 'Browse Heritage');
     return;
   }
 
   showAppMessage('storyDetailsMessage', 'Loading story...', 'info');
 
-  const { data, error } = await StoryQueries.getPublished(storyId);
+  try {
+    const { data, error } = await StoryQueries.getPublished(storyId);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load story.', error);
+      showAppMessage('storyDetailsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    if (!data) {
+      showAppMessage('storyDetailsMessage', APP_MESSAGES.storyNotFound, 'warning');
+      appendAppLink('storyDetailsMessage', 'browse.html', 'Browse Heritage');
+      return;
+    }
+
+    fillStoryDetails(data);
+    showAppMessage('storyDetailsMessage', 'Story loaded successfully.', 'success');
+  } catch (error) {
     logAppError('Could not load story.', error);
     showAppMessage('storyDetailsMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
   }
-
-  if (!data) {
-    showAppMessage('storyDetailsMessage', APP_MESSAGES.storyNotFound, 'warning');
-    return;
-  }
-
-  fillStoryDetails(data);
-  showAppMessage('storyDetailsMessage', 'Story loaded successfully.', 'success');
 }
 
 if (document.body.dataset.page === 'story-details') {

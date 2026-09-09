@@ -12,16 +12,32 @@ async function renderSignedCardImage(imageElement, imagePath, altText) {
     return;
   }
 
-  const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
+  try {
+    const { signedUrl, error } = await createSignedImageUrl(imagePath, 3600);
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load public heritage card image.', error);
+      return;
+    }
+
+    // An unusable scheme returns an empty string. Assigning it would ask the
+    // browser to reload the page as an image, so the placeholder stays instead.
+    const safeUrl = safeImageUrl(signedUrl);
+
+    if (!safeUrl) {
+      return;
+    }
+
+    imageElement.addEventListener('error', function () {
+      imageElement.classList.add('d-none');
+    }, { once: true });
+
+    imageElement.src = safeUrl;
+    imageElement.alt = altText;
+    imageElement.classList.remove('d-none');
+  } catch (error) {
     logAppError('Could not load public heritage card image.', error);
-    return;
   }
-
-  imageElement.src = safeImageUrl(signedUrl);
-  imageElement.alt = altText;
-  imageElement.classList.remove('d-none');
 }
 
 function createHeritageCard(site) {
@@ -59,7 +75,9 @@ async function renderHeritageCards(containerId, sites, emptyMessage) {
 
   setSafeHtml(container, sites.map(createHeritageCard));
 
-  document.querySelectorAll(`#${containerId} [data-card-image]`).forEach(function (image) {
+  // Scoped to the container just filled, so a repeat render cannot pick up
+  // images belonging to another grid on the same page.
+  container.querySelectorAll('[data-card-image]').forEach(function (image) {
     renderSignedCardImage(image, image.dataset.cardImage, image.alt);
   });
 }
@@ -104,35 +122,20 @@ function renderPublishedStoryCards(stories, searchTerm) {
   setSafeHtml(container, stories.map(createPublishedStoryCard));
 }
 
+// Signed-in navigation state is applied in one place, js/auth.js, for every
+// page. This used to be a second implementation that ran on the public pages
+// only, and it raced the first one over the same elements. Kept as the public
+// entry point; the shared work is idempotent and the profile is cached.
 async function updatePublicNavigation() {
-  if (typeof getCurrentUserProfile !== 'function') {
+  if (typeof updateRoleNavigation !== 'function') {
     return;
   }
 
-  const profile = await getCurrentUserProfile();
-
-  if (!profile) {
-    return;
+  try {
+    await updateRoleNavigation();
+  } catch (error) {
+    logAppError('Could not update public navigation.', error);
   }
-
-  const isAdmin = profile.role === PAMANA_ROLES.admin;
-  const dashboardUrl = isAdmin
-    ? 'admin/dashboard.html'
-    : 'contributor/dashboard.html';
-
-  document.querySelectorAll('[data-public-account-link]').forEach(function (link) {
-    link.classList.add('d-none');
-  });
-
-  document.querySelectorAll('[data-dashboard-nav]').forEach(function (item) {
-    item.classList.remove('d-none');
-  });
-
-  document.querySelectorAll('[data-dashboard-link]').forEach(function (link) {
-    link.href = dashboardUrl;
-    link.textContent = isAdmin ? 'Admin Dashboard' : 'Contributor Dashboard';
-    link.classList.remove('d-none');
-  });
 }
 
 /* ---------------------------------------------------------------------------
@@ -168,38 +171,54 @@ async function loadBrowseResults(searchTerm) {
 async function loadFeaturedSites() {
   showAppMessage('featuredSitesMessage', 'Loading featured heritage sites...', 'info');
 
-  const { data, error } = await HeritageQueries.listActive();
+  try {
+    const { data, error } = await HeritageQueries.listActive();
 
-  if (error) {
+    if (error) {
+      logAppError('Could not load featured heritage sites.', error);
+      showAppMessage('featuredSitesMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
+      return;
+    }
+
+    await renderHeritageCards('featuredSitesList', (data || []).slice(0, 3), 'No active heritage sites are available yet.');
+    showAppMessage('featuredSitesMessage', 'Featured heritage sites loaded successfully.', 'success');
+  } catch (error) {
     logAppError('Could not load featured heritage sites.', error);
     showAppMessage('featuredSitesMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
   }
-
-  await renderHeritageCards('featuredSitesList', data.slice(0, 3), 'No active heritage sites are available yet.');
-  showAppMessage('featuredSitesMessage', 'Featured heritage sites loaded successfully.', 'success');
 }
 
+let browseRequestSequence = 0;
 async function loadBrowseSites(searchTerm) {
+  const requestId = ++browseRequestSequence;
+  const button = document.querySelector('#browseSearchForm button[type="submit"]');
+  const results = document.getElementById('heritageList');
+  setSubmitLoading(button, true, 'Searching...', 'Search');
+  if (results) results.setAttribute('aria-busy', 'true');
   showAppMessage('browseMessage', searchTerm ? 'Searching heritage sites and community stories...' : 'Loading heritage sites...', 'info');
-
-  const { sites, stories, error } = await loadBrowseResults(searchTerm);
-
-  if (error) {
+  try {
+    const { sites, stories, error } = await loadBrowseResults(searchTerm);
+    // A slow older response must not overwrite a newer search or Clear action.
+    if (requestId !== browseRequestSequence) return;
+    if (error) throw error;
+    const normalizedTerm = normalizeSearchText(searchTerm);
+    const matchedSites = filterSitesBySearch(sites, normalizedTerm);
+    await renderHeritageCards('heritageList', matchedSites, searchTerm ? APP_MESSAGES.noSearchResults : 'No active heritage sites are available yet.');
+    renderPublishedStoryCards(stories, normalizedTerm);
+    const count = matchedSites.length + (normalizedTerm ? stories.length : 0);
+    showAppMessage('browseMessage', normalizedTerm
+      ? `${count} result${count === 1 ? '' : 's'} for "${searchTerm}". Use Clear to browse all heritage sites.`
+      : `${matchedSites.length} active heritage site${matchedSites.length === 1 ? '' : 's'} available.`, count ? 'success' : 'info');
+  } catch (error) {
+    if (requestId !== browseRequestSequence) return;
     logAppError('Could not load public search results.', error);
     showAppMessage('browseMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
-    return;
+  } finally {
+    if (requestId === browseRequestSequence) {
+      setSubmitLoading(button, false, '', 'Search');
+      if (results) results.removeAttribute('aria-busy');
+    }
   }
-
-  const normalizedTerm = normalizeSearchText(searchTerm);
-
-  await renderHeritageCards(
-    'heritageList',
-    filterSitesBySearch(sites, normalizedTerm),
-    searchTerm ? APP_MESSAGES.noSearchResults : 'No active heritage sites are available yet.'
-  );
-  renderPublishedStoryCards(stories, normalizedTerm);
-  showAppMessage('browseMessage', searchTerm ? `Showing results for "${searchTerm}".` : 'Active heritage sites loaded successfully.', 'success');
 }
 
 /* ---------------------------------------------------------------------------
@@ -221,13 +240,17 @@ function setupBrowseSearch() {
   if (searchForm) {
     searchForm.addEventListener('submit', function (event) {
       event.preventDefault();
-      loadBrowseSites(searchInput.value.trim());
+      loadBrowseSites(searchInput ? searchInput.value.trim() : '');
     });
   }
 
   if (clearButton) {
     clearButton.addEventListener('click', function () {
-      searchInput.value = '';
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+      }
+
       loadBrowseSites('');
     });
   }
