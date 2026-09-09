@@ -5,11 +5,7 @@ let currentQrDetails = {
 };
 
 function getQrBaseUrl() {
-  if (PAMANA_CONFIG.productionBaseUrl) {
-    return PAMANA_CONFIG.productionBaseUrl;
-  }
-
-  return getAppBasePath();
+  return getConfiguredQrBaseUrl() || getAppBasePath();
 }
 
 // With no production URL configured the QR code encodes whatever host the
@@ -19,22 +15,24 @@ function getQrBaseUrl() {
 const LOCAL_QR_HOSTNAMES = ['localhost', '127.0.0.1', '0.0.0.0', '::1', ''];
 
 function isQrBaseUrlPublishable() {
-  if (PAMANA_CONFIG.productionBaseUrl) {
-    return true;
-  }
+  return Boolean(getConfiguredQrBaseUrl());
+}
 
+function getConfiguredQrBaseUrl() {
+  const configuredUrl = String(PAMANA_CONFIG.productionBaseUrl || '').trim();
+  if (!configuredUrl) return '';
   try {
-    const base = new URL(getQrBaseUrl());
-
-    if (base.protocol !== 'http:' && base.protocol !== 'https:') {
-      return false;
-    }
+    const base = new URL(configuredUrl);
+    if (base.protocol !== 'https:') return '';
 
     const hostname = base.hostname.replace(/^\[|\]$/g, '').toLowerCase();
-
-    return !LOCAL_QR_HOSTNAMES.includes(hostname) && !hostname.endsWith('.local');
+    if (LOCAL_QR_HOSTNAMES.includes(hostname) || hostname.endsWith('.local')) return '';
+    base.search = '';
+    base.hash = '';
+    if (!base.pathname.endsWith('/')) base.pathname += '/';
+    return base.href;
   } catch (_) {
-    return false;
+    return '';
   }
 }
 
@@ -43,7 +41,7 @@ function getQrBaseUrlWarning() {
     return '';
   }
 
-  return 'This QR code points at this computer, not a public address. Set productionBaseUrl in js/config.js before printing or sharing it.';
+  return 'Set a permanent HTTPS productionBaseUrl in js/config.js before saving, printing, or sharing this QR code.';
 }
 
 function getHeritagePublicUrl(slug) {
@@ -52,9 +50,10 @@ function getHeritagePublicUrl(slug) {
 
 let lastQrTrigger = null;
 function setQrReady(ready) {
+  const exportReady = ready && isQrBaseUrlPublishable();
   ['saveQrButton', 'printQrButton'].forEach(function (id) {
     const button = document.getElementById(id);
-    if (button) button.disabled = !ready;
+    if (button) button.disabled = !exportReady;
   });
 }
 function renderQrCode(url) {
@@ -162,6 +161,9 @@ function buildQrPrintDocument(printDocument) {
   return image;
 }
 function printCurrentQrCode() {
+  if (!isQrBaseUrlPublishable()) {
+    showAppMessage('qrMessage', getQrBaseUrlWarning(), 'warning'); return;
+  }
   if (!currentQrDetails.url || !getQrImageDataUrl()) {
     showAppMessage('qrMessage', APP_MESSAGES.qrNotReady, 'warning'); return;
   }
@@ -180,6 +182,9 @@ function printCurrentQrCode() {
 }
 function saveCurrentQrCode() {
   try {
+    if (!isQrBaseUrlPublishable()) {
+      showAppMessage('qrMessage', getQrBaseUrlWarning(), 'warning'); return;
+    }
     const imageUrl = getQrImageDataUrl();
     if (!currentQrDetails.slug || !imageUrl) {
       showAppMessage('qrMessage', APP_MESSAGES.qrNotReady, 'warning'); return;

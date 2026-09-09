@@ -71,6 +71,11 @@ case_('XSS: unsafe image URL blocked', 'safeImageUrl("javascript:alert(1)")', ''
 case_('Search: matching behavior unchanged', 'siteMatchesSearch({name:"Fort Santiago",location:"Manila",historical_period:"Spanish Colonial Period"},normalizeSearchText("  MANILA  "))', true);
 case_('Search: empty matches existing supplied rows', 'filterSitesBySearch([{name:"Fort"}], "").length', 1);
 case_('QR: subfolder URL remains correct', 'getHeritagePublicUrl("pamana-test-heritage-plaza")', 'https://pamana.test/archive/heritage.html?site=pamana-test-heritage-plaza');
+case_('QR: export requires an explicit production base', 'isQrBaseUrlPublishable()', false);
+case_('QR: configured HTTPS base is canonical', '(() => { PAMANA_CONFIG.productionBaseUrl="https://pamana.example/archive"; const value=[isQrBaseUrlPublishable(),getHeritagePublicUrl("old-town")]; PAMANA_CONFIG.productionBaseUrl=""; return value; })()', [true, 'https://pamana.example/archive/heritage.html?site=old-town']);
+case_('QR: insecure configured base cannot be exported', '(() => { PAMANA_CONFIG.productionBaseUrl="http://pamana.example/"; const value=isQrBaseUrlPublishable(); PAMANA_CONFIG.productionBaseUrl=""; return value; })()', false);
+case_('Heritage edit payload preserves the stored slug by omission', 'Object.hasOwn(buildHeritageSiteRecord({name:"Renamed Site",shortDescription:"",historicalBackground:"History",location:"Place",historicalPeriod:"Period",sourceReference:"",status:"active"}),"slug")', false);
+case_('Heritage create payload includes its generated slug', 'buildHeritageSiteRecord({name:"New Site",shortDescription:"",historicalBackground:"History",location:"Place",historicalPeriod:"Period",sourceReference:"",status:"active"},"new-site").slug', 'new-site');
 case_('Guard: duplicate button claim is rejected', '(() => { const b={disabled:false}; return [claimButtonAction(b), claimButtonAction(b)]; })()', [true,false]);
 case_('Guard: release restores action', '(() => { const b={disabled:true}; releaseButtonAction(b); return b.disabled; })()', false);
 case_('Workflow: new story never published', 'buildNewStoryRecord({heritageSiteId:"1",title:"Test story",content:"a".repeat(50),sourceReference:"",suggestedClassification:"Personal Recollection",allowPublicName:false},{id:"c"},{display_name:"Juan"}).status', 'submitted');

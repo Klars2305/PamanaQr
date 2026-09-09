@@ -1,8 +1,8 @@
 // Administrator heritage site form: create and edit official records.
 //
-// The slug is what public heritage URLs and printed QR codes point at, so it
-// is always derived through createSlug and checked for uniqueness before it is
-// written. Only an administrator can reach these writes, per the heritage
+// The slug is what public heritage URLs and printed QR codes point at. It is
+// generated once for new records and then kept during edits so printed codes
+// remain valid. Only an administrator can reach these writes, per the heritage
 // policy in database/schema.sql.
 
 function createSlug(value) {
@@ -48,6 +48,14 @@ function fillHeritageForm(site) {
   setHeritageFieldValue('historicalBackground', site.historical_background || '');
   setHeritageFieldValue('sourceReference', site.source_reference || '');
   setHeritageFieldValue('siteStatus', site.status || SITE_STATUSES.active);
+
+  const slugHelp = document.getElementById('siteSlugHelp');
+  if (slugHelp) {
+    const output = document.createElement('output');
+    output.id = 'siteSlugPreview';
+    output.textContent = site.slug || 'Unavailable';
+    slugHelp.replaceChildren('Permanent address (kept when the name changes): ', output);
+  }
 
   if (site.main_photo) {
     setText('currentPhotoHelp', 'The existing photograph will be kept unless you choose a new main photograph.');
@@ -151,8 +159,7 @@ async function resolveHeritageSlug(formData, currentSiteId) {
  * ------------------------------------------------------------------------ */
 
 function buildHeritageSiteRecord(formData, slug) {
-  return {
-    slug: slug,
+  const record = {
     name: formData.name,
     short_description: formData.shortDescription,
     historical_background: formData.historicalBackground,
@@ -161,6 +168,9 @@ function buildHeritageSiteRecord(formData, slug) {
     source_reference: formData.sourceReference || null,
     status: formData.status
   };
+
+  if (slug) record.slug = slug;
+  return record;
 }
 
 async function addHeritageSite(formData, adminProfile, onProgress) {
@@ -220,16 +230,9 @@ async function addHeritageSite(formData, adminProfile, onProgress) {
 }
 
 async function updateHeritageSite(siteId, formData, onProgress, existingPhotoPath) {
-  const slugResult = await resolveHeritageSlug(formData, siteId);
-
-  if (slugResult.error) {
-    return {
-      data: null,
-      error: slugResult.error
-    };
-  }
-
-  const updates = buildHeritageSiteRecord(formData, slugResult.slug);
+  // Omit slug from edits. The stored value is the permanent destination of
+  // printed QR codes even when an administrator changes the display name.
+  const updates = buildHeritageSiteRecord(formData);
 
   // Kept so the previous file can be removed once the new path is committed.
   const previousPhoto = existingPhotoPath || '';
@@ -310,7 +313,7 @@ async function loadHeritageSiteForEditing(siteId) {
     if (relatedSection) relatedSection.classList.remove('d-none');
     await loadRelatedHeritagePhotos(siteId);
     loaded = true;
-    showAppMessage('heritageFormMessage', 'Heritage site loaded. Renaming a site can change its public URL; regenerate QR codes after renaming.', 'info');
+    showAppMessage('heritageFormMessage', 'Heritage site loaded. Its permanent public address will stay the same if the name changes.', 'info');
   } catch (error) {
     logAppError('Could not load heritage site for editing.', error);
     showAppMessage('heritageFormMessage', getAppErrorMessage(error, APP_MESSAGES.databaseFailed), 'danger');
@@ -398,11 +401,13 @@ if (heritageForm) {
   heritageForm.addEventListener('submit', handleHeritageFormSubmit);
 }
 
-// Preview only: preserve the existing automatic slug and uniqueness algorithm.
+// New records preview their generated address. Edit pages replace this output
+// with the stored permanent slug after the record loads.
 const siteNameInput = document.getElementById('siteName');
 if (siteNameInput) {
   const updateSlugPreview = function () {
     const output = document.getElementById('siteSlugPreview');
+    if (getHeritageFormSiteId()) return;
     if (output) output.textContent = createSlug(siteNameInput.value.trim()) || 'Enter a site name';
   };
   siteNameInput.addEventListener('input', updateSlugPreview);

@@ -1,7 +1,7 @@
 -- Pamana Supabase Storage setup
 -- Run this after database/schema.sql.
 
-alter table storage.objects enable row level security;
+-- alter table storage.objects enable row level security;
 
 insert into storage.buckets (
   id,

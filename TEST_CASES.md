@@ -330,3 +330,26 @@ Use uniquely marked test records and an inbox you control; never use a service-r
 - Initial test harness failures included attempting to edit a read-only profile field, expecting "No" instead of the actual "0 results" message, secure-context UUID absence in about:blank, and unsafe test-fixture JSON embedding. The harness was corrected; these failures are not represented as live application defects.
 
 Final executed suites have no failed assertions. The unrun live checks above remain release acceptance work, not passing results.
+
+## QR Scanner focused verification — 2026-09-09
+
+Command: `node --test tests/scanner.test.cjs` — **7/7 passed**. The tests execute the real scanner controller with isolated camera/decoder doubles. Headless Chrome renders were also checked at the mobile breakpoint (500 × 850) and desktop (1440 × 1000).
+
+| Feature | Result | Notes |
+| --- | --- | --- |
+| TC-QR-001 — Valid Pamana QR | PARTIAL | The real validation and navigation code opened the exact local and configured production `heritage.html?site=fort-santiago` destinations. Physical camera decoding of a generated QR was not available. |
+| TC-QR-002 — Invalid QR | PASS | An unrelated URL and plain text caused no navigation and showed the exact required invalid-QR message. |
+| TC-QR-003 — Camera permission denied | PASS | A simulated browser `NotAllowedError` did not crash, restored Retry, and explicitly offered QR image upload. |
+| TC-QR-004 — QR image upload | PARTIAL | The upload controller accepted a valid image result and opened the correct heritage destination. Production CDN bitmap decoding was not executed in this environment. |
+| TC-QR-005 — Duplicate scan | PASS | Two immediate detections produced one navigation action. |
+| Camera start/stop | PASS | Start/Stop state, button recovery, stream stop call, insecure context, and busy-camera messages passed with browser API doubles. |
+| Mobile layout | PASS | Responsive structure passed at 375 px; the scanner page visually fit the mobile breakpoint in headless Chrome. |
+| Desktop layout | PASS | Headless Chrome render at 1440 × 1000 fit without scanner-page overflow. |
+| Back navigation | PASS | Back to Home points to the existing `index.html` destination. |
+| Localhost | PASS | Relative Pamana QR validation preserves the local application base path; insecure non-local HTTP receives HTTPS guidance. |
+| HTTPS / Vercel | PARTIAL | Configured production-origin validation passed. Live Vercel camera permission and CDN loading were not available. |
+| Console errors | PARTIAL | No exceptions occurred in the seven isolated scanner scenarios or static headless renders. Live camera/CDN console behavior remains a device check. |
+
+### Scanner bug fixed
+
+- Camera permission denial now tells the visitor to allow access and retry **or upload a QR image instead**.

@@ -199,6 +199,22 @@ main {
   vertical-align: middle;
 }
 
+.scan-qr-icon {
+  background-color: currentColor;
+  -webkit-mask: url('../assets/icons/qr.svg') center / contain no-repeat;
+  mask: url('../assets/icons/qr.svg') center / contain no-repeat;
+}
+
+.btn-icon .scan-qr-icon {
+  width: 19px;
+  height: 19px;
+}
+
+:is(.pamana-mobile-nav, .home-bottom-nav) .scan-qr-icon {
+  width: 21px;
+  height: 21px;
+}
+
 .btn-icon {
   display: inline-flex;
 }
@@ -2844,6 +2860,76 @@ main[tabindex="-1"]:focus {
   }
   .story-photo-frame {
     break-inside: avoid;
+  }
+}
+
+/* QR scanner ------------------------------------------------------------ */
+.scan-main {
+  min-height: calc(100vh - 190px);
+}
+
+.scan-shell {
+  width: min(100%, 680px);
+  margin-inline: auto;
+}
+
+.scan-heading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.scan-heading h1 {
+  margin-bottom: .5rem;
+  font-family: var(--pamana-serif);
+  color: var(--pamana-forest-dark);
+}
+
+.scan-card {
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+}
+
+.scanner-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--pamana-border);
+  border-radius: var(--radius-md);
+  background: var(--pamana-forest-dark);
+}
+
+.scanner-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scanner-frame {
+  position: absolute;
+  inset: 18%;
+  border: 3px solid rgb(255 253 249 / 88%);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 999px rgb(16 56 45 / 28%);
+  pointer-events: none;
+}
+
+.scanner-message {
+  margin-block: 1rem;
+}
+
+.scan-back-link {
+  padding-inline: 0;
+}
+
+@media (min-width: 576px) {
+  .scan-card {
+    padding: 1.75rem;
+  }
+
+  .scanner-preview {
+    aspect-ratio: 4 / 3;
   }
 }
 

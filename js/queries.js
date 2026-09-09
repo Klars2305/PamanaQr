@@ -69,7 +69,7 @@ const HeritageQueries = {
     return runSupabaseQuery('Could not load heritage site for editing.', APP_MESSAGES.databaseFailed, function (supabaseClient) {
       return supabaseClient
         .from('heritage_sites')
-        .select('id, name, location, historical_period, short_description, historical_background, source_reference, status, main_photo')
+        .select('id, slug, name, location, historical_period, short_description, historical_background, source_reference, status, main_photo')
         .eq('id', siteId)
         .single();
     });

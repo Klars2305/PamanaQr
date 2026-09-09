@@ -107,9 +107,9 @@ const PAMANA_CONFIG = {
 
 Important:
 
-- `productionBaseUrl` must be set before generating QR codes. While it is
-  empty, QR codes encode whatever host the browser is on, which for local
-  development is the XAMPP address and will not resolve for anyone else.
+- `productionBaseUrl` must be a permanent HTTPS address before QR codes can be
+  saved or printed. While it is empty, QR preview uses the current host for
+  local testing and export remains disabled.
 - The Supabase publishable/anon key is allowed in frontend code. Row Level
   Security in `database/schema.sql` is what actually protects the data.
 - Never place the service-role key in this project.
