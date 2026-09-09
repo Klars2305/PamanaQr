@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Pamana Admin | Review Story
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../css/style.css" rel="stylesheet"/>
+  <meta content="#174C3A" name="theme-color"/>
+  <link href="../assets/logo/pamana-mark.svg" rel="icon" type="image/svg+xml"/>
+  <meta content="Pamana heritage archive workspace." name="description"/>
+ </head>
+ <body class="admin-page review-story-page pamana-polished" data-page="admin-review-story" data-require-role="admin">
+  <a class="skip-link" href="#mainContent">
+   Skip to main content
+  </a>
+  <nav aria-label="Primary navigation" class="navbar navbar-expand-lg navbar-light pamana-navbar admin-topbar">
+   <div class="container">
+    <a class="navbar-brand pamana-brand" href="dashboard.html">
+     <img alt="" aria-hidden="true" class="brand-mark-img" height="48" src="../assets/logo/pamana-mark.svg" width="42"/>
+     <span>
+      <span class="brand-title">
+       Pamana
+      </span>
+      <span class="brand-subtitle">
+       Administration
+      </span>
+     </span>
+    </a>
+    <button aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#mainNav" data-bs-toggle="collapse" type="button">
+     <span class="navbar-toggler-icon">
+     </span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+     <div class="navbar-nav ms-auto">
+      <a class="nav-link" href="dashboard.html">
+       Dashboard
+      </a>
+      <a class="nav-link" href="heritage-sites.html">
+       Heritage Sites
+      </a>
+      <a class="nav-link active" href="submissions.html">
+       Submissions
+      </a>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="container admin-shell">
+   <aside aria-label="Admin workspace navigation" class="admin-sidebar">
+    <div class="admin-sidebar-heading">
+     Workspace
+    </div>
+    <a href="dashboard.html">
+     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+      <use href="../assets/icons/sprite.svg#home">
+      </use>
+     </svg>
+     Dashboard
+    </a>
+    <a href="heritage-sites.html">
+     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+      <use href="../assets/icons/sprite.svg#heritage-site">
+      </use>
+     </svg>
+     Heritage Sites
+    </a>
+    <a class="active" href="submissions.html">
+     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+      <use href="../assets/icons/sprite.svg#stories">
+      </use>
+     </svg>
+     Story Review
+    </a>
+    <a href="heritage-form.html">
+     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+      <use href="../assets/icons/sprite.svg#add">
+      </use>
+     </svg>
+     Add Heritage Site
+    </a>
+    <div class="admin-sidebar-spacer">
+    </div>
+    <button data-logout="" type="button">
+     <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+      <use href="../assets/icons/sprite.svg#logout">
+      </use>
+     </svg>
+     Logout
+    </button>
+   </aside>
+   <main class="admin-main py-4 py-lg-5" id="mainContent" tabindex="-1">
+    <header class="admin-page-header">
+     <div>
+      <p class="portal-session mb-2" id="sessionStatus">
+       Checking session...
+      </p>
+      <p class="home-eyebrow">
+       Editorial Review
+      </p>
+      <h1 id="reviewStoryHeading">
+       Review Story
+      </h1>
+      <p class="text-muted mb-0" id="reviewStoryDescription">
+       Classify, publish, or reject a community story submission.
+      </p>
+     </div>
+     <a class="btn btn-outline-secondary" href="submissions.html">
+      Back to Submissions
+     </a>
+    </header>
+    <div aria-atomic="true" aria-live="polite" class="alert d-none" id="reviewStoryMessage" role="status">
+    </div>
+    <div class="d-none review-layout" id="reviewStoryContent">
+     <div class="review-content-column">
+      <section class="review-story-card">
+       <div class="d-flex flex-wrap justify-content-between gap-2 align-items-start">
+        <div>
+         <p class="home-eyebrow">
+          Story Submission
+         </p>
+         <h2 class="h2 mb-2" id="reviewStoryTitle">
+         </h2>
+        </div>
+        <p id="reviewStoryStatus">
+        </p>
+       </div>
+       <p class="review-story-body" id="reviewStoryBody">
+       </p>
+      </section>
+      <section class="row g-3">
+       <div class="col-md-6">
+        <article class="starter-card h-100 pamana-info-card">
+         <p class="home-eyebrow">
+          Heritage Site
+         </p>
+         <h3 class="h5">
+          <strong id="reviewHeritageName">
+          </strong>
+         </h3>
+         <p class="text-muted mb-0" id="reviewHeritageLocation">
+         </p>
+        </article>
+       </div>
+       <div class="col-md-6">
+        <article class="starter-card h-100 pamana-info-card">
+         <p class="home-eyebrow">
+          Contributor
+         </p>
+         <h3 class="h5" id="reviewContributorName">
+         </h3>
+         <p class="text-muted mb-0">
+          Contributor email is managed by Supabase Auth and is not shown here.
+         </p>
+        </article>
+       </div>
+      </section>
+      <section class="review-photo-section">
+       <div class="section-intro">
+        <p class="home-eyebrow">
+         Supporting Media
+        </p>
+        <h3 class="h4 mb-0">
+         Photograph
+        </h3>
+       </div>
+       <div class="row g-3" id="reviewPhotoBox">
+       </div>
+      </section>
+     </div>
+     <aside class="review-sidebar-column">
+      <section class="review-meta-card" id="reviewInformationSection">
+       <p class="home-eyebrow">
+        Review Information
+       </p>
+       <h3 class="h5">
+        Decision summary
+       </h3>
+       <dl class="review-meta-list">
+        <div>
+         <dt>
+          Final classification
+         </dt>
+         <dd id="reviewFinalClassification">
+          Not classified
+         </dd>
+        </div>
+        <div>
+         <dt>
+          Reviewed at
+         </dt>
+         <dd id="reviewedAt">
+          Not reviewed
+         </dd>
+        </div>
+        <div>
+         <dt>
+          Review notes
+         </dt>
+         <dd id="reviewNotesDisplay">
+          No review notes.
+         </dd>
+        </div>
+       </dl>
+      </section>
+      <section class="review-meta-card">
+       <p class="home-eyebrow">
+        Source / Reference
+       </p>
+       <p class="mb-0" id="reviewSourceReference">
+       </p>
+      </section>
+      <section class="review-meta-card">
+       <p class="home-eyebrow">
+        Suggested Classification
+       </p>
+       <p class="mb-0" id="reviewSuggestedClassification">
+       </p>
+      </section>
+      <form class="review-form-card" id="reviewStoryForm" novalidate="">
+       <p class="form-notice">
+        Fields marked * are required.
+       </p>
+       <h3 class="h4">
+        Review Decision
+       </h3>
+       <div class="mb-3">
+        <label class="form-label" for="finalClassification">
+         Final classification
+         <span aria-hidden="true" class="required-hint">
+          *
+         </span>
+        </label>
+        <select aria-describedby="finalClassificationFeedback" class="form-select" id="finalClassification" required="">
+         <option value="">
+          Choose final classification
+         </option>
+         <option value="Documented Historical Information">
+          Documented Historical Information
+         </option>
+         <option value="Oral History">
+          Oral History
+         </option>
+         <option value="Personal Recollection">
+          Personal Recollection
+         </option>
+         <option value="Community Legend">
+          Community Legend
+         </option>
+        </select>
+        <div class="invalid-feedback" id="finalClassificationFeedback">
+        </div>
+       </div>
+       <div class="mb-3">
+        <label class="form-label" for="reviewNotes">
+         Review notes
+        </label>
+        <textarea aria-describedby="reviewNotesFeedback" class="form-control" id="reviewNotes" rows="4"></textarea>
+        <div class="invalid-feedback" id="reviewNotesFeedback">
+        </div>
+       </div>
+       <p class="review-decision-note">
+        Check the account, sources, and final classification before deciding. Published stories become visible in the public archive.
+       </p>
+       <div class="review-action-grid">
+        <a class="btn btn-outline-secondary" href="submissions.html">
+         Cancel
+        </a>
+        <button class="btn btn-danger" id="rejectStoryButton" type="button">
+         Reject Story
+        </button>
+        <button class="btn btn-success" id="publishStoryButton" type="button">
+         Publish Story
+        </button>
+       </div>
+      </form>
+     </aside>
+    </div>
+   </main>
+  </div>
+  <nav aria-label="Admin mobile navigation" class="pamana-mobile-nav admin-mobile-nav">
+   <a href="dashboard.html">
+    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+     <use href="../assets/icons/sprite.svg#home">
+     </use>
+    </svg>
+    Dashboard
+   </a>
+   <a href="heritage-sites.html">
+    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+     <use href="../assets/icons/sprite.svg#heritage-site">
+     </use>
+    </svg>
+    Sites
+   </a>
+   <a class="active" href="submissions.html">
+    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+     <use href="../assets/icons/sprite.svg#stories">
+     </use>
+    </svg>
+    Stories
+   </a>
+   <button data-logout="" type="button">
+    <svg aria-hidden="true" class="pamana-icon" focusable="false" viewbox="0 0 24 24">
+     <use href="../assets/icons/sprite.svg#logout">
+     </use>
+    </svg>
+    Logout
+   </button>
+  </nav>
+  <footer class="site-footer">
+   <div class="container footer-inner">
+    <p class="mb-0">
+     Pamana
+     <span aria-hidden="true">
+      ·
+     </span>
+     Our Heritage Lives On
+    </p>
+    <nav aria-label="Footer navigation" class="footer-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a href="../browse.html">
+      Browse heritage
+     </a>
+    </nav>
+   </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/queries.js"></script>
+  <script src="../js/session.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/search-matching.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/story-review.js"></script>
+ </body>
+</html>

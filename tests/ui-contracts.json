@@ -1,0 +1,2595 @@
+{
+  "baseline": "User-uploaded pamana-bootstrap-redesign.zip, before this UI polish",
+  "protected_files": {
+    "database/storage.sql": "90c7b08f49b558a504f8c90d76e11dad244ca2fd127a3d55448deaae339225a7",
+    "database/schema.sql": "252a770c830937c82f678b6286efa23b753a928d234ad85e1b416a10b905f8a1",
+    "js/config.example.js": "8c2eb0a2a0aaa4619da201393286c88eef69e1562796f4ef339b44443e8203fb",
+    "js/story-review.js": "2f8176bc97f97b7acd7ca36441fd66bb055ceaa54edc6229475782ecfc8eb1a5",
+    "js/contributor-dashboard.js": "36713e263134013c5582206bb9286af9c58d3e045661aa3d557a7b074dafefc8",
+    "js/search.js": "c8a968d3b44d3cf4ee0c533cdd1bafe8d36ba66eb73fde57753625ea14ee14d2",
+    "js/session.js": "86ec22e8b409195bb5f53eac3911f6d768dbe5f2200ea8a9e023dea03ef96cd0",
+    "js/auth.js": "4bb2ff3f113a51952cab3fccfa3700f50b4c4b2c51786c374cb450d8f85b17f7",
+    "js/admin-dashboard.js": "9e6b148b486675724c64b05280227cdb35c6dd74bb50a69a0a21d7f3f8516b23",
+    "js/supabase.js": "b42364ea79e7c8ed25e4de49ae698a83be36456e61f98a613f08b15c90b599bc",
+    "js/stories.js": "65d3999d7a80bbaafc17816fe9e9d7544d77b69ca7aaf07aa8af64ac62d46972",
+    "js/config.js": "819a152b7a65c6ae967075c31a2351f9b4777b1726202f71a456c229f157942e",
+    "js/search-matching.js": "d12612390d5aaeb9013023645e98f8653acf858fcb46ffe409d120d51304c0db",
+    "js/storage.js": "01199c74e101081703b381046e747b71ddccf3cfd16473a010c9abdd6baa9fcd",
+    "js/story-lists.js": "1b0780e7267891c0e5d173f9166f9c90c8e64d4a289a24dc59197fb2e9539413",
+    "js/core.js": "b3342aa09023cae8bb8752f143008adbb1f51445ed8bfe4112e9de65956a192c",
+    "js/story-submit.js": "665d1b13d8045820e618c6f178237fac1b4a4ee8e04c28d11be95afe9021373c",
+    "js/queries.js": "3ffb83c912ef6aea18c816b977dd9d50e696cbd7b4662cd86cb574c217771b29",
+    "js/validation.js": "4b56b055723fd0fbc6f387d1ed284ea3405d0f5ab2c954f1ac582f5634d0bf67",
+    "js/qr.js": "1c3e747578a943a3eddbe30e905043996a30496727d5a1f328ceda4d681f3470",
+    "js/heritage-photos.js": "b913caa0cce3a3acfb4a3e84ad88804af00205a2b4d0e7fa210ac93bae0c1d64",
+    "js/heritage-details.js": "10e3b7195e8f66ba94c3ffdc8cc8a33cbd088d128b0c92f841720974c30afba6",
+    "js/heritage-list.js": "6ca3cb073e5b03f2eb3d568c82d561a1af3f5d9dc453593392d5a02bf3ef623d",
+    "js/heritage-form.js": "9b31ef1071a0824eff314e337310be7b8b39ff580723194c5c15815c6cdaf220"
+  },
+  "pages": {
+    "heritage.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "contributionAction": {
+          "tag": "a",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageDetailsMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageDetails": {
+          "tag": "article",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageName": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageLocation": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "heritagePeriod": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageShortDescription": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "heritagePhoto": {
+          "tag": "img",
+          "form": null,
+          "attrs": {}
+        },
+        "officialInfoHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageBackground": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageSources": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "publishedStoriesHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "publishedStoriesList": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "relatedMediaHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "relatedMediaList": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-page",
+          "heritage-details"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "contribute.html",
+        "login.html",
+        "index.html",
+        "browse.html",
+        "browse.html#communityStoriesSection",
+        "login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        },
+        {
+          "src": "js/stories.js"
+        },
+        {
+          "src": "js/heritage-details.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "d-none",
+        "container",
+        "d-none",
+        "d-none"
+      ]
+    },
+    "index.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "homeHeroTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "homeSearchInput": {
+          "tag": "input",
+          "form": "",
+          "attrs": {
+            "type": "search",
+            "name": "q"
+          }
+        },
+        "featuredHeritageTitle": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "featuredSitesMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "featuredSitesList": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-page",
+          "home"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ],
+        [
+          "a",
+          "",
+          "data-contribute-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "li",
+          "",
+          "data-dashboard-nav",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-contribute-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-button",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-link",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "browse.html",
+        "index.html",
+        "browse.html",
+        "contribute.html",
+        "register.html",
+        "login.html",
+        "login.html",
+        "admin/login.html",
+        "contribute.html",
+        "browse.html",
+        "contribute.html",
+        "register.html",
+        "login.html",
+        "browse.html",
+        "index.html",
+        "browse.html",
+        "browse.html",
+        "login.html",
+        "login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        },
+        {
+          "src": "js/search.js"
+        }
+      ],
+      "forms": [
+        {
+          "action": "browse.html"
+        }
+      ],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "d-none",
+        "nav-link",
+        "nav-link",
+        "d-none",
+        "container",
+        "d-none",
+        "d-none",
+        "container"
+      ]
+    },
+    "contribute.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "contributionPageTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "submissionForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "submissionMessage": {
+          "tag": "div",
+          "form": "submissionForm",
+          "attrs": {}
+        },
+        "contributorDisplayName": {
+          "tag": "input",
+          "form": "submissionForm",
+          "attrs": {
+            "type": "text",
+            "readonly": ""
+          }
+        },
+        "heritageSiteId": {
+          "tag": "select",
+          "form": "submissionForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "storyTitle": {
+          "tag": "input",
+          "form": "submissionForm",
+          "attrs": {
+            "type": "text",
+            "required": ""
+          }
+        },
+        "storyContent": {
+          "tag": "textarea",
+          "form": "submissionForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "suggestedClassification": {
+          "tag": "select",
+          "form": "submissionForm",
+          "attrs": {}
+        },
+        "storySourceReference": {
+          "tag": "textarea",
+          "form": "submissionForm",
+          "attrs": {}
+        },
+        "allowPublicName": {
+          "tag": "input",
+          "form": "submissionForm",
+          "attrs": {
+            "type": "checkbox"
+          }
+        },
+        "supportingPhoto": {
+          "tag": "input",
+          "form": "submissionForm",
+          "attrs": {
+            "type": "file",
+            "accept": ".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+          }
+        },
+        "supportingPhotoHelp": {
+          "tag": "p",
+          "form": "submissionForm",
+          "attrs": {}
+        },
+        "submissionButton": {
+          "tag": "button",
+          "form": "submissionForm",
+          "attrs": {
+            "type": "submit"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "contributor"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "contribution-form"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "contribute.html",
+        "login.html",
+        "browse.html",
+        "register.html",
+        "admin/login.html",
+        "contributor/dashboard.html",
+        "contributor/submissions.html",
+        "contribute.html",
+        "browse.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        },
+        {
+          "src": "js/story-submit.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "submissionForm",
+          "novalidate": ""
+        }
+      ],
+      "options": {
+        "heritageSiteId": [
+          [
+            "",
+            false,
+            "Loading heritage sites..."
+          ]
+        ],
+        "suggestedClassification": [
+          [
+            "",
+            false,
+            "Choose a classification"
+          ],
+          [
+            "Documented Historical Information",
+            false,
+            "Documented Historical Information"
+          ],
+          [
+            "Oral History",
+            false,
+            "Oral History"
+          ],
+          [
+            "Personal Recollection",
+            false,
+            "Personal Recollection"
+          ],
+          [
+            "Community Legend",
+            false,
+            "Community Legend"
+          ]
+        ]
+      },
+      "textareas": {
+        "storyContent": "",
+        "storySourceReference": ""
+      },
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "register.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "registerPageTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "registerForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "registerMessage": {
+          "tag": "div",
+          "form": "registerForm",
+          "attrs": {}
+        },
+        "displayName": {
+          "tag": "input",
+          "form": "registerForm",
+          "attrs": {
+            "type": "text",
+            "required": ""
+          }
+        },
+        "registerEmail": {
+          "tag": "input",
+          "form": "registerForm",
+          "attrs": {
+            "type": "email",
+            "required": ""
+          }
+        },
+        "registerPassword": {
+          "tag": "input",
+          "form": "registerForm",
+          "attrs": {
+            "type": "password",
+            "required": ""
+          }
+        },
+        "confirmPassword": {
+          "tag": "input",
+          "form": "registerForm",
+          "attrs": {
+            "type": "password",
+            "required": ""
+          }
+        },
+        "registerButton": {
+          "tag": "button",
+          "form": "registerForm",
+          "attrs": {
+            "type": "submit"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "register.html",
+        "login.html",
+        "login.html",
+        "contribute.html",
+        "admin/login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "registerForm",
+          "novalidate": ""
+        }
+      ],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "login.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "loginPageTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "loginForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "loginMessage": {
+          "tag": "div",
+          "form": "loginForm",
+          "attrs": {}
+        },
+        "loginEmail": {
+          "tag": "input",
+          "form": "loginForm",
+          "attrs": {
+            "type": "email",
+            "required": ""
+          }
+        },
+        "loginPassword": {
+          "tag": "input",
+          "form": "loginForm",
+          "attrs": {
+            "type": "password",
+            "required": ""
+          }
+        },
+        "loginButton": {
+          "tag": "button",
+          "form": "loginForm",
+          "attrs": {
+            "type": "submit"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "register.html",
+        "login.html",
+        "register.html",
+        "contribute.html",
+        "admin/login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "loginForm",
+          "novalidate": ""
+        }
+      ],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "story.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "storyDetailsMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "storyDetails": {
+          "tag": "article",
+          "form": null,
+          "attrs": {}
+        },
+        "storyClassification": {
+          "tag": "span",
+          "form": null,
+          "attrs": {}
+        },
+        "storyTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "storyHeritageSite": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "storyPhoto": {
+          "tag": "img",
+          "form": null,
+          "attrs": {}
+        },
+        "storyContentHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "storyContent": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "storySourceHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "storySourceReference": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "storyContributorHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "storyContributor": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "backToHeritageLink": {
+          "tag": "a",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-page",
+          "story-details"
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "browse.html",
+        "index.html",
+        "browse.html",
+        "browse.html#communityStoriesSection",
+        "login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        },
+        {
+          "src": "js/stories.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none",
+        "d-none"
+      ]
+    },
+    "browse.html": {
+      "ids": {
+        "mainNav": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "browsePageTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "browseSearchForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "browseSearchInput": {
+          "tag": "input",
+          "form": "browseSearchForm",
+          "attrs": {
+            "type": "search"
+          }
+        },
+        "clearSearchButton": {
+          "tag": "button",
+          "form": "browseSearchForm",
+          "attrs": {
+            "type": "button"
+          }
+        },
+        "browseMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageResultsHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageList": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "communityStoriesSection": {
+          "tag": "section",
+          "form": null,
+          "attrs": {}
+        },
+        "communityStoriesHeading": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "storyList": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-page",
+          "browse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-toggle",
+          "collapse"
+        ],
+        [
+          "button",
+          "",
+          "data-bs-target",
+          "#mainNav"
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "li",
+          "",
+          "data-dashboard-nav",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-public-account-link",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-dashboard-link",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "index.html",
+        "index.html",
+        "browse.html",
+        "contribute.html",
+        "login.html",
+        "register.html",
+        "login.html",
+        "admin/login.html",
+        "index.html",
+        "browse.html",
+        "browse.html#communityStoriesSection",
+        "login.html",
+        "login.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "js/config.js"
+        },
+        {
+          "src": "js/core.js"
+        },
+        {
+          "src": "js/supabase.js"
+        },
+        {
+          "src": "js/queries.js"
+        },
+        {
+          "src": "js/session.js"
+        },
+        {
+          "src": "js/storage.js"
+        },
+        {
+          "src": "js/validation.js"
+        },
+        {
+          "src": "js/search-matching.js"
+        },
+        {
+          "src": "js/auth.js"
+        },
+        {
+          "src": "js/search.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "browseSearchForm"
+        }
+      ],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-collapse",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "d-none",
+        "nav-link",
+        "container",
+        "d-none",
+        "container",
+        "d-none"
+      ]
+    },
+    "admin/heritage-sites.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageManagementMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageSitesTableBody": {
+          "tag": "tbody",
+          "form": null,
+          "attrs": {}
+        },
+        "qrModal": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "qrModalTitle": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "qrCodeBox": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "qrCodeUrl": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "regenerateQrButton": {
+          "tag": "button",
+          "form": null,
+          "attrs": {
+            "type": "button"
+          }
+        },
+        "printQrButton": {
+          "tag": "button",
+          "form": null,
+          "attrs": {
+            "type": "button"
+          }
+        },
+        "saveQrButton": {
+          "tag": "button",
+          "form": null,
+          "attrs": {
+            "type": "button"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "admin"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "heritage-sites-admin"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-bs-dismiss",
+          "modal"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "dashboard.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "heritage-form.html",
+        "heritage-form.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/heritage-list.js"
+        },
+        {
+          "src": "../js/qr.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "admin/dashboard.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "adminDashboardMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "activeSitesCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "archivedSitesCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "submittedStoriesCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "contributorsCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "publishedStoriesCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "rejectedStoriesCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "admin"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "admin-dashboard"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "heritage-form.html",
+        "../index.html",
+        "heritage-form.html",
+        "submissions.html",
+        "heritage-sites.html",
+        "heritage-form.html",
+        "submissions.html",
+        "submissions.html?status=published",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/admin-dashboard.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "admin/review-story.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryHeading": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryDescription": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryContent": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryTitle": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryBody": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewHeritageName": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewHeritageLocation": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewContributorName": {
+          "tag": "h3",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewPhotoBox": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewInformationSection": {
+          "tag": "section",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewFinalClassification": {
+          "tag": "dd",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewedAt": {
+          "tag": "dd",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewNotesDisplay": {
+          "tag": "dd",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewSourceReference": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewSuggestedClassification": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "reviewStoryForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "finalClassification": {
+          "tag": "select",
+          "form": "reviewStoryForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "reviewNotes": {
+          "tag": "textarea",
+          "form": "reviewStoryForm",
+          "attrs": {}
+        },
+        "publishStoryButton": {
+          "tag": "button",
+          "form": "reviewStoryForm",
+          "attrs": {
+            "type": "button"
+          }
+        },
+        "rejectStoryButton": {
+          "tag": "button",
+          "form": "reviewStoryForm",
+          "attrs": {
+            "type": "button"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "admin"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "admin-review-story"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "dashboard.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "heritage-form.html",
+        "submissions.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/story-review.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "reviewStoryForm",
+          "novalidate": ""
+        }
+      ],
+      "options": {
+        "finalClassification": [
+          [
+            "",
+            false,
+            "Choose final classification"
+          ],
+          [
+            "Documented Historical Information",
+            false,
+            "Documented Historical Information"
+          ],
+          [
+            "Oral History",
+            false,
+            "Oral History"
+          ],
+          [
+            "Personal Recollection",
+            false,
+            "Personal Recollection"
+          ],
+          [
+            "Community Legend",
+            false,
+            "Community Legend"
+          ]
+        ]
+      },
+      "textareas": {
+        "reviewNotes": ""
+      },
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none",
+        "d-none"
+      ]
+    },
+    "admin/login.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [],
+      "hrefs": [
+        "#mainContent",
+        "../index.html",
+        "../index.html",
+        "../login.html",
+        "../index.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "container"
+      ]
+    },
+    "admin/heritage-form.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageFormTitle": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageFormHelp": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageForm": {
+          "tag": "form",
+          "form": null,
+          "attrs": {}
+        },
+        "heritageFormMessage": {
+          "tag": "div",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "siteName": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "text",
+            "required": ""
+          }
+        },
+        "siteLocation": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "text",
+            "required": ""
+          }
+        },
+        "historicalPeriod": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "text",
+            "required": ""
+          }
+        },
+        "shortDescription": {
+          "tag": "textarea",
+          "form": "heritageForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "historicalBackground": {
+          "tag": "textarea",
+          "form": "heritageForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "sourceReference": {
+          "tag": "textarea",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "mainPhoto": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "file",
+            "accept": ".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+          }
+        },
+        "currentPhotoHelp": {
+          "tag": "div",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "relatedPhotosSection": {
+          "tag": "section",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "relatedPhotosHeading": {
+          "tag": "h3",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "relatedPhotosMessage": {
+          "tag": "div",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "relatedPhoto": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "file",
+            "accept": ".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+          }
+        },
+        "relatedPhotoCaption": {
+          "tag": "input",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "text",
+            "maxlength": "255"
+          }
+        },
+        "uploadRelatedPhotoButton": {
+          "tag": "button",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "button"
+          }
+        },
+        "relatedPhotosList": {
+          "tag": "div",
+          "form": "heritageForm",
+          "attrs": {}
+        },
+        "siteStatus": {
+          "tag": "select",
+          "form": "heritageForm",
+          "attrs": {
+            "required": ""
+          }
+        },
+        "heritageFormButton": {
+          "tag": "button",
+          "form": "heritageForm",
+          "attrs": {
+            "type": "submit"
+          }
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "admin"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "heritage-form"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "dashboard.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "heritage-form.html",
+        "heritage-sites.html",
+        "heritage-sites.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/heritage-photos.js"
+        },
+        {
+          "src": "../js/heritage-form.js"
+        }
+      ],
+      "forms": [
+        {
+          "id": "heritageForm",
+          "novalidate": ""
+        }
+      ],
+      "options": {
+        "siteStatus": [
+          [
+            "active",
+            true,
+            "Active"
+          ],
+          [
+            "archived",
+            false,
+            "Archived"
+          ]
+        ]
+      },
+      "textareas": {
+        "shortDescription": "",
+        "historicalBackground": "",
+        "sourceReference": ""
+      },
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none",
+        "d-none",
+        "d-none"
+      ]
+    },
+    "admin/submissions.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "adminStoriesHeading": {
+          "tag": "h1",
+          "form": null,
+          "attrs": {}
+        },
+        "adminStoriesDescription": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "adminSubmissionsMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "adminSubmissionsTableBody": {
+          "tag": "tbody",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "admin"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "admin-submissions"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "a",
+          "",
+          "data-story-status-tab",
+          "submitted"
+        ],
+        [
+          "a",
+          "",
+          "data-story-status-tab",
+          "published"
+        ],
+        [
+          "a",
+          "",
+          "data-story-status-tab",
+          "rejected"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "dashboard.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html",
+        "heritage-form.html",
+        "submissions.html?status=submitted",
+        "submissions.html?status=published",
+        "submissions.html?status=rejected",
+        "dashboard.html",
+        "heritage-sites.html",
+        "submissions.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/story-lists.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none",
+        "nav-link",
+        "nav-link",
+        "nav-link"
+      ]
+    },
+    "contributor/dashboard.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "dashboardMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "submittedCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "publishedCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        },
+        "rejectedCount": {
+          "tag": "strong",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "contributor"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "contributor-dashboard"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "../index.html",
+        "../browse.html",
+        "../contribute.html",
+        "../contribute.html",
+        "../contribute.html",
+        "submissions.html",
+        "../browse.html",
+        "dashboard.html",
+        "submissions.html",
+        "../contribute.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/contributor-dashboard.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    },
+    "contributor/submissions.html": {
+      "ids": {
+        "mainContent": {
+          "tag": "main",
+          "form": null,
+          "attrs": {}
+        },
+        "sessionStatus": {
+          "tag": "p",
+          "form": null,
+          "attrs": {}
+        },
+        "mySubmissionsMessage": {
+          "tag": "div",
+          "form": null,
+          "attrs": {}
+        },
+        "submissionsTableTitle": {
+          "tag": "h2",
+          "form": null,
+          "attrs": {}
+        },
+        "mySubmissionsTableBody": {
+          "tag": "tbody",
+          "form": null,
+          "attrs": {}
+        }
+      },
+      "data_hooks": [
+        [
+          "body",
+          "",
+          "data-require-role",
+          "contributor"
+        ],
+        [
+          "body",
+          "",
+          "data-page",
+          "my-submissions"
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ],
+        [
+          "button",
+          "",
+          "data-logout",
+          ""
+        ]
+      ],
+      "hrefs": [
+        "#mainContent",
+        "../index.html",
+        "dashboard.html",
+        "../contribute.html",
+        "../contribute.html",
+        "dashboard.html",
+        "submissions.html",
+        "../contribute.html"
+      ],
+      "scripts": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        },
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        },
+        {
+          "src": "../js/config.js"
+        },
+        {
+          "src": "../js/core.js"
+        },
+        {
+          "src": "../js/supabase.js"
+        },
+        {
+          "src": "../js/queries.js"
+        },
+        {
+          "src": "../js/session.js"
+        },
+        {
+          "src": "../js/storage.js"
+        },
+        {
+          "src": "../js/validation.js"
+        },
+        {
+          "src": "../js/search-matching.js"
+        },
+        {
+          "src": "../js/auth.js"
+        },
+        {
+          "src": "../js/story-lists.js"
+        }
+      ],
+      "forms": [],
+      "options": {},
+      "textareas": {},
+      "classes": [
+        "navbar",
+        "container",
+        "navbar-nav",
+        "nav-link",
+        "nav-link",
+        "container",
+        "d-none"
+      ]
+    }
+  }
+}

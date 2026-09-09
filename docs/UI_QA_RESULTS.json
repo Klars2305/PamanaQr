@@ -1,0 +1,2235 @@
+{
+  "scope": "Static checks plus isolated/offline UI checks. Not live Supabase acceptance testing.",
+  "bootstrap_delivered": "5.3.3, unchanged CDN imports",
+  "offline_rendering_substitute": "5.3.6 (only in the external QA harness; not shipped)",
+  "contracts": {
+    "passed": true,
+    "failures": [],
+    "pages": [
+      {
+        "file": "admin/dashboard.html",
+        "original_ids": 9,
+        "current_ids": 10,
+        "scripts": 12
+      },
+      {
+        "file": "admin/heritage-form.html",
+        "original_ids": 23,
+        "current_ids": 36,
+        "scripts": 13
+      },
+      {
+        "file": "admin/heritage-sites.html",
+        "original_ids": 11,
+        "current_ids": 13,
+        "scripts": 14
+      },
+      {
+        "file": "admin/login.html",
+        "original_ids": 1,
+        "current_ids": 2,
+        "scripts": 11
+      },
+      {
+        "file": "admin/review-story.html",
+        "original_ids": 24,
+        "current_ids": 27,
+        "scripts": 12
+      },
+      {
+        "file": "admin/submissions.html",
+        "original_ids": 6,
+        "current_ids": 7,
+        "scripts": 12
+      },
+      {
+        "file": "browse.html",
+        "original_ids": 12,
+        "current_ids": 13,
+        "scripts": 12
+      },
+      {
+        "file": "contribute.html",
+        "original_ids": 16,
+        "current_ids": 25,
+        "scripts": 12
+      },
+      {
+        "file": "contributor/dashboard.html",
+        "original_ids": 6,
+        "current_ids": 8,
+        "scripts": 12
+      },
+      {
+        "file": "contributor/submissions.html",
+        "original_ids": 5,
+        "current_ids": 6,
+        "scripts": 12
+      },
+      {
+        "file": "heritage.html",
+        "original_ids": 17,
+        "current_ids": 18,
+        "scripts": 13
+      },
+      {
+        "file": "index.html",
+        "original_ids": 7,
+        "current_ids": 8,
+        "scripts": 12
+      },
+      {
+        "file": "login.html",
+        "original_ids": 8,
+        "current_ids": 10,
+        "scripts": 11
+      },
+      {
+        "file": "register.html",
+        "original_ids": 10,
+        "current_ids": 15,
+        "scripts": 11
+      },
+      {
+        "file": "story.html",
+        "original_ids": 14,
+        "current_ids": 15,
+        "scripts": 12
+      }
+    ],
+    "protected_files": [
+      {
+        "file": ".gitignore",
+        "unchanged": true,
+        "sha256": "0c83bacc2e724003daabda7f1d40b842cc776c8a75c9740d18c6df5770ecfcb7"
+      },
+      {
+        "file": "database/storage.sql",
+        "unchanged": true,
+        "sha256": "90c7b08f49b558a504f8c90d76e11dad244ca2fd127a3d55448deaae339225a7"
+      },
+      {
+        "file": "database/schema.sql",
+        "unchanged": true,
+        "sha256": "252a770c830937c82f678b6286efa23b753a928d234ad85e1b416a10b905f8a1"
+      },
+      {
+        "file": "js/config.example.js",
+        "unchanged": true,
+        "sha256": "8c2eb0a2a0aaa4619da201393286c88eef69e1562796f4ef339b44443e8203fb"
+      },
+      {
+        "file": "js/story-review.js",
+        "unchanged": true,
+        "sha256": "2f8176bc97f97b7acd7ca36441fd66bb055ceaa54edc6229475782ecfc8eb1a5"
+      },
+      {
+        "file": "js/contributor-dashboard.js",
+        "unchanged": true,
+        "sha256": "36713e263134013c5582206bb9286af9c58d3e045661aa3d557a7b074dafefc8"
+      },
+      {
+        "file": "js/search.js",
+        "unchanged": true,
+        "sha256": "c8a968d3b44d3cf4ee0c533cdd1bafe8d36ba66eb73fde57753625ea14ee14d2"
+      },
+      {
+        "file": "js/session.js",
+        "unchanged": true,
+        "sha256": "86ec22e8b409195bb5f53eac3911f6d768dbe5f2200ea8a9e023dea03ef96cd0"
+      },
+      {
+        "file": "js/auth.js",
+        "unchanged": true,
+        "sha256": "4bb2ff3f113a51952cab3fccfa3700f50b4c4b2c51786c374cb450d8f85b17f7"
+      },
+      {
+        "file": "js/admin-dashboard.js",
+        "unchanged": true,
+        "sha256": "9e6b148b486675724c64b05280227cdb35c6dd74bb50a69a0a21d7f3f8516b23"
+      },
+      {
+        "file": "js/supabase.js",
+        "unchanged": true,
+        "sha256": "b42364ea79e7c8ed25e4de49ae698a83be36456e61f98a613f08b15c90b599bc"
+      },
+      {
+        "file": "js/stories.js",
+        "unchanged": true,
+        "sha256": "65d3999d7a80bbaafc17816fe9e9d7544d77b69ca7aaf07aa8af64ac62d46972"
+      },
+      {
+        "file": "js/config.js",
+        "unchanged": true,
+        "sha256": "819a152b7a65c6ae967075c31a2351f9b4777b1726202f71a456c229f157942e"
+      },
+      {
+        "file": "js/search-matching.js",
+        "unchanged": true,
+        "sha256": "d12612390d5aaeb9013023645e98f8653acf858fcb46ffe409d120d51304c0db"
+      },
+      {
+        "file": "js/storage.js",
+        "unchanged": true,
+        "sha256": "01199c74e101081703b381046e747b71ddccf3cfd16473a010c9abdd6baa9fcd"
+      },
+      {
+        "file": "js/story-lists.js",
+        "unchanged": true,
+        "sha256": "1b0780e7267891c0e5d173f9166f9c90c8e64d4a289a24dc59197fb2e9539413"
+      },
+      {
+        "file": "js/core.js",
+        "unchanged": true,
+        "sha256": "b3342aa09023cae8bb8752f143008adbb1f51445ed8bfe4112e9de65956a192c"
+      },
+      {
+        "file": "js/story-submit.js",
+        "unchanged": true,
+        "sha256": "665d1b13d8045820e618c6f178237fac1b4a4ee8e04c28d11be95afe9021373c"
+      },
+      {
+        "file": "js/queries.js",
+        "unchanged": true,
+        "sha256": "3ffb83c912ef6aea18c816b977dd9d50e696cbd7b4662cd86cb574c217771b29"
+      },
+      {
+        "file": "js/validation.js",
+        "unchanged": true,
+        "sha256": "4b56b055723fd0fbc6f387d1ed284ea3405d0f5ab2c954f1ac582f5634d0bf67"
+      },
+      {
+        "file": "js/qr.js",
+        "unchanged": true,
+        "sha256": "1c3e747578a943a3eddbe30e905043996a30496727d5a1f328ceda4d681f3470"
+      },
+      {
+        "file": "js/heritage-photos.js",
+        "unchanged": true,
+        "sha256": "b913caa0cce3a3acfb4a3e84ad88804af00205a2b4d0e7fa210ac93bae0c1d64"
+      },
+      {
+        "file": "js/heritage-details.js",
+        "unchanged": true,
+        "sha256": "10e3b7195e8f66ba94c3ffdc8cc8a33cbd088d128b0c92f841720974c30afba6"
+      },
+      {
+        "file": "js/heritage-list.js",
+        "unchanged": true,
+        "sha256": "6ca3cb073e5b03f2eb3d568c82d561a1af3f5d9dc453593392d5a02bf3ef623d"
+      },
+      {
+        "file": "js/heritage-form.js",
+        "unchanged": true,
+        "sha256": "9b31ef1071a0824eff314e337310be7b8b39ff580723194c5c15815c6cdaf220"
+      }
+    ],
+    "css_bytes": 55394,
+    "css_lines": 2851
+  },
+  "responsive_matrix": {
+    "environment": "Offline Chromium; locally available Bootstrap 5.3.6 layout substitute, Supabase/URLs mocked. Shipped project still references Bootstrap 5.3.3.",
+    "checks": 135,
+    "passed": 135,
+    "results": [
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "index.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "browse.html?q=Test",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "heritage.html?site=test-site-1",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [
+          ""
+        ],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [
+          ""
+        ],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contribute.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "register.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/dashboard.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "contributor/submissions.html",
+        "role": "contributor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/login.html",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/dashboard.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-sites.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/heritage-form.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/submissions.html",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "admin/review-story.html?id=22222222-2222-4222-8222-222222222220",
+        "role": "admin",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 430,
+        "scrollWidth": 430,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 576,
+        "scrollWidth": 576,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 992,
+        "scrollWidth": 992,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1200,
+        "scrollWidth": 1200,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      },
+      {
+        "page": "story.html?id=22222222-2222-4222-8222-222222222221",
+        "role": "visitor",
+        "errors": [],
+        "console_errors": [],
+        "width": 1680,
+        "scrollWidth": 1680,
+        "overflow": [],
+        "brokenImages": [],
+        "unlabeled": [],
+        "main": 1,
+        "pass": true
+      }
+    ]
+  },
+  "interactions": {
+    "environment": "Offline rendering; mocked Supabase; URL helper injection; Bootstrap 5.3.6 local rendering substitute, while application pins 5.3.3.",
+    "passed": 30,
+    "total": 30,
+    "tests": [
+      {
+        "test": "Featured heritage renderer retains three cards and site query links",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Mobile Bootstrap collapse opens through its existing hook",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": "Bootstrap 5.3.6 local substitute; repeat on shipped 5.3.3."
+      },
+      {
+        "test": "Mobile menu collapses again",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Story results appear for a search",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "No-results feedback uses existing search results",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Clear restores sites and hides story results as before",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Missing heritage record has a recovery link and warning",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Public name privacy is retained in the story renderer",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Story return link retains the heritage slug",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Empty login keeps validation and restores the button",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Login errors are associated with their inputs",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Registration keeps password length and matching rules",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Contribution requires site, title, and content",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Valid story submits to mocked data with submitted status and private name",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": "No live Supabase write occurred."
+      },
+      {
+        "test": "Successful contribution resets fields and restores submit",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Unsupported upload type remains rejected by original validation",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Heritage form required-field checks still run",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Edit form fills existing fields and exposes related photos",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Mobile table stays a keyboard-focusable native table region",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Archive action retains its original handler and scoped update",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "QR modal opens and retains the public site URL",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": "QR drawing is stubbed. Modal/URL plumbing only, not QR scan validation."
+      },
+      {
+        "test": "QR regenerate control remains connected",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "QR modal closes with Escape",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Publish requires final classification and restores decision buttons",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Publish sends the existing published transition to the mock",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Reject keeps the existing rule that classification is not required",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Already-reviewed story keeps decision controls disabled",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Missing record image uses decorative placeholder, not fabricated photo",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Loading feedback and reduced-motion override are present",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": ""
+      },
+      {
+        "test": "Simulated fetch failure displays the existing error state",
+        "status": "PASS",
+        "scope": "isolated UI / mocked data",
+        "details": "Expected application console logging occurs for this deliberately simulated failure."
+      }
+    ]
+  },
+  "selected_contrast_pairs": [
+    {
+      "pair": "Body / cream",
+      "ratio": 12.44,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Secondary / cream",
+      "ratio": 5.08,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Primary button",
+      "ratio": 9.7,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Terracotta CTA",
+      "ratio": 6.36,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Published badge",
+      "ratio": 7.47,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Submitted badge",
+      "ratio": 5.85,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Rejected badge",
+      "ratio": 5.4,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Archived badge",
+      "ratio": 5.65,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Info state",
+      "ratio": 6.02,
+      "pass_4_5": true
+    },
+    {
+      "pair": "Placeholder text",
+      "ratio": 5.0,
+      "pass_4_5": true
+    }
+  ]
+}
