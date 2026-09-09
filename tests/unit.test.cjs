@@ -10,9 +10,10 @@ const context = vm.createContext({
   console: { error() {}, warn() {} }, setTimeout, clearTimeout,
   window: { location: { origin: 'https://pamana.test', pathname: '/archive/admin/heritage-sites.html', search: '' } },
   document: { body: { dataset: {} }, getElementById() { return null; }, querySelector() { return null; }, querySelectorAll() { return []; } },
-  PAMANA_CONFIG: { productionBaseUrl: '' }
+  PAMANA_CONFIG: { productionBaseUrl: '' },
+  getSupabaseClient() { return null; }
 });
-for (const file of ['core', 'storage', 'validation', 'search-matching', 'session', 'story-submit', 'heritage-form', 'story-review', 'heritage-list', 'story-lists', 'contributor-dashboard', 'qr']) {
+for (const file of ['core', 'storage', 'validation', 'search-matching', 'session', 'story-submit', 'heritage-form', 'story-review', 'heritage-list', 'story-lists', 'contributor-dashboard', 'qr', 'auth']) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../js', file + '.js'), 'utf8'), context, { filename: file + '.js' });
 }
 const run = code => vm.runInContext(code, context);
@@ -80,6 +81,10 @@ case_('Guard: duplicate button claim is rejected', '(() => { const b={disabled:f
 case_('Guard: release restores action', '(() => { const b={disabled:true}; releaseButtonAction(b); return b.disabled; })()', false);
 case_('Workflow: new story never published', 'buildNewStoryRecord({heritageSiteId:"1",title:"Test story",content:"a".repeat(50),sourceReference:"",suggestedClassification:"Personal Recollection",allowPublicName:false},{id:"c"},{display_name:"Juan"}).status', 'submitted');
 case_('Privacy: new story defaults to hidden public name', 'buildNewStoryRecord({heritageSiteId:"1",title:"Test story",content:"a".repeat(50),sourceReference:"",suggestedClassification:"Personal Recollection",allowPublicName:false},{id:"c"},{display_name:"Juan"}).allow_public_name', false);
+case_('Navbar account uses profile display name', 'getAccountDisplayName({display_name:" Maria Santos "},{email:"maria@example.com"})', 'Maria Santos');
+case_('Navbar account falls back to authenticated email', 'getAccountDisplayName({display_name:""},{email:"maria@example.com"})', 'maria@example.com');
+case_('Contributor account menu includes submissions', 'getAccountMenuItems("contributor").map(item=>item.label)', ['Dashboard','My Submissions','Logout']);
+case_('Admin account menu stays admin-only', 'getAccountMenuItems("admin").map(item=>item.label)', ['Admin Dashboard','Logout']);
 test('Service boundary blocks invalid registration before Supabase', async () => {
   const result = await run('registerContributor("Juan", "test@example.com", "abc")');
   assert.ok(result.error); assert.match(result.error.message, /8.*64/);

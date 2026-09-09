@@ -7,12 +7,14 @@ const ROLE_NAV_ITEMS = {
   visitor: [
     { label: 'Home', path: 'index.html', icon: 'home' },
     { label: 'Browse', path: 'browse.html', icon: 'explore' },
-    { label: 'Register', path: 'register.html', icon: 'contributor' },
-    { label: 'Login', path: 'login.html', icon: 'profile', activePaths: ['admin/login.html', 'forgot-password.html', 'reset-password.html'] }
+    { label: 'Scan QR', path: 'scan.html', icon: 'qr', mobileLabel: 'Scan' },
+    { label: 'Login', path: 'login.html', icon: 'profile', activePaths: ['admin/login.html', 'forgot-password.html', 'reset-password.html'] },
+    { label: 'Register', path: 'register.html', icon: 'contributor' }
   ],
   contributor: [
     { label: 'Home', path: 'index.html', icon: 'home' },
     { label: 'Browse', path: 'browse.html', icon: 'explore' },
+    { label: 'Scan QR', path: 'scan.html', icon: 'qr', mobileLabel: 'Scan' },
     { label: 'Contribute', path: 'contribute.html', icon: 'contribute' },
     { label: 'My Submissions', path: 'contributor/submissions.html', icon: 'stories', mobileLabel: 'Submissions' },
     { label: 'Dashboard', path: 'contributor/dashboard.html', icon: 'profile' },
@@ -107,6 +109,86 @@ function createRoleNavItem(item, useListItem) {
   return listItem;
 }
 
+function getAccountDisplayName(profile, user) {
+  const displayName = profile && String(profile.display_name || '').trim();
+  const email = user && String(user.email || '').trim();
+  return displayName || email || 'Account';
+}
+
+function getAccountMenuItems(role) {
+  if (role === PAMANA_ROLES.admin) {
+    return [
+      { label: 'Admin Dashboard', path: ROLE_ROUTES.admin },
+      { label: 'Logout', action: 'logout' }
+    ];
+  }
+
+  return [
+    { label: 'Dashboard', path: ROLE_ROUTES.contributor },
+    { label: 'My Submissions', path: 'contributor/submissions.html' },
+    { label: 'Logout', action: 'logout' }
+  ];
+}
+
+function isAccountMenuItem(item, role) {
+  if (item.action === 'logout') return true;
+  if (role === PAMANA_ROLES.admin) return item.path === ROLE_ROUTES.admin;
+  return item.path === ROLE_ROUTES.contributor || item.path === 'contributor/submissions.html';
+}
+
+function createAccountDropdown(profile, user, useListItem) {
+  const wrapper = document.createElement(useListItem ? 'li' : 'div');
+  wrapper.className = useListItem ? 'nav-item dropdown' : 'dropdown';
+
+  const toggle = document.createElement('button');
+  toggle.className = 'nav-link dropdown-toggle';
+  toggle.type = 'button';
+  toggle.setAttribute('data-bs-toggle', 'dropdown');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.textContent = getAccountDisplayName(profile, user);
+
+  const menu = document.createElement('ul');
+  menu.className = 'dropdown-menu dropdown-menu-end';
+
+  getAccountMenuItems(profile.role).forEach(function (item) {
+    const menuItem = document.createElement('li');
+
+    if (item.action === 'logout') {
+      const divider = document.createElement('li');
+      const rule = document.createElement('hr');
+      rule.className = 'dropdown-divider';
+      divider.appendChild(rule);
+      menu.appendChild(divider);
+
+      const button = document.createElement('button');
+      button.className = 'dropdown-item';
+      button.type = 'button';
+      button.textContent = item.label;
+      button.setAttribute('data-logout', '');
+      button.addEventListener('click', logoutUser);
+      menuItem.appendChild(button);
+    } else {
+      const link = document.createElement('a');
+      link.className = isCurrentPath(item.path) ? 'dropdown-item active' : 'dropdown-item';
+      link.href = toAppUrl(item.path);
+      link.textContent = item.label;
+      if (link.classList.contains('active')) link.setAttribute('aria-current', 'page');
+      menuItem.appendChild(link);
+    }
+
+    menu.appendChild(menuItem);
+  });
+
+  if (getAccountMenuItems(profile.role).some(function (item) {
+    return item.path && isCurrentPath(item.path);
+  })) {
+    toggle.classList.add('active');
+  }
+
+  wrapper.append(toggle, menu);
+  return wrapper;
+}
+
 // Replaces a link's visible label without touching its element children, so an
 // icon nested inside a navigation link survives the update.
 function setNavLinkLabel(link, label) {
@@ -180,9 +262,11 @@ async function updateRoleNavigation() {
   }
 
   let profile = null;
+  let user = null;
 
   try {
     profile = await getCurrentUserProfile();
+    if (profile) user = await getCurrentUser();
   } catch (error) {
     logAppError('Could not read the session for navigation.', error);
   }
@@ -198,8 +282,15 @@ async function updateRoleNavigation() {
   }
 
   const useListItem = navList.tagName.toLowerCase() === 'ul';
+  const items = ROLE_NAV_ITEMS[role].filter(function (item) {
+    return role === 'visitor' || !isAccountMenuItem(item, role);
+  });
+  const navigationItems = items.map(function (item) {
+    return createRoleNavItem(item, useListItem);
+  });
+  if (profile) navigationItems.push(createAccountDropdown(profile, user, useListItem));
   navList.className = 'navbar-nav ms-auto align-items-lg-center';
-  navList.replaceChildren(...ROLE_NAV_ITEMS[role].map(item => createRoleNavItem(item, useListItem)));
+  navList.replaceChildren(...navigationItems);
   navbar.dataset.navigationRole = role;
   navbar.setAttribute('aria-label', 'Primary navigation');
   const brand = navbar.querySelector('.pamana-brand');
